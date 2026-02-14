@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include role8_theme *.css
+recursive-include role8_theme *.csv
+recursive-include role8_theme *.html
+recursive-include role8_theme *.ico
+recursive-include role8_theme *.js
+recursive-include role8_theme *.json
+recursive-include role8_theme *.md
+recursive-include role8_theme *.png
+recursive-include role8_theme *.py
+recursive-include role8_theme *.svg
+recursive-include role8_theme *.txt
+recursive-exclude role8_theme *.pyc

@@ -1,0 +1,133 @@
+/* Role8 Theme - Azia Inspired */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Role8 Brand Colors */
+    --role8-blue: #144983;
+    --role8-orange: #f37b37;
+    
+    /* Azia-Derived Palette */
+    --sidebar-bg: #0F3460;
+    --sidebar-hover: rgba(255, 255, 255, 0.08);
+    --sidebar-active: rgba(243, 123, 55, 0.15);
+    --sidebar-text: rgba(255, 255, 255, 0.7);
+    --sidebar-text-active: #FFFFFF;
+    
+    --page-bg: #F4F7FE;
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 2px 12px rgba(15, 52, 96, 0.06);
+    --card-radius: 12px;
+    
+    --primary-btn: #144983;
+    --primary-btn-hover: #1A5BA6;
+    --accent: #f37b37;
+    --accent-soft: rgba(243, 123, 55, 0.1);
+    
+    --text-dark: #1B2559;
+    --text-muted: #8F9BBA;
+    --border: #E9EDF7;
+    
+    /* Overriding Frappe Variables */
+    --font-stack: 'Inter', sans-serif !important;
+    --primary: var(--role8-blue);
+    --text-color: var(--text-dark);
+}
+
+body {
+    background-color: var(--page-bg) !important;
+    font-family: var(--font-stack);
+    color: var(--text-dark);
+}
+
+/* Sidebar Styling */
+.layout-side-section {
+    background-color: var(--sidebar-bg) !important;
+    color: var(--sidebar-text);
+}
+
+.sidebar-item-label {
+    color: var(--sidebar-text) !important;
+}
+
+.sidebar-item:hover {
+    background-color: var(--sidebar-hover) !important;
+}
+
+.sidebar-item.is-selected {
+    background-color: var(--sidebar-active) !important;
+    color: var(--sidebar-text-active) !important;
+    border-right: 3px solid var(--accent);
+}
+
+.sidebar-item.is-selected .sidebar-item-label {
+    color: var(--sidebar-text-active) !important;
+    font-weight: 600;
+}
+
+.sidebar-item-icon {
+    color: var(--sidebar-text);
+}
+
+.sidebar-item.is-selected .sidebar-item-icon {
+    color: var(--accent) !important;
+}
+
+/* Card Styling */
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--card-radius) !important;
+    box-shadow: var(--card-shadow) !important;
+    border: 1px solid var(--border) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-btn) !important;
+    border-color: var(--primary-btn) !important;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-btn-hover) !important;
+    border-color: var(--primary-btn-hover) !important;
+    box-shadow: 0 4px 12px rgba(20, 73, 131, 0.2);
+}
+
+/* Navbar */
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) !important;
+    border-bottom: 1px solid var(--border) !important;
+}
+
+/* Form Controls */
+.form-control {
+    background-color: #F9FAFC;
+    border: 1px solid var(--border);
+    border-radius: 8px !important;
+    color: var(--text-dark);
+}
+
+.form-control:focus {
+    background-color: #fff;
+    border-color: var(--primary-btn);
+    box-shadow: 0 0 0 2px rgba(20, 73, 131, 0.1);
+}
+
+/* Dashboard Number Cards */
+.number-card {
+    transition: transform 0.2s;
+}
+
+.number-card:hover {
+    transform: translateY(-2px);
+}
+
+/* List Rows */
+.list-row-container {
+    border-bottom: 1px solid var(--border) !important;
+}
+
+.list-row-container:hover {
+    background-color: #F8FAFD !important;
+}
