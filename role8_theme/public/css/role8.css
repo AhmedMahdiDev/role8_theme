@@ -178,6 +178,26 @@ body {
     opacity: 1 !important;
 }
 
+/* PREVENT unwanted background on focus/focus-within (Fixes white bg on expand) */
+.desk-sidebar .standard-sidebar-item:focus,
+.desk-sidebar .standard-sidebar-item:focus-within {
+    background-color: transparent !important;
+}
+
+/* Re-apply hover if focused AND hovered */
+.desk-sidebar .standard-sidebar-item:focus:hover,
+.desk-sidebar .standard-sidebar-item:focus-within:hover {
+    background-color: var(--sidebar-hover) !important;
+}
+
+/* Keep selected item bg even if focused */
+.desk-sidebar .standard-sidebar-item.selected:focus,
+.desk-sidebar .standard-sidebar-item.selected:focus-within,
+.desk-sidebar .standard-sidebar-item.active:focus,
+.desk-sidebar .standard-sidebar-item.active:focus-within {
+    background-color: var(--sidebar-active) !important;
+}
+
 /* Sidebar section labels (e.g., "PUBLIC", "PRIVATE") */
 .desk-sidebar .standard-sidebar-label,
 .standard-sidebar-label {
