@@ -442,6 +442,36 @@ input.awesomebar-input:focus,
 /* Hide Page Head (Title & Toggle) specifically on Workspaces (Dashboard) */
 /* REMOVED: User wants title back */
 
+/* ── User Request: Remove default styling from main section on Workspaces ──
+   (So only widgets look like cards, not the whole page) */
+@media (min-width: 992px) {
+    [data-page-route="Workspaces"] .layout-main .layout-main-section {
+        border: none !important;
+        padding: 0 !important;
+        margin-bottom: 0 !important;
+        box-shadow: none !important;
+        /* Ensure no shadow either */
+        background-color: transparent !important;
+    }
+}
+
+/* ── Move Search Bar to Left ── */
+.navbar .container {
+    display: flex !important;
+    justify-content: flex-start !important;
+}
+
+.navbar .search-bar {
+    order: -1 !important;
+    margin-right: auto !important;
+    margin-left: 10px !important;
+}
+
+/* Keep right-side icons (Help, User, etc) on the right */
+.navbar .navbar-right {
+    margin-left: auto !important;
+}
+
 .layout-main-section {
     background-color: transparent !important;
 }
