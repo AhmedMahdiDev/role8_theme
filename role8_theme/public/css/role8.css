@@ -227,6 +227,22 @@ body {
     font-weight: 700 !important;
     letter-spacing: 1.2px !important;
     padding: 14px 20px 6px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.desk-sidebar .standard-sidebar-label svg,
+.standard-sidebar-label svg {
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.5 !important;
+    width: 12px !important;
+    height: 12px !important;
+    margin-right: 6px !important;
+}
+
+.desk-sidebar .standard-sidebar-label:hover svg,
+.standard-sidebar-label:hover svg {
+    opacity: 1 !important;
 }
 
 /* Sidebar search input */
