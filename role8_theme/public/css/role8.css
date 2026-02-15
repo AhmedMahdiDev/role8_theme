@@ -60,11 +60,73 @@ body {
    .desk-sidebar-item, .standard-sidebar-label
    ══════════════════════════════════════════════════════ */
 
-/* Sidebar container — deep dark blue */
+/* Sidebar container — deep dark blue, FULL HEIGHT FIXED */
 .desk-sidebar {
     background-color: var(--sidebar-bg) !important;
     border-right: none !important;
-    min-height: 100vh !important;
+    height: 100vh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 230px !important;
+    /* Fixed width */
+    z-index: 1001 !important;
+    /* Above navbar */
+    padding-top: 0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow-y: auto !important;
+}
+
+/* Hide default Navbar Logo/Brand */
+.navbar .navbar-brand,
+.navbar .navbar-home {
+    display: none !important;
+}
+
+/* Adjust Navbar to start AFTER sidebar */
+.navbar {
+    left: 230px !important;
+    width: calc(100% - 230px) !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    padding-left: 20px !important;
+}
+
+/* Adjust Main Page Content to NOT be hidden by fixed sidebar/navbar */
+.page-container,
+.layout-main-section-wrapper {
+    margin-left: 230px !important;
+    margin-top: 60px !important;
+    /* To account for fixed navbar */
+    padding-top: 20px !important;
+}
+
+/* New Role8 Sidebar Logo Area Styles */
+.role8-sidebar-logo {
+    display: flex;
+    align-items: center;
+    padding: 24px 12px 20px 12px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 15px !important;
+}
+
+.role8-sidebar-logo img.app-logo {
+    max-height: 28px !important;
+    width: auto !important;
+}
+
+/* Sidebar scrollbar */
+.desk-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.desk-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
 }
 
 .layout-side-section {

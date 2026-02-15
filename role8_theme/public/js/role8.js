@@ -7,13 +7,39 @@ $(document).ready(function () {
     // Run after a short delay to let sidebar render
     setTimeout(function () {
         role8_fix_submenu_icons();
+        role8_inject_sidebar_logo();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
     $(document).on('page-change', function () {
-        setTimeout(role8_fix_submenu_icons, 500);
+        setTimeout(function () {
+            role8_fix_submenu_icons();
+            role8_inject_sidebar_logo();
+        }, 500);
     });
 });
+
+function role8_inject_sidebar_logo() {
+    // Check if logo already exists
+    if ($('.role8-sidebar-logo').length > 0) return;
+
+    var sidebar = $('.desk-sidebar');
+    if (sidebar.length === 0) return;
+
+    // Create Logo HTML
+    // You can replace the src with your actual logo URL usually found in /assets/...
+    var logoHtml = `
+        <div class="role8-sidebar-logo" style="padding: 20px; text-align: center; margin-bottom: 10px;">
+            <a href="/app/home" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
+                <img src="/assets/frappe/images/frappe-framework-logo.svg" style="height: 28px; width: auto;" alt="App Logo" class="app-logo">
+                <span style="color: #fff; font-weight: 700; font-size: 18px; letter-spacing: 0.5px;">Cloud3</span>
+            </a>
+        </div>
+    `;
+
+    // Prepend to sidebar
+    sidebar.prepend(logoHtml);
+}
 
 function role8_fix_submenu_icons() {
     // Find all sidebar sub-item icons with arrow-left or arrow-right
@@ -39,7 +65,7 @@ function role8_fix_submenu_icons() {
         dot.textContent = '\u2022'; // bullet character •
         iconSpan.appendChild(dot);
         iconSpan.setAttribute('data-role8-fixed', 'true');
-        console.log("Role8: Fixed submenu icon for", iconSpan.getAttribute('item-icon'));
+        // console.log("Role8: Fixed submenu icon for", iconSpan.getAttribute('item-icon'));
     });
 
     // Also watch for sidebar mutations (menu expand/collapse)
