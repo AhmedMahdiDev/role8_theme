@@ -15,10 +15,21 @@ $(document).ready(function () {
         setTimeout(function () {
             role8_fix_submenu_icons();
             role8_inject_sidebar_logo();
+            role8_move_sidebar_to_body(); // NEW: Fix visibility by moving to body
             role8_init_sidebar_toggle();
         }, 500);
     });
 });
+
+/* ── NEW: Move Sidebar to Body (Fix visibility on List/Form views) ── */
+function role8_move_sidebar_to_body() {
+    var sidebar = $('.desk-sidebar');
+    // If sidebar exists AND is not already a direct child of body
+    if (sidebar.length > 0 && sidebar.parent()[0].tagName !== 'BODY') {
+        console.log('Role8: Moving sidebar to body for global visibility');
+        sidebar.prependTo('body');
+    }
+}
 
 function role8_init_sidebar_toggle() {
     // Attach click event to the sidebar toggle button
