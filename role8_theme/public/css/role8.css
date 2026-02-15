@@ -110,7 +110,7 @@ body {
 /* Adjust Main Page Content to NOT be hidden by fixed sidebar/navbar */
 .page-container,
 .layout-main-section-wrapper {
-    margin-left: 0px !important;
+    /* Margin handled in Toggle Logic section */
     margin-top: 60px !important;
     /* To account for fixed navbar */
     padding-top: 20px !important;
@@ -384,8 +384,24 @@ body {
 /* When sidebar is HIDDEN */
 body.role8-sidebar-hidden .desk-sidebar {
     left: -230px !important;
-    /* Slide out */
     transition: left 0.3s ease !important;
+}
+
+/* Adjust Navbar when sidebar is hidden */
+body.role8-sidebar-hidden .navbar {
+    left: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+    /* Safer than 100% to avoid overflow */
+    padding-left: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Adjust Content when sidebar is hidden (Full Width) */
+body.role8-sidebar-hidden .page-container,
+body.role8-sidebar-hidden .layout-main-section-wrapper {
+    margin-left: 0px !important;
+    transition: margin-left 0.3s ease !important;
 }
 
 /* When sidebar is VISIBLE (Default) */
@@ -393,16 +409,15 @@ body.role8-sidebar-hidden .desk-sidebar {
     transition: left 0.3s ease !important;
 }
 
-/* Adjust Navbar when sidebar is hidden */
-body.role8-sidebar-hidden .navbar {
-    left: 0 !important;
-    width: 100% !important;
-    padding-left: 20px !important;
+.navbar {
     transition: all 0.3s ease !important;
 }
 
-.navbar {
-    transition: all 0.3s ease !important;
+.page-container,
+.layout-main-section-wrapper {
+    transition: margin-left 0.3s ease !important;
+    /* Default: Sidebar is open, so push content */
+    margin-left: 230px !important;
 }
 
 /* Search / Awesomebar */
