@@ -129,9 +129,19 @@ body {
     border-radius: 4px;
 }
 
+/* Parent container wrapper - COLLAPSE it so it doesn't take space */
+/* (Since child .desk-sidebar is fixed, this parent is empty flow-wise) */
 .layout-side-section {
-    background-color: var(--sidebar-bg) !important;
-    border-right: none !important;
+    width: 0 !important;
+    flex: 0 0 0% !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background-color: transparent !important;
+    /* Hide bg */
+    border: none !important;
+    overflow: visible !important;
+    /* Allow fixed child to be seen */
 }
 
 .standard-sidebar-section {
