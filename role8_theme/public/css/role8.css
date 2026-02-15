@@ -278,8 +278,7 @@ body {
     font-weight: 600 !important;
 }
 
-color: var(--sidebar-text-active) !important;
-}
+
 
 /* ── FIX: Prevent white background on ANY child element (a, span, etc) ── */
 .desk-sidebar .standard-sidebar-item *,
