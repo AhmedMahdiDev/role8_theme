@@ -278,6 +278,21 @@ body {
     font-weight: 600 !important;
 }
 
+color: var(--sidebar-text-active) !important;
+}
+
+/* ── FIX: Prevent white background on ANY child element (a, span, etc) ── */
+.desk-sidebar .standard-sidebar-item *,
+.desk-sidebar .standard-sidebar-item a,
+.desk-sidebar .standard-sidebar-item span,
+.desk-sidebar .standard-sidebar-item:focus,
+.desk-sidebar .standard-sidebar-item:active,
+.desk-sidebar .standard-sidebar-item:focus-within {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    /* Remove any default focus rings/shadows */
+}
+
 .desk-sidebar .standard-sidebar-item.selected svg,
 .desk-sidebar .standard-sidebar-item.active svg {
     color: var(--accent) !important;
