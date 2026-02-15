@@ -388,19 +388,23 @@ body.role8-sidebar-hidden .desk-sidebar {
 }
 
 /* Adjust Navbar when sidebar is hidden */
+/* Adjust Navbar when sidebar is hidden */
 body.role8-sidebar-hidden .navbar {
     left: 0 !important;
-    right: 0 !important;
-    width: auto !important;
-    /* Safer than 100% to avoid overflow */
+    width: 100% !important;
+    max-width: 100% !important;
     padding-left: 20px !important;
     transition: all 0.3s ease !important;
 }
 
 /* Adjust Content when sidebar is hidden (Full Width) */
 body.role8-sidebar-hidden .page-container,
-body.role8-sidebar-hidden .layout-main-section-wrapper {
+body.role8-sidebar-hidden .layout-main-section-wrapper,
+body.role8-sidebar-hidden .container {
     margin-left: 0px !important;
+    margin-right: 0px !important;
+    width: 100% !important;
+    max-width: 100% !important;
     transition: margin-left 0.3s ease !important;
 }
 
