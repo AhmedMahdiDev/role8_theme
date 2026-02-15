@@ -165,7 +165,8 @@ body {
 .desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control),
 .desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) {
     background-color: transparent !important;
-    border-left: none !important;
+    border-left: 3px solid var(--accent) !important;
+    /* Restored orange accent */
     /* Only text color changes */
 }
 
