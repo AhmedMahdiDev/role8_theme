@@ -154,11 +154,27 @@ body {
     stroke: var(--sidebar-text-active) !important;
 }
 
-/* Sidebar selected/active item */
-.desk-sidebar .standard-sidebar-item.selected,
-.desk-sidebar .standard-sidebar-item.active {
+/* Sidebar selected/active item - LEAF NODES ONLY (Not parents) */
+.desk-sidebar .standard-sidebar-item.selected:not(:has(.sidebar-item-control)),
+.desk-sidebar .standard-sidebar-item.active:not(:has(.sidebar-item-control)) {
     background-color: var(--sidebar-active) !important;
     border-left: 3px solid var(--accent) !important;
+}
+
+/* Parent items (with arrow control) - FORCE TRANSPARENT when selected/expanded */
+.desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control),
+.desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) {
+    background-color: transparent !important;
+    border-left: none !important;
+    /* Only text color changes */
+}
+
+/* Ensure text is still highlighted for parent items */
+.desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control) a,
+.desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control) span,
+.desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) a,
+.desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) span {
+    color: var(--sidebar-text-active) !important;
 }
 
 .desk-sidebar .standard-sidebar-item.selected a,
@@ -190,12 +206,16 @@ body {
     background-color: var(--sidebar-hover) !important;
 }
 
-/* Keep selected item bg even if focused */
-.desk-sidebar .standard-sidebar-item.selected:focus,
-.desk-sidebar .standard-sidebar-item.selected:focus-within,
-.desk-sidebar .standard-sidebar-item.active:focus,
-.desk-sidebar .standard-sidebar-item.active:focus-within {
+/* Keep selected item bg even if focused — BUT NOT FOR PARENTS */
+.desk-sidebar .standard-sidebar-item.selected:not(:has(.sidebar-item-control)):focus,
+.desk-sidebar .standard-sidebar-item.active:not(:has(.sidebar-item-control)):focus {
     background-color: var(--sidebar-active) !important;
+}
+
+/* Force Parents transparent even on focus */
+.desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control):focus,
+.desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control):focus {
+    background-color: transparent !important;
 }
 
 /* Sidebar section labels (e.g., "PUBLIC", "PRIVATE") */
