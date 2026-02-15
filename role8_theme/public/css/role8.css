@@ -446,6 +446,20 @@ input.awesomebar-input:focus,
     background-color: transparent !important;
 }
 
+/* ── Use Window Scrollbar (No inner scroll) ── */
+.layout-main-section,
+.layout-main-section-wrapper,
+.page-container {
+    height: auto !important;
+    overflow: visible !important;
+    max-height: none !important;
+}
+
+/* Specific user request for margin */
+.col.layout-main-section-wrapper {
+    margin-top: 0px !important;
+}
+
 /* Page title */
 .page-head .page-title .title-text,
 .page-title .title-text,
