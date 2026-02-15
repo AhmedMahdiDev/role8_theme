@@ -124,6 +124,18 @@ body {
     opacity: 0.7 !important;
 }
 
+/* Sub-menu dot indicator (replaces arrow icons via JS) */
+.role8-submenu-dot {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 16px !important;
+    height: 16px !important;
+}
+
 /* Sidebar hover */
 .desk-sidebar .standard-sidebar-item:hover {
     background-color: var(--sidebar-hover) !important;
