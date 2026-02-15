@@ -1,69 +1,54 @@
-frappe.ready(function () {
+// Role8 Theme JS — Auto-runs on desk load
+// Uses $(document).ready and frappe.after_ajax for desk
+
+$(document).ready(function () {
     console.log("Role8 Theme Loaded 🚀");
-    role8.init();
+
+    // Run after a short delay to let sidebar render
+    setTimeout(function () {
+        role8_fix_submenu_icons();
+    }, 500);
+
+    // Re-run on Frappe page changes (SPA)
+    $(document).on('page-change', function () {
+        setTimeout(role8_fix_submenu_icons, 500);
+    });
 });
 
-const role8 = {
-    init: function () {
-        this.inject_logo();
-        this.setup_sidebar_effects();
-        this.fix_submenu_icons();
+function role8_fix_submenu_icons() {
+    // Find all sidebar sub-item icons with arrow-left or arrow-right
+    var icons = document.querySelectorAll(
+        '.sidebar-item-icon[item-icon="arrow-left"],' +
+        '.sidebar-item-icon[item-icon="arrow-right"],' +
+        '.sidebar-item-icon[item-icon="arrow-up-right"]'
+    );
 
-        // Re-run on route change (SPA navigation)
-        frappe.router && frappe.router.on && frappe.router.on('change', () => {
-            setTimeout(() => this.fix_submenu_icons(), 300);
-        });
+    icons.forEach(function (iconSpan) {
+        // Skip if already fixed
+        if (iconSpan.getAttribute('data-role8-fixed')) return;
 
-        // Also watch for sidebar mutations (when menus expand/collapse)
-        this.observe_sidebar();
-    },
-
-    inject_logo: function () {
-        const sidebar_header = $('.layout-side-section .app-logo');
-        if (sidebar_header.length > 0) {
-            const logo_url = '/assets/role8_theme/images/role8_logo.png';
-            const logo_img = $(`<img src="${logo_url}" class="role8-logo" alt="Role8" style="max-height: 40px; width: auto;">`);
-            sidebar_header.empty().append(logo_img);
-            console.log("Role8 Logo Injected");
+        // Hide the original SVG
+        var svg = iconSpan.querySelector('svg');
+        if (svg) {
+            svg.style.display = 'none';
         }
-    },
 
-    fix_submenu_icons: function () {
-        // Find all sidebar sub-item icons with arrow-left or arrow-right
-        document.querySelectorAll('.desk-sidebar .sidebar-item-icon[item-icon="arrow-left"], .desk-sidebar .sidebar-item-icon[item-icon="arrow-right"], .layout-side-section .sidebar-item-icon[item-icon="arrow-left"], .layout-side-section .sidebar-item-icon[item-icon="arrow-right"]').forEach(function (iconSpan) {
-            // Skip if already fixed
-            if (iconSpan.dataset.role8Fixed) return;
+        // Insert a white dot/circle instead
+        var dot = document.createElement('span');
+        dot.className = 'role8-submenu-dot';
+        dot.textContent = '\u2022'; // bullet character •
+        iconSpan.appendChild(dot);
+        iconSpan.setAttribute('data-role8-fixed', 'true');
+        console.log("Role8: Fixed submenu icon for", iconSpan.getAttribute('item-icon'));
+    });
 
-            // Hide the original SVG
-            const svg = iconSpan.querySelector('svg');
-            if (svg) {
-                svg.style.display = 'none';
-            }
-
-            // Insert a white dot/circle instead
-            const dot = document.createElement('span');
-            dot.className = 'role8-submenu-dot';
-            dot.innerHTML = '•';
-            iconSpan.appendChild(dot);
-            iconSpan.dataset.role8Fixed = 'true';
+    // Also watch for sidebar mutations (menu expand/collapse)
+    var sidebar = document.querySelector('.desk-sidebar') || document.querySelector('.layout-side-section');
+    if (sidebar && !sidebar.getAttribute('data-role8-observer')) {
+        var observer = new MutationObserver(function () {
+            setTimeout(role8_fix_submenu_icons, 200);
         });
-    },
-
-    observe_sidebar: function () {
-        // Watch for DOM changes in sidebar (menu expand/collapse)
-        const sidebar = document.querySelector('.desk-sidebar') || document.querySelector('.layout-side-section');
-        if (sidebar) {
-            const observer = new MutationObserver(() => {
-                setTimeout(() => this.fix_submenu_icons(), 100);
-            });
-            observer.observe(sidebar, { childList: true, subtree: true });
-        }
-    },
-
-    setup_sidebar_effects: function () {
-        $('.sidebar-item').hover(
-            function () { $(this).addClass('role8-hover'); },
-            function () { $(this).removeClass('role8-hover'); }
-        );
+        observer.observe(sidebar, { childList: true, subtree: true });
+        sidebar.setAttribute('data-role8-observer', 'true');
     }
-};
+}
