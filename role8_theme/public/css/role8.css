@@ -280,7 +280,7 @@ body {
 
 
 
-/* ── FIX: Prevent white background on ANY child element (a, span, etc) ── */
+/* ── FIX: Prevent white background/border on ANY child element (a, span, etc) ── */
 .desk-sidebar .standard-sidebar-item *,
 .desk-sidebar .standard-sidebar-item a,
 .desk-sidebar .standard-sidebar-item span,
@@ -290,6 +290,8 @@ body {
     background-color: transparent !important;
     box-shadow: none !important;
     /* Remove any default focus rings/shadows */
+    border: none !important;
+    outline: none !important;
 }
 
 .desk-sidebar .standard-sidebar-item.selected svg,
