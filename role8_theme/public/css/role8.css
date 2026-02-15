@@ -305,6 +305,8 @@ body {
     box-shadow: none !important;
     width: 0 !important;
     /* Collapse them if they are borders */
+    content: none !important;
+    /* Nuking content just in case */
 }
 
 .desk-sidebar .standard-sidebar-item svg,
@@ -319,8 +321,13 @@ body {
     box-shadow: none !important;
 }
 
+/* CORRECTLY COLOR SELECTED ICONS (Disable the global white filter) */
 .desk-sidebar .standard-sidebar-item.selected svg,
-.desk-sidebar .standard-sidebar-item.active svg {
+.desk-sidebar .standard-sidebar-item.active svg,
+.desk-sidebar .standard-sidebar-item.selected .sidebar-item-icon svg,
+.desk-sidebar .standard-sidebar-item.active .sidebar-item-icon svg {
+    filter: none !important;
+    /* CRITICAL: Turn off the white filter */
     color: var(--accent) !important;
     fill: var(--accent) !important;
     stroke: var(--accent) !important;
