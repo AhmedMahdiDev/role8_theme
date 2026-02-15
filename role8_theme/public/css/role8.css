@@ -250,16 +250,15 @@ body {
 .desk-sidebar .standard-sidebar-item.selected:not(:has(.sidebar-item-control)),
 .desk-sidebar .standard-sidebar-item.active:not(:has(.sidebar-item-control)) {
     background-color: var(--sidebar-active) !important;
-    /* Removed border-left to fix rounded corner clash */
-    border: none !important;
-    /* Optional: Add a subtle right border or keep just bg */
+    border-left: 3px solid var(--accent) !important;
+    /* User wants the original look: Border Left + Dark BG */
 }
 
 /* Parent items (with arrow control) - USE ORANGE TINT (Same as leaf items) when selected/expanded */
 .desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control),
 .desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) {
     background-color: var(--sidebar-active) !important;
-    border: none !important;
+    border-left: 3px solid var(--accent) !important;
 }
 
 /* Ensure text is still highlighted for parent items */
@@ -326,8 +325,8 @@ body {
 .desk-sidebar .standard-sidebar-item.active svg,
 .desk-sidebar .standard-sidebar-item.selected .sidebar-item-icon svg,
 .desk-sidebar .standard-sidebar-item.active .sidebar-item-icon svg {
-    filter: none !important;
-    /* CRITICAL: Turn off the white filter */
+    /* Keeping filter ACTIVE for White Icons as per request */
+    /* filter: none !important;  <-- COMMENTED OUT to keep them white */
     color: var(--accent) !important;
     fill: var(--accent) !important;
     stroke: var(--accent) !important;
