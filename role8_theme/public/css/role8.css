@@ -77,6 +77,8 @@ body {
     padding-left: 10px !important;
     padding-right: 10px !important;
     overflow-y: auto !important;
+    display: block !important;
+    /* FORCE VISIBILITY ON ALL PAGES */
 }
 
 /* Hide default Navbar Logo/Brand */
