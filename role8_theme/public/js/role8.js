@@ -15,9 +15,20 @@ $(document).ready(function () {
         setTimeout(function () {
             role8_fix_submenu_icons();
             role8_inject_sidebar_logo();
+            role8_init_sidebar_toggle();
         }, 500);
     });
 });
+
+function role8_init_sidebar_toggle() {
+    // Attach click event to the sidebar toggle button
+    // We use 'body' delegation because the button might be re-rendered
+    $('body').off('click', '.sidebar-toggle-btn').on('click', '.sidebar-toggle-btn', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('body').toggleClass('role8-sidebar-hidden');
+    });
+}
 
 
 

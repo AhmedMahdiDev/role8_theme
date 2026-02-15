@@ -372,10 +372,37 @@ body {
     color: var(--role8-blue) !important;
 }
 
-/* Hide Sidebar Toggle Button globally (Redundant with fixed sidebar) */
+/* Hide Sidebar Toggle Button globally - REVERTED (User wants it back) */
 .sidebar-toggle-btn,
 .toggle-sidebar {
-    display: none !important;
+    display: inline-flex !important;
+    /* Restore button */
+}
+
+/* ── Toggle Logic (Controlled by JS adding 'role8-sidebar-hidden' to body) ── */
+
+/* When sidebar is HIDDEN */
+body.role8-sidebar-hidden .desk-sidebar {
+    left: -230px !important;
+    /* Slide out */
+    transition: left 0.3s ease !important;
+}
+
+/* When sidebar is VISIBLE (Default) */
+.desk-sidebar {
+    transition: left 0.3s ease !important;
+}
+
+/* Adjust Navbar when sidebar is hidden */
+body.role8-sidebar-hidden .navbar {
+    left: 0 !important;
+    width: 100% !important;
+    padding-left: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+.navbar {
+    transition: all 0.3s ease !important;
 }
 
 /* Search / Awesomebar */
