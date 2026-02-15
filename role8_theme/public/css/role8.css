@@ -416,8 +416,8 @@ body.role8-sidebar-hidden .layout-main-section-wrapper {
 .page-container,
 .layout-main-section-wrapper {
     transition: margin-left 0.3s ease !important;
-    /* Default: Sidebar is open, so push content */
-    margin-left: 230px !important;
+    /* Default: User requested 0 margin (Overlay behavior or custom layout) */
+    margin-left: 0px !important;
 }
 
 /* Search / Awesomebar */
