@@ -20,25 +20,28 @@ $(document).ready(function () {
 });
 
 function role8_inject_sidebar_logo() {
-    // Check if logo already exists
-    if ($('.role8-sidebar-logo').length > 0) return;
-
     var sidebar = $('.desk-sidebar');
     if (sidebar.length === 0) return;
 
-    // Create Logo HTML
-    // You can replace the src with your actual logo URL usually found in /assets/...
-    var logoHtml = `
-        <div class="role8-sidebar-logo" style="padding: 20px; text-align: center; margin-bottom: 10px;">
-            <a href="/app/home" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                <img src="/assets/frappe/images/frappe-framework-logo.svg" style="height: 28px; width: auto;" alt="App Logo" class="app-logo">
-                <span style="color: #fff; font-weight: 700; font-size: 18px; letter-spacing: 0.5px;">Cloud3</span>
-            </a>
-        </div>
-    `;
+    // Check if logo already exists INSIDE this specific sidebar
+    // If multiple sidebars exist (e.g. one hidden), we iterate
+    sidebar.each(function () {
+        var $thisSidebar = $(this);
+        if ($thisSidebar.find('.role8-sidebar-logo').length > 0) return;
 
-    // Prepend to sidebar
-    sidebar.prepend(logoHtml);
+        // Create Logo HTML
+        var logoHtml = `
+            <div class="role8-sidebar-logo" style="padding: 24px 20px; text-align: left; margin-bottom: 0;">
+                <a href="/app/home" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <img src="/assets/frappe/images/frappe-framework-logo.svg" style="height: 24px; width: auto;" alt="App Logo" class="app-logo">
+                    <span style="color: #fff; font-weight: 700; font-size: 18px; letter-spacing: 0.5px; line-height: 1;">Cloud3</span>
+                </a>
+            </div>
+        `;
+
+        // Prepend to sidebar
+        $thisSidebar.prepend(logoHtml);
+    });
 }
 
 function role8_fix_submenu_icons() {

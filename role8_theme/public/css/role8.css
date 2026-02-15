@@ -85,6 +85,17 @@ body {
     display: none !important;
 }
 
+/* Hide Native Sidebar Branding (if any) */
+.desk-sidebar .app-logo,
+.desk-sidebar .sidebar-header {
+    display: none !important;
+}
+
+/* Ensure OUR injected logo is visible */
+.desk-sidebar .role8-sidebar-logo .app-logo {
+    display: block !important;
+}
+
 /* Adjust Navbar to start AFTER sidebar */
 .navbar {
     left: 230px !important;
