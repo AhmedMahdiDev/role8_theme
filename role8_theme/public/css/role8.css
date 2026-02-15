@@ -161,12 +161,11 @@ body {
     border-left: 3px solid var(--accent) !important;
 }
 
-/* Parent items (with arrow control) - FORCE TRANSPARENT when selected/expanded */
+/* Parent items (with arrow control) - USE ORANGE TINT (Same as leaf items) when selected/expanded */
 .desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control),
 .desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) {
-    background-color: transparent !important;
+    background-color: var(--sidebar-active) !important;
     border-left: 3px solid var(--accent) !important;
-    /* Restored orange accent */
     /* Only text color changes */
 }
 
@@ -213,10 +212,10 @@ body {
     background-color: var(--sidebar-active) !important;
 }
 
-/* Force Parents transparent even on focus */
+/* Force Parents ORANGE TINT even on focus (was transparent) */
 .desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control):focus,
 .desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control):focus {
-    background-color: transparent !important;
+    background-color: var(--sidebar-active) !important;
 }
 
 /* Sidebar section labels (e.g., "PUBLIC", "PRIVATE") */
