@@ -110,7 +110,7 @@ body {
 /* Adjust Main Page Content to NOT be hidden by fixed sidebar/navbar */
 .page-container,
 .layout-main-section-wrapper {
-    margin-left: 0px !important;
+    margin-left: 230px !important;
     margin-top: 60px !important;
     /* To account for fixed navbar */
     padding-top: 20px !important;
@@ -413,10 +413,7 @@ input.awesomebar-input:focus,
 }
 
 /* Hide Page Head (Title & Toggle) specifically on Workspaces (Dashboard) */
-/* Hide Page Head (Title & Toggle) specifically on Workspaces (Dashboard) */
-[data-page-route^="Workspaces"] .page-head {
-    display: none !important;
-}
+/* REMOVED: User wants title back */
 
 .layout-main-section {
     background-color: transparent !important;
