@@ -250,15 +250,16 @@ body {
 .desk-sidebar .standard-sidebar-item.selected:not(:has(.sidebar-item-control)),
 .desk-sidebar .standard-sidebar-item.active:not(:has(.sidebar-item-control)) {
     background-color: var(--sidebar-active) !important;
-    border-left: 3px solid var(--accent) !important;
+    /* Removed border-left to fix rounded corner clash */
+    border: none !important;
+    /* Optional: Add a subtle right border or keep just bg */
 }
 
 /* Parent items (with arrow control) - USE ORANGE TINT (Same as leaf items) when selected/expanded */
 .desk-sidebar .standard-sidebar-item.selected:has(.sidebar-item-control),
 .desk-sidebar .standard-sidebar-item.active:has(.sidebar-item-control) {
     background-color: var(--sidebar-active) !important;
-    border-left: 3px solid var(--accent) !important;
-    /* Only text color changes */
+    border: none !important;
 }
 
 /* Ensure text is still highlighted for parent items */
@@ -292,6 +293,30 @@ body {
     /* Remove any default focus rings/shadows */
     border: none !important;
     outline: none !important;
+}
+
+/* ── FIX: Double-check pseudo-elements and SVGs ── */
+.desk-sidebar .standard-sidebar-item::before,
+.desk-sidebar .standard-sidebar-item::after,
+.desk-sidebar .standard-sidebar-item a::before,
+.desk-sidebar .standard-sidebar-item a::after {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: 0 !important;
+    /* Collapse them if they are borders */
+}
+
+.desk-sidebar .standard-sidebar-item svg,
+.desk-sidebar .standard-sidebar-item svg path,
+.desk-sidebar .standard-sidebar-item svg rect,
+.desk-sidebar .standard-sidebar-item svg circle {
+    fill: currentColor !important;
+    /* Force to use text color */
+    stroke: currentColor !important;
+    background-color: transparent !important;
+    /* Ensure no white bg on icon */
+    box-shadow: none !important;
 }
 
 .desk-sidebar .standard-sidebar-item.selected svg,
