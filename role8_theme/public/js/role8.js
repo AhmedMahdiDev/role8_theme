@@ -15,9 +15,22 @@ $(document).ready(function () {
         setTimeout(function () {
             role8_fix_submenu_icons();
             role8_inject_sidebar_logo();
+            role8_handle_page_header();
         }, 500);
     });
 });
+
+function role8_handle_page_header() {
+    // Hide the standard Page Header (Title & Sidebar Toggle) on Workspaces
+    // to match the clean "Resonate" theme look.
+    var route = frappe.get_route();
+    if (route[0] === 'Workspaces') {
+        $('.page-head').hide();
+    } else {
+        // Ensure it is shown on other pages (Lists, Forms, etc)
+        $('.page-head').show();
+    }
+}
 
 function role8_inject_sidebar_logo() {
     var sidebar = $('.desk-sidebar');
