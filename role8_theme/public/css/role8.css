@@ -101,17 +101,45 @@ body {
     text-decoration: none !important;
 }
 
-/* SVG icons inside sidebar */
+/* SVG icons inside sidebar — including sub-menu items */
 .desk-sidebar .standard-sidebar-item svg,
 .desk-sidebar .standard-sidebar-item .icon,
 .desk-sidebar svg,
 .layout-side-section svg,
-.standard-sidebar-item svg {
+.standard-sidebar-item svg,
+.desk-sidebar .sidebar-child-item svg,
+.desk-sidebar .sidebar-child-item .icon,
+.desk-sidebar [data-is-child] svg,
+.desk-sidebar .standard-sidebar-item .collapse svg,
+.desk-sidebar .standard-sidebar-item+.sidebar-child-list svg,
+.desk-sidebar .sidebar-item-control svg,
+.desk-sidebar use,
+.layout-side-section use {
     color: var(--sidebar-text) !important;
     fill: var(--sidebar-text) !important;
     stroke: var(--sidebar-text) !important;
     opacity: 0.7 !important;
     transition: all 0.2s ease !important;
+}
+
+/* Force ALL icons inside sidebar to be light — catch-all */
+.desk-sidebar .feather-icon,
+.desk-sidebar .es-icon,
+.desk-sidebar .icon-sm,
+.desk-sidebar .icon-xs,
+.layout-side-section .feather-icon,
+.layout-side-section .es-icon,
+.layout-side-section .icon-sm,
+.layout-side-section .icon-xs {
+    color: var(--sidebar-text) !important;
+}
+
+.desk-sidebar .feather-icon svg,
+.desk-sidebar .es-icon svg,
+.layout-side-section .feather-icon svg,
+.layout-side-section .es-icon svg {
+    color: var(--sidebar-text) !important;
+    stroke: var(--sidebar-text) !important;
 }
 
 /* Sidebar hover */
