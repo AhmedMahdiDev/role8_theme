@@ -101,44 +101,27 @@ body {
     text-decoration: none !important;
 }
 
-/* SVG icons inside sidebar — targeting the wrapper span .sidebar-item-icon */
-/* The SVG <use> elements inherit color via currentColor from parent */
-.desk-sidebar .sidebar-item-icon,
-.layout-side-section .sidebar-item-icon,
-.desk-sidebar .standard-sidebar-item .sidebar-item-icon {
-    color: var(--sidebar-text) !important;
-}
+/* SVG icons inside sidebar — CSS filter approach
+   SVG <use> creates shadow DOM with hardcoded fills that cannot
+   be overridden with CSS color/fill. Using filter instead. */
 
+/* Make ALL sidebar SVG icons white via CSS filter */
 .desk-sidebar .sidebar-item-icon svg,
 .desk-sidebar .sidebar-item-icon .icon,
 .layout-side-section .sidebar-item-icon svg,
-.layout-side-section .sidebar-item-icon .icon {
-    color: var(--sidebar-text) !important;
-    fill: currentColor !important;
-    stroke: currentColor !important;
+.layout-side-section .sidebar-item-icon .icon,
+.desk-sidebar svg.icon,
+.layout-side-section svg.icon {
+    filter: brightness(0) invert(1) !important;
     opacity: 0.7 !important;
     transition: all 0.2s ease !important;
 }
 
-/* Fallback: ANY svg inside sidebar */
-.desk-sidebar svg,
-.layout-side-section svg,
-.desk-sidebar .icon,
-.layout-side-section .icon {
-    color: var(--sidebar-text) !important;
-}
-
-/* Sidebar item control icons (collapse arrow, etc) */
-.desk-sidebar .sidebar-item-control,
-.layout-side-section .sidebar-item-control {
-    color: var(--sidebar-text) !important;
-}
-
+/* Sidebar item control icons (collapse arrow, caret, etc) */
 .desk-sidebar .sidebar-item-control svg,
 .layout-side-section .sidebar-item-control svg {
-    color: var(--sidebar-text) !important;
-    fill: currentColor !important;
-    stroke: currentColor !important;
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.7 !important;
 }
 
 /* Sidebar hover */
