@@ -372,6 +372,12 @@ body {
     color: var(--role8-blue) !important;
 }
 
+/* Hide Sidebar Toggle Button globally (Redundant with fixed sidebar) */
+.sidebar-toggle-btn,
+.toggle-sidebar {
+    display: none !important;
+}
+
 /* Search / Awesomebar */
 input.awesomebar-input,
 .awesomebar-input {
