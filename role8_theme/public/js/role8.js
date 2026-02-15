@@ -44,10 +44,9 @@ function role8_inject_sidebar_logo() {
 
         // Create Logo HTML
         var logoHtml = `
-            <div class="role8-sidebar-logo" style="padding: 24px 20px; text-align: left; margin-bottom: 0;">
-                <a href="/app/home" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                    <img src="/assets/frappe/images/frappe-framework-logo.svg" style="height: 24px; width: auto;" alt="App Logo" class="app-logo">
-                    <span style="color: #fff; font-weight: 700; font-size: 18px; letter-spacing: 0.5px; line-height: 1;">Cloud3</span>
+            <div class="role8-sidebar-logo" style="padding: 20px; text-align: center; margin-bottom: 0;">
+                <a href="/app/home" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                    <img src="/assets/role8_theme/images/cloud360.png" style="max-height: 45px; width: auto;" alt="Cloud360" class="app-logo">
                 </a>
             </div>
         `;
