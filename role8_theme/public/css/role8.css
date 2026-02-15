@@ -412,6 +412,11 @@ input.awesomebar-input:focus,
     background-color: var(--page-bg) !important;
 }
 
+/* Hide Page Head (Title & Toggle) specifically on Workspaces (Dashboard) */
+[data-page-route="Workspaces"] .page-head {
+    display: none !important;
+}
+
 .layout-main-section {
     background-color: transparent !important;
 }
