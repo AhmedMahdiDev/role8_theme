@@ -98,9 +98,12 @@ function role8_fix_submenu_icons() {
 
 /* ── Welcome Header — Azia-style greeting banner ── */
 function role8_inject_welcome_header() {
-    // Only show on Home workspace
+    // Only show on Home workspace (case-insensitive)
     var route = frappe.get_route();
-    if (!route || route[0] !== 'Workspaces' || (route[1] && route[1] !== 'Home' && route[1] !== 'home')) {
+    if (!route) return;
+    var r0 = (route[0] || '').toLowerCase();
+    var r1 = (route[1] || '').toLowerCase();
+    if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) {
         return;
     }
 
