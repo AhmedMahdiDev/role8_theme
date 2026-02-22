@@ -238,9 +238,11 @@ function role8_render_pnl_cards(data) {
 
     // Parse report_summary if available
     if (data.report_summary && data.report_summary.length >= 3) {
-        income = Math.abs(data.report_summary[0].value || 0);
-        expense = Math.abs(data.report_summary[1].value || 0);
-        netProfit = data.report_summary[2].value || 0;
+        income = parseFloat(data.report_summary[0].value) || 0;
+        income = Math.abs(income);
+        expense = parseFloat(data.report_summary[1].value) || 0;
+        expense = Math.abs(expense);
+        netProfit = parseFloat(data.report_summary[2].value) || 0;
     } else if (data.result) {
         // Fallback: parse rows
         data.result.forEach(function (row) {
@@ -293,30 +295,40 @@ function role8_fix_chart_bars() {
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
 
-    var shrinkFactor = 0.5; // shrink bars to 50% width for visible gaps
+    var shrink = 0.4; // shrink to 40% for big visible gaps
+    var modified = 0;
 
-    document.querySelectorAll('.widget.dashboard-widget-box .frappe-chart svg rect').forEach(function (rect) {
+    document.querySelectorAll('.dashboard-widget-box .frappe-chart rect').forEach(function (rect) {
+        // Skip if already processed
+        if (rect.getAttribute('data-r8')) return;
+
         var w = parseFloat(rect.getAttribute('width'));
+        var h = parseFloat(rect.getAttribute('height'));
         var x = parseFloat(rect.getAttribute('x'));
-        if (!w || w < 5) return; // skip tiny/non-bar rects
+        if (!w || !h || !x && x !== 0) return;
 
-        // Only process if not already processed
-        if (rect.getAttribute('data-role8-fixed')) return;
+        // Only target actual data bars — skip backgrounds, grids, legend boxes
+        // Data bars: have a color fill, reasonable width (>10), and visible height (>3)
+        var fill = (rect.getAttribute('fill') || '').toLowerCase();
+        if (!fill || fill === 'none' || fill === 'transparent' || fill === '#fff' ||
+            fill === '#ffffff' || fill === 'white' || fill.indexOf('rgba(0') === 0) return;
 
-        var newW = w * shrinkFactor;
+        if (w < 10 || h < 3) return;
+
+        // Also skip if parent is not a data group (legend rects are small)
+        var parent = rect.parentElement;
+        if (parent && parent.classList && parent.classList.contains('legend-dataset')) return;
+
+        var newW = w * shrink;
         var offset = (w - newW) / 2;
         rect.setAttribute('width', newW);
         rect.setAttribute('x', x + offset);
-        rect.setAttribute('data-role8-fixed', '1');
+        rect.setAttribute('data-r8', '1');
+        modified++;
     });
 
-    // Observe for chart re-renders
-    document.querySelectorAll('.widget.dashboard-widget-box .frappe-chart').forEach(function (chart) {
-        if (chart.getAttribute('data-role8-observer')) return;
-        var obs = new MutationObserver(function () {
-            setTimeout(role8_fix_chart_bars, 300);
-        });
-        obs.observe(chart, { childList: true, subtree: true });
-        chart.setAttribute('data-role8-observer', '1');
-    });
+    // If no bars found yet, chart may not have rendered — retry
+    if (modified === 0) {
+        setTimeout(role8_fix_chart_bars, 1000);
+    }
 }
