@@ -670,7 +670,7 @@ h1.page-title {
 }
 
 .widget.dashboard-widget-box .widget-head {
-    background: linear-gradient(135deg, #144983 0%, #1A5BA6 50%, #0F3460 100%) !important;
+    background: linear-gradient(to right, #0F3460 0%, #144983 40%, #3A7BD5 100%) !important;
     border-bottom: none !important;
     padding: 18px 22px !important;
     border-radius: 16px 16px 0 0 !important;
