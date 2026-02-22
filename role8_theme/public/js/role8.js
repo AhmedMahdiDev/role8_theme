@@ -12,9 +12,6 @@ $(document).ready(function () {
         role8_inject_finance_cards();
     }, 500);
 
-    // Fix chart bars after charts render (needs more time)
-    setTimeout(role8_fix_chart_bars, 2000);
-
     // Re-run on Frappe page changes (SPA)
     $(document).on('page-change', function () {
         setTimeout(function () {
@@ -24,7 +21,6 @@ $(document).ready(function () {
             role8_inject_welcome_header();
             role8_inject_finance_cards();
         }, 500);
-        setTimeout(role8_fix_chart_bars, 2000);
     });
 });
 
@@ -292,36 +288,4 @@ function role8_render_pnl_cards(data) {
 function role8_update_cards_error(msg) {
     $('.role8-finance-cards .role8-finance-card').removeClass('loading')
         .find('.card-value').text(msg);
-}
-
-/* ── Chart Bar Spacing — Target bars by CSS class ── */
-function role8_fix_chart_bars() {
-    var route = frappe.get_route();
-    if (!route) return;
-    var r0 = (route[0] || '').toLowerCase();
-    var r1 = (route[1] || '').toLowerCase();
-    if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
-
-    var shrink = 0.65;
-    var modified = 0;
-
-    // Target elements with class 'bar' inside chart SVGs
-    document.querySelectorAll('.dashboard-widget-box .frappe-chart rect.bar').forEach(function (rect) {
-        if (rect.getAttribute('data-r8')) return;
-
-        var w = parseFloat(rect.getAttribute('width'));
-        var x = parseFloat(rect.getAttribute('x'));
-        if (!w || w < 5) return;
-
-        var newW = w * shrink;
-        var offset = (w - newW) / 2;
-        rect.setAttribute('width', newW);
-        rect.setAttribute('x', x + offset);
-        rect.setAttribute('data-r8', '1');
-        modified++;
-    });
-
-    if (modified === 0) {
-        setTimeout(role8_fix_chart_bars, 1000);
-    }
 }
