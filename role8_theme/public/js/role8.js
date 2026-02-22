@@ -260,8 +260,9 @@ function role8_render_pnl_cards(data) {
         netProfit = income - expense;
     }
 
+    var riyalSign = (currency === 'SAR') ? '\u20C1' : currency;
     var formatNum = function (n) {
-        return '<span class="currency">' + currency + '</span>' +
+        return '<span class="currency">' + riyalSign + '</span>' +
             Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
 
