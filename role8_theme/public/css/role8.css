@@ -1772,6 +1772,10 @@ body:has(.login-content) .for-login {
     .role8-login-panel p {
         display: none !important;
     }
+
+    .role8-login-logo {
+        margin-bottom: 0px !important;
+    }
 }
 
 /* ══════════════════════════════════════════════════════
