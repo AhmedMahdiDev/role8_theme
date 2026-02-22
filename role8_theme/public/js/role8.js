@@ -336,12 +336,12 @@ function role8_inject_login_panel() {
     hide.forEach(function (h) { h.style.display = 'none'; });
 
     // Hide the page-card-head (logo + "Login to Cloud360" header)
-    var cardHead = card.querySelector('.page-card-head');
+    var cardHead = document.querySelector('.page-card-head');
     var logoSrc = '';
     if (cardHead) {
         var logoImg = cardHead.querySelector('img');
         if (logoImg) logoSrc = logoImg.src;
-        cardHead.style.display = 'none';
+        cardHead.style.setProperty('display', 'none', 'important');
     }
 
     // Inject "Sign In" heading above the form

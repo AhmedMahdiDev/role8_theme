@@ -1559,7 +1559,8 @@ body:has(.login-content) .for-login {
 }
 
 /* Hide original card header */
-.login-content .page-card-head {
+.for-login>.page-card-head,
+.page-card-head {
     display: none !important;
 }
 
