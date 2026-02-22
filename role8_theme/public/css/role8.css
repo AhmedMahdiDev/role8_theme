@@ -586,7 +586,7 @@ h1.page-title {
 .custom-block-widget-box,
 .quick-list-widget-box {
     background-color: var(--card-bg) !important;
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
     border: 1px solid #cdd4e0 !important;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -594,16 +594,16 @@ h1.page-title {
     position: relative !important;
 }
 
-/* Hover lift */
+/* Hover */
 .widget:hover {
-    box-shadow: 0 0 18px rgba(28, 39, 60, 0.10) !important;
-    transform: translateY(-2px) !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
+    transform: none !important;
 }
 
 .card,
 .frappe-card {
     background-color: var(--card-bg) !important;
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
     border: 1px solid #cdd4e0 !important;
 }
@@ -685,19 +685,17 @@ h1.page-title {
    ══════════════════════════════════════════════════════ */
 
 .widget.dashboard-widget-box {
-    border: none !important;
+    border: 1px solid #cdd4e0 !important;
     background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFF 100%) !important;
-    box-shadow:
-        0 2px 6px rgba(15, 52, 96, 0.05),
-        0 8px 24px rgba(15, 52, 96, 0.08),
-        0 16px 48px rgba(20, 73, 131, 0.06) !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
+    border-radius: 0 !important;
 }
 
 .widget.dashboard-widget-box .widget-head {
     background: linear-gradient(to right, #0F3460 0%, #144983 40%, #3A7BD5 100%) !important;
     border-bottom: none !important;
     padding: 18px 22px !important;
-    border-radius: 16px 16px 0 0 !important;
+    border-radius: 0 !important;
 }
 
 .widget.dashboard-widget-box .widget-head .widget-title {
@@ -837,10 +835,8 @@ h1.page-title {
 
 /* Shortcut hover */
 .widget.shortcut-widget-box:hover {
-    transform: translateY(-3px) scale(1.02) !important;
-    box-shadow:
-        0 6px 16px rgba(15, 52, 96, 0.10),
-        0 12px 32px rgba(15, 52, 96, 0.06) !important;
+    transform: none !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
 }
 
 .widget.shortcut-widget-box .widget-head {
@@ -1048,24 +1044,18 @@ h1.page-title {
 
 .role8-finance-card {
     background: #FFFFFF !important;
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     padding: 24px !important;
     position: relative !important;
     overflow: hidden !important;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow:
-        0 1px 3px rgba(15, 52, 96, 0.04),
-        0 4px 12px rgba(15, 52, 96, 0.06),
-        0 8px 24px rgba(15, 52, 96, 0.04) !important;
-    border: 1px solid rgba(226, 232, 240, 0.6) !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
+    border: 1px solid #cdd4e0 !important;
 }
 
 .role8-finance-card:hover {
-    transform: translateY(-4px) !important;
-    box-shadow:
-        0 4px 8px rgba(15, 52, 96, 0.06),
-        0 12px 28px rgba(15, 52, 96, 0.12),
-        0 20px 48px rgba(20, 73, 131, 0.08) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
 }
 
 /* Gradient accent stripe at top */
