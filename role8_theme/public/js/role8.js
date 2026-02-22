@@ -308,7 +308,6 @@ function role8_update_cards_error(msg) {
 
 /* ── Login Page — Welcome Back Panel ── */
 function role8_inject_login_panel() {
-    // Only on login page
     var card = document.querySelector('.login-content.page-card');
     if (!card) return;
     if (document.querySelector('.role8-login-panel')) return;
@@ -325,19 +324,43 @@ function role8_inject_login_panel() {
         el = el.parentElement;
     }
 
-    // Force body background
+    // Force body
     document.body.style.setProperty('background', '#144983', 'important');
     document.body.style.setProperty('overflow', 'hidden', 'important');
 
-    // Hide navbar/footer
+    // Hide navbar/footer/header
     var hide = document.querySelectorAll('footer, .navbar, .web-footer, .page-header');
     hide.forEach(function (h) { h.style.display = 'none'; });
 
-    // Inject branding panel
+    // Hide the page-card-head (logo + "Login to Cloud360" header)
+    var cardHead = card.querySelector('.page-card-head');
+    var logoSrc = '';
+    if (cardHead) {
+        var logoImg = cardHead.querySelector('img');
+        if (logoImg) logoSrc = logoImg.src;
+        cardHead.style.display = 'none';
+    }
+
+    // Inject "Sign In" heading above the form
+    var formBody = card.querySelector('.page-card-body');
+    if (formBody && !formBody.querySelector('.role8-signin-title')) {
+        var titleHtml = '<div class="role8-signin-title">' +
+            '<h2>Sign In</h2>' +
+            '<p>Enter your credentials to access your account</p>' +
+            '</div>';
+        formBody.insertAdjacentHTML('afterbegin', titleHtml);
+    }
+
+    // Inject branding panel with logo
     var dots = '';
     for (var i = 0; i < 15; i++) { dots += '<span></span>'; }
 
+    var logoHtml = logoSrc
+        ? '<img src="' + logoSrc + '" class="role8-login-logo" alt="Cloud360">'
+        : '';
+
     var panelHtml = '<div class="role8-login-panel">' +
+        logoHtml +
         '<h2>Your Cloud ERP<br>Solution for Growth.</h2>' +
         '<p>Manage your accounting, inventory, CRM and operations — all in one powerful platform built for modern businesses.</p>' +
         '<div class="role8-login-dots">' + dots + '</div>' +
