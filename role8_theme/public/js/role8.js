@@ -106,6 +106,8 @@ function role8_inject_welcome_header() {
     var r0 = (route[0] || '').toLowerCase();
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) {
+        // Remove if navigated away from Home
+        $('.role8-welcome-header').remove();
         return;
     }
 
@@ -147,7 +149,11 @@ function role8_inject_finance_cards() {
     if (!route) return;
     var r0 = (route[0] || '').toLowerCase();
     var r1 = (route[1] || '').toLowerCase();
-    if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
+    if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) {
+        // Remove if navigated away from Home
+        $('.role8-finance-cards').remove();
+        return;
+    }
 
     // Don't inject if already exists
     if ($('.role8-finance-cards').length > 0) return;
