@@ -9,6 +9,7 @@ $(document).ready(function () {
         role8_fix_submenu_icons();
         role8_inject_sidebar_logo();
         role8_inject_welcome_header();
+        role8_inject_finance_cards();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
@@ -18,6 +19,7 @@ $(document).ready(function () {
             role8_inject_sidebar_logo();
             role8_init_sidebar_toggle();
             role8_inject_welcome_header();
+            role8_inject_finance_cards();
         }, 500);
     });
 });
@@ -136,4 +138,143 @@ function role8_inject_welcome_header() {
             layoutMain.prepend(welcomeHtml);
         }
     }
+}
+
+/* ── Finance Summary Cards — Azia-style KPI Cards ── */
+function role8_inject_finance_cards() {
+    // Only show on Home workspace
+    var route = frappe.get_route();
+    if (!route) return;
+    var r0 = (route[0] || '').toLowerCase();
+    var r1 = (route[1] || '').toLowerCase();
+    if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
+
+    // Don't inject if already exists
+    if ($('.role8-finance-cards').length > 0) return;
+
+    // SVG icons
+    var incomeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>';
+    var expenseIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>';
+    var profitIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"></rect><line x1="2" y1="9" x2="22" y2="9"></line><line x1="12" y1="9" x2="12" y2="21"></line></svg>';
+
+    // Create loading skeleton cards first
+    var cardsHtml = '<div class="role8-finance-cards">' +
+        role8_build_card('card-income', 'TOTAL INCOME', '...', '', incomeIcon, true) +
+        role8_build_card('card-expense', 'TOTAL EXPENSES', '...', '', expenseIcon, true) +
+        role8_build_card('card-profit', 'NET PROFIT / LOSS', '...', '', profitIcon, true) +
+        '</div>';
+
+    // Insert after welcome header or before chart
+    var welcomeHeader = $('.role8-welcome-header');
+    if (welcomeHeader.length > 0) {
+        welcomeHeader.after(cardsHtml);
+    } else {
+        var chartWidget = $('.widget.dashboard-widget-box').first();
+        if (chartWidget.length > 0) {
+            chartWidget.before(cardsHtml);
+        } else {
+            var layoutMain = $('.layout-main-section');
+            if (layoutMain.length > 0) layoutMain.prepend(cardsHtml);
+        }
+    }
+
+    // Fetch actual P&L data
+    role8_fetch_pnl_data();
+}
+
+function role8_build_card(typeClass, label, value, trend, iconSvg, loading) {
+    var loadClass = loading ? ' loading' : '';
+    return '<div class="role8-finance-card ' + typeClass + loadClass + '">' +
+        '<div class="card-header-row">' +
+        '<div class="card-icon">' + iconSvg + '</div>' +
+        '<span class="card-label">' + label + '</span>' +
+        '</div>' +
+        '<div class="card-value">' + value + '</div>' +
+        '<div class="card-trend">' + trend + '</div>' +
+        '</div>';
+}
+
+function role8_fetch_pnl_data() {
+    var company = frappe.defaults.get_user_default('company');
+    if (!company) {
+        role8_update_cards_error('No company set');
+        return;
+    }
+
+    var year = new Date().getFullYear();
+
+    frappe.call({
+        method: 'frappe.desk.query_report.run',
+        args: {
+            report_name: 'Profit and Loss Statement',
+            filters: {
+                company: company,
+                period_start_date: year + '-01-01',
+                period_end_date: year + '-12-31',
+                periodicity: 'Yearly'
+            }
+        },
+        callback: function (r) {
+            if (r && r.message) {
+                role8_render_pnl_cards(r.message);
+            } else {
+                role8_update_cards_error('No data');
+            }
+        },
+        error: function () {
+            role8_update_cards_error('Error loading data');
+        }
+    });
+}
+
+function role8_render_pnl_cards(data) {
+    var income = 0, expense = 0, netProfit = 0;
+    var currency = frappe.boot.sysdefaults.currency || 'SAR';
+
+    // Parse report_summary if available
+    if (data.report_summary && data.report_summary.length >= 3) {
+        income = Math.abs(data.report_summary[0].value || 0);
+        expense = Math.abs(data.report_summary[1].value || 0);
+        netProfit = data.report_summary[2].value || 0;
+    } else if (data.result) {
+        // Fallback: parse rows
+        data.result.forEach(function (row) {
+            if (row.account_name === 'Total Income' || row.account === 'Total Income') {
+                income = Math.abs(row.total || 0);
+            }
+            if (row.account_name === 'Total Expense' || row.account === 'Total Expense') {
+                expense = Math.abs(row.total || 0);
+            }
+        });
+        netProfit = income - expense;
+    }
+
+    var formatNum = function (n) {
+        return '<span class="currency">' + currency + '</span>' +
+            Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    // Build trend HTML
+    var profitTrend = netProfit >= 0
+        ? '<div class="card-trend trend-up"><span class="trend-icon">▲</span> Profitable</div>'
+        : '<div class="card-trend trend-down"><span class="trend-icon">▼</span> Loss</div>';
+
+    // Update income card
+    var cards = $('.role8-finance-cards');
+    cards.find('.card-income').removeClass('loading')
+        .find('.card-value').html(formatNum(income)).end()
+        .find('.card-trend').html('<div class="card-trend trend-up"><span class="trend-icon">▲</span> ' + year + ' Total</div>');
+
+    cards.find('.card-expense').removeClass('loading')
+        .find('.card-value').html(formatNum(expense)).end()
+        .find('.card-trend').html('<div class="card-trend trend-down"><span class="trend-icon">▼</span> ' + year + ' Total</div>');
+
+    cards.find('.card-profit').removeClass('loading')
+        .find('.card-value').html(formatNum(netProfit)).end()
+        .find('.card-trend').html(profitTrend);
+}
+
+function role8_update_cards_error(msg) {
+    $('.role8-finance-cards .role8-finance-card').removeClass('loading')
+        .find('.card-value').text(msg);
 }

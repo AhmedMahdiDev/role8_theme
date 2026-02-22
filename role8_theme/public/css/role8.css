@@ -1008,6 +1008,210 @@ h1.page-title {
 }
 
 /* ══════════════════════════════════════════════════════
+   FINANCE SUMMARY CARDS — Azia-Style KPI Cards
+   ══════════════════════════════════════════════════════ */
+
+.role8-finance-cards {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 20px !important;
+    margin-bottom: 24px !important;
+}
+
+.role8-finance-card {
+    background: #FFFFFF !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow:
+        0 1px 3px rgba(15, 52, 96, 0.04),
+        0 4px 12px rgba(15, 52, 96, 0.06),
+        0 8px 24px rgba(15, 52, 96, 0.04) !important;
+    border: 1px solid rgba(226, 232, 240, 0.6) !important;
+}
+
+.role8-finance-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow:
+        0 4px 8px rgba(15, 52, 96, 0.06),
+        0 12px 28px rgba(15, 52, 96, 0.12),
+        0 20px 48px rgba(20, 73, 131, 0.08) !important;
+}
+
+/* Gradient accent stripe at top */
+.role8-finance-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    border-radius: 16px 16px 0 0 !important;
+}
+
+.role8-finance-card.card-income::before {
+    background: linear-gradient(90deg, #00B894, #55EFC4) !important;
+}
+
+.role8-finance-card.card-expense::before {
+    background: linear-gradient(90deg, #E17055, #FAB1A0) !important;
+}
+
+.role8-finance-card.card-profit::before {
+    background: linear-gradient(90deg, #144983, #6C5CE7) !important;
+}
+
+/* Subtle background gradient per card type */
+.role8-finance-card.card-income {
+    background: linear-gradient(145deg, #FFFFFF 0%, #F0FFF4 100%) !important;
+}
+
+.role8-finance-card.card-expense {
+    background: linear-gradient(145deg, #FFFFFF 0%, #FFF5F5 100%) !important;
+}
+
+.role8-finance-card.card-profit {
+    background: linear-gradient(145deg, #FFFFFF 0%, #F0F0FF 100%) !important;
+}
+
+/* Card header row (icon + label) */
+.role8-finance-card .card-header-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 16px !important;
+}
+
+.role8-finance-card .card-icon {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.role8-finance-card.card-income .card-icon {
+    background: linear-gradient(135deg, #00B894, #55EFC4) !important;
+    box-shadow: 0 4px 12px rgba(0, 184, 148, 0.3) !important;
+}
+
+.role8-finance-card.card-expense .card-icon {
+    background: linear-gradient(135deg, #E17055, #FAB1A0) !important;
+    box-shadow: 0 4px 12px rgba(225, 112, 85, 0.3) !important;
+}
+
+.role8-finance-card.card-profit .card-icon {
+    background: linear-gradient(135deg, #144983, #6C5CE7) !important;
+    box-shadow: 0 4px 12px rgba(20, 73, 131, 0.3) !important;
+}
+
+.role8-finance-card .card-icon svg {
+    width: 24px !important;
+    height: 24px !important;
+    color: #FFFFFF !important;
+    fill: none !important;
+    stroke: #FFFFFF !important;
+    stroke-width: 2 !important;
+    filter: none !important;
+}
+
+.role8-finance-card .card-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    color: var(--text-muted-color) !important;
+    margin: 0 !important;
+}
+
+/* Large value */
+.role8-finance-card .card-value {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    color: var(--text-dark) !important;
+    letter-spacing: -0.5px !important;
+    margin: 4px 0 8px !important;
+    font-family: 'Inter', sans-serif !important;
+    line-height: 1.2 !important;
+}
+
+.role8-finance-card .card-value .currency {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: var(--text-muted-color) !important;
+    margin-right: 4px !important;
+}
+
+/* Trend indicator */
+.role8-finance-card .card-trend {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+.role8-finance-card .card-trend.trend-up {
+    color: #00B894 !important;
+}
+
+.role8-finance-card .card-trend.trend-down {
+    color: #E17055 !important;
+}
+
+.role8-finance-card .card-trend .trend-icon {
+    width: 18px !important;
+    height: 18px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+}
+
+.role8-finance-card .card-trend.trend-up .trend-icon {
+    background: rgba(0, 184, 148, 0.15) !important;
+}
+
+.role8-finance-card .card-trend.trend-down .trend-icon {
+    background: rgba(225, 112, 85, 0.15) !important;
+}
+
+/* Mini sparkline bar chart decoration */
+.role8-finance-card .card-mini-chart {
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    width: 120px !important;
+    height: 60px !important;
+    opacity: 0.08 !important;
+    pointer-events: none !important;
+}
+
+/* Loading skeleton */
+.role8-finance-card.loading .card-value,
+.role8-finance-card.loading .card-trend {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%) !important;
+    background-size: 200% 100% !important;
+    animation: role8-shimmer 1.5s infinite !important;
+    border-radius: 4px !important;
+    color: transparent !important;
+}
+
+@keyframes role8-shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ══════════════════════════════════════════════════════
    LINKS — Blue in content area (NOT sidebar)
    ══════════════════════════════════════════════════════ */
 
