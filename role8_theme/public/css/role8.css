@@ -1480,8 +1480,20 @@ body:has(.login-content) .page-header {
 }
 
 body:has(.login-content) .page-container,
-body:has(.login-content) .container {
-    max-width: 100% !important;
+body:has(.login-content) .container,
+body:has(.login-content) main.container,
+body:has(.login-content) main {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+}
+
+body:has(.login-content) .for-login {
+    width: 100% !important;
+    height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
 }
@@ -1491,7 +1503,7 @@ body:has(.login-content) .container {
     display: flex !important;
     flex-direction: row !important;
     width: 100vw !important;
-    max-width: 100% !important;
+    max-width: 100vw !important;
     height: 100vh !important;
     margin: 0 !important;
     padding: 0 !important;
