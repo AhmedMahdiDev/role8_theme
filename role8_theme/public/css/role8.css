@@ -39,7 +39,7 @@
     --text-color: #1B2559 !important;
     --bg-color: #EDF2F9 !important;
     --fg-color: #FFFFFF !important;
-    --card-border-radius: 14px !important;
+    --card-border-radius: 0 !important;
     --border-color: #E2E8F0 !important;
     --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
@@ -800,7 +800,7 @@ h1.page-title {
 
 .widget.shortcut-widget-box {
     border-left: 4px solid var(--role8-blue) !important;
-    border-radius: 12px !important;
+    border-radius: 0 !important;
     padding: 0 !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer !important;
@@ -871,8 +871,8 @@ h1.page-title {
    ══════════════════════════════════════════════════════ */
 
 .widget.links-widget-box {
-    border-radius: 14px !important;
-    border: 1px solid var(--border-light) !important;
+    border-radius: 0 !important;
+    border: 1px solid #cdd4e0 !important;
     overflow: hidden !important;
 }
 
@@ -978,15 +978,13 @@ h1.page-title {
 
 .role8-welcome-header {
     background: linear-gradient(135deg, #144983 0%, #1A5BA6 40%, #0F3460 100%) !important;
-    border-radius: 18px !important;
+    border-radius: 0 !important;
     padding: 28px 32px !important;
     margin-bottom: 24px !important;
     color: #FFFFFF !important;
     position: relative !important;
     overflow: hidden !important;
-    box-shadow:
-        0 4px 12px rgba(20, 73, 131, 0.15),
-        0 8px 32px rgba(15, 52, 96, 0.10) !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
 }
 
 .role8-welcome-header::before {
@@ -1066,7 +1064,7 @@ h1.page-title {
     left: 0 !important;
     right: 0 !important;
     height: 4px !important;
-    border-radius: 16px 16px 0 0 !important;
+    border-radius: 0 !important;
 }
 
 .role8-finance-card.card-income::before {
@@ -1342,7 +1340,7 @@ textarea.form-control {
 .frappe-list .result,
 .frappe-list {
     background-color: var(--card-bg) !important;
-    border-radius: var(--card-radius) !important;
+    border-radius: 0 !important;
     box-shadow: var(--card-shadow) !important;
     border: 1px solid var(--border-light) !important;
     overflow: hidden !important;
@@ -1364,7 +1362,7 @@ textarea.form-control {
 .form-section,
 .section-body {
     background-color: var(--card-bg) !important;
-    border-radius: var(--card-radius) !important;
+    border-radius: 0 !important;
     box-shadow: var(--card-shadow) !important;
     border: 1px solid var(--border-light) !important;
     margin-bottom: 16px !important;
@@ -1420,7 +1418,7 @@ textarea.form-control {
    ══════════════════════════════════════════════════════ */
 
 .modal-content {
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     box-shadow: 0 16px 48px rgba(15, 52, 96, 0.15) !important;
     border: none !important;
 }
@@ -1461,7 +1459,7 @@ textarea.form-control {
    ══════════════════════════════════════════════════════ */
 
 .page-card {
-    border-radius: 16px !important;
+    border-radius: 0 !important;
     box-shadow: 0 8px 40px rgba(15, 52, 96, 0.10) !important;
     border: 1px solid var(--border-light) !important;
 }
