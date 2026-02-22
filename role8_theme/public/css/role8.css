@@ -1681,6 +1681,15 @@ body:has(.login-content) .for-login {
     color: #f37b37 !important;
 }
 
+/* Form width — desktop */
+.for-login .page-card form,
+.for-forgot .page-card form,
+.for-login-with-email-link .page-card form,
+.for-signup .page-card form,
+.for-email-login .page-card form {
+    max-width: 30% !important;
+}
+
 /* ── Mobile: stack vertically ── */
 @media (max-width: 768px) {
     .login-content.page-card {
@@ -1701,6 +1710,18 @@ body:has(.login-content) .for-login {
     .login-content.page-card .form-signin {
         flex: 1 !important;
         padding: 32px 24px !important;
+    }
+
+    .for-login .page-card form,
+    .for-forgot .page-card form,
+    .for-login-with-email-link .page-card form,
+    .for-signup .page-card form,
+    .for-email-login .page-card form {
+        max-width: 100% !important;
+    }
+
+    .role8-login-panel p {
+        display: none !important;
     }
 }
 
