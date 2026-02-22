@@ -1542,6 +1542,60 @@ textarea.form-control {
 }
 
 /* ══════════════════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ══════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+    /* Welcome header — compact */
+    .role8-welcome-header {
+        padding: 16px 20px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .role8-welcome-header h2 {
+        font-size: 16px !important;
+        margin: 0 0 4px 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .role8-welcome-header p {
+        font-size: 12px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* Hide decorative pseudo-elements on mobile */
+    .role8-welcome-header::before,
+    .role8-welcome-header::after {
+        display: none !important;
+    }
+
+    /* Finance cards — 1 per row */
+    .role8-finance-cards {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .role8-finance-card {
+        padding: 16px !important;
+    }
+
+    .role8-finance-card .card-value {
+        font-size: 22px !important;
+    }
+
+    .role8-finance-card .card-icon {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}
+
+/* ══════════════════════════════════════════════════════
    PRINT
    ══════════════════════════════════════════════════════ */
 
