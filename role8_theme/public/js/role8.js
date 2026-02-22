@@ -12,6 +12,9 @@ $(document).ready(function () {
         role8_inject_finance_cards();
     }, 500);
 
+    // Fix chart bars after charts render (needs more time)
+    setTimeout(role8_fix_chart_bars, 2000);
+
     // Re-run on Frappe page changes (SPA)
     $(document).on('page-change', function () {
         setTimeout(function () {
@@ -21,6 +24,7 @@ $(document).ready(function () {
             role8_inject_welcome_header();
             role8_inject_finance_cards();
         }, 500);
+        setTimeout(role8_fix_chart_bars, 2000);
     });
 });
 
@@ -278,4 +282,41 @@ function role8_render_pnl_cards(data) {
 function role8_update_cards_error(msg) {
     $('.role8-finance-cards .role8-finance-card').removeClass('loading')
         .find('.card-value').text(msg);
+}
+
+/* ── Chart Bar Spacing — Directly modify SVG rect widths ── */
+function role8_fix_chart_bars() {
+    // Only on Home workspace
+    var route = frappe.get_route();
+    if (!route) return;
+    var r0 = (route[0] || '').toLowerCase();
+    var r1 = (route[1] || '').toLowerCase();
+    if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
+
+    var shrinkFactor = 0.5; // shrink bars to 50% width for visible gaps
+
+    document.querySelectorAll('.widget.dashboard-widget-box .frappe-chart svg rect').forEach(function (rect) {
+        var w = parseFloat(rect.getAttribute('width'));
+        var x = parseFloat(rect.getAttribute('x'));
+        if (!w || w < 5) return; // skip tiny/non-bar rects
+
+        // Only process if not already processed
+        if (rect.getAttribute('data-role8-fixed')) return;
+
+        var newW = w * shrinkFactor;
+        var offset = (w - newW) / 2;
+        rect.setAttribute('width', newW);
+        rect.setAttribute('x', x + offset);
+        rect.setAttribute('data-role8-fixed', '1');
+    });
+
+    // Observe for chart re-renders
+    document.querySelectorAll('.widget.dashboard-widget-box .frappe-chart').forEach(function (chart) {
+        if (chart.getAttribute('data-role8-observer')) return;
+        var obs = new MutationObserver(function () {
+            setTimeout(role8_fix_chart_bars, 300);
+        });
+        obs.observe(chart, { childList: true, subtree: true });
+        chart.setAttribute('data-role8-observer', '1');
+    });
 }

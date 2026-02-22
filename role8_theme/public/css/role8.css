@@ -713,13 +713,11 @@ h1.page-title {
     background: transparent !important;
 }
 
-/* Chart bars — 3D static look with wide spacing */
+/* Chart bars — 3D static look */
 .widget.dashboard-widget-box .frappe-chart .bar rect,
 .widget.dashboard-widget-box .frappe-chart rect.bar {
     rx: 8 !important;
     ry: 8 !important;
-    transform: scaleX(0.55) !important;
-    transform-origin: center !important;
     filter:
         drop-shadow(3px 5px 6px rgba(0, 0, 0, 0.22)) drop-shadow(-1px -1px 0px rgba(255, 255, 255, 0.15)) drop-shadow(0 8px 12px rgba(0, 0, 0, 0.10)) !important;
     stroke: rgba(255, 255, 255, 0.35) !important;
