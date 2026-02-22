@@ -713,42 +713,17 @@ h1.page-title {
     background: transparent !important;
 }
 
-/* Animated bars — 3D look with spacing */
+/* Chart bars — 3D static look with wide spacing */
 .widget.dashboard-widget-box .frappe-chart .bar rect,
 .widget.dashboard-widget-box .frappe-chart rect.bar {
-    rx: 6 !important;
-    ry: 6 !important;
-    filter:
-        drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.18)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.08)) !important;
-    transform: scaleX(0.75) !important;
+    rx: 8 !important;
+    ry: 8 !important;
+    transform: scaleX(0.55) !important;
     transform-origin: center !important;
-    stroke: rgba(255, 255, 255, 0.3) !important;
-    stroke-width: 1 !important;
-    animation: role8-bar-rise 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
-    transition: filter 0.3s ease, transform 0.3s ease !important;
-}
-
-/* Hover effect on bars — pop out */
-.widget.dashboard-widget-box .frappe-chart .bar rect:hover,
-.widget.dashboard-widget-box .frappe-chart rect.bar:hover {
     filter:
-        drop-shadow(3px 6px 10px rgba(0, 0, 0, 0.25)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12)) !important;
-    transform: scaleX(0.78) scaleY(1.02) !important;
-    cursor: pointer !important;
-}
-
-@keyframes role8-bar-rise {
-    0% {
-        transform: scaleY(0);
-        transform-origin: bottom;
-        opacity: 0;
-    }
-
-    100% {
-        transform: scaleY(1);
-        transform-origin: bottom;
-        opacity: 1;
-    }
+        drop-shadow(3px 5px 6px rgba(0, 0, 0, 0.22)) drop-shadow(-1px -1px 0px rgba(255, 255, 255, 0.15)) drop-shadow(0 8px 12px rgba(0, 0, 0, 0.10)) !important;
+    stroke: rgba(255, 255, 255, 0.35) !important;
+    stroke-width: 1.5 !important;
 }
 
 /* Chart legends — pill style */
