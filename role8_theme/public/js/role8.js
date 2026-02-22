@@ -4,6 +4,13 @@
 $(document).ready(function () {
     console.log("Role8 Theme Loaded 🚀");
 
+    // Login page panel (try immediately and with delay)
+    role8_inject_login_panel();
+    setTimeout(role8_inject_login_panel, 500);
+
+    // Skip desk-only functions if not on desk
+    if (typeof frappe === 'undefined' || !frappe.get_route) return;
+
     // Run after a short delay to let sidebar render
     setTimeout(function () {
         role8_fix_submenu_icons();
@@ -11,9 +18,6 @@ $(document).ready(function () {
         role8_inject_welcome_header();
         role8_inject_finance_cards();
     }, 500);
-
-    // Login page panel
-    role8_inject_login_panel();
 
     // Re-run on Frappe page changes (SPA)
     $(document).on('page-change', function () {
