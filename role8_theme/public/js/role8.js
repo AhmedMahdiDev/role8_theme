@@ -12,6 +12,9 @@ $(document).ready(function () {
         role8_inject_finance_cards();
     }, 500);
 
+    // Login page panel
+    role8_inject_login_panel();
+
     // Re-run on Frappe page changes (SPA)
     $(document).on('page-change', function () {
         setTimeout(function () {
@@ -297,4 +300,21 @@ function role8_render_pnl_cards(data) {
 function role8_update_cards_error(msg) {
     $('.role8-finance-cards .role8-finance-card').removeClass('loading')
         .find('.card-value').text(msg);
+}
+
+/* ── Login Page — Welcome Back Panel ── */
+function role8_inject_login_panel() {
+    // Only on login page
+    if (!document.querySelector('.login-content.page-card')) return;
+    if (document.querySelector('.role8-login-panel')) return;
+
+    var panelHtml = '<div class="role8-login-panel">' +
+        '<h2>Welcome Back! 👋</h2>' +
+        '<p>Sign in to access your Cloud360 dashboard and manage your business operations.</p>' +
+        '</div>';
+
+    var card = document.querySelector('.login-content.page-card');
+    if (card) {
+        card.insertAdjacentHTML('beforeend', panelHtml);
+    }
 }
