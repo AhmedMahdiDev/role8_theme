@@ -312,9 +312,13 @@ function role8_inject_login_panel() {
     if (!document.querySelector('.login-content.page-card')) return;
     if (document.querySelector('.role8-login-panel')) return;
 
+    var dots = '';
+    for (var i = 0; i < 15; i++) { dots += '<span></span>'; }
+
     var panelHtml = '<div class="role8-login-panel">' +
-        '<h2>Welcome Back! 👋</h2>' +
-        '<p>Sign in to access your Cloud360 dashboard and manage your business operations.</p>' +
+        '<h2>Your Cloud ERP<br>Solution for Growth.</h2>' +
+        '<p>Manage your accounting, inventory, CRM and operations — all in one powerful platform built for modern businesses.</p>' +
+        '<div class="role8-login-dots">' + dots + '</div>' +
         '</div>';
 
     var card = document.querySelector('.login-content.page-card');

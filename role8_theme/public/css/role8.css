@@ -1462,52 +1462,105 @@ textarea.form-control {
 }
 
 /* ══════════════════════════════════════════════════════
-   LOGIN PAGE — Split Layout with Wave Background
+   LOGIN PAGE — Split Layout (Blue Left + White Right)
    ══════════════════════════════════════════════════════ */
 
-/* Full-page login background */
-.page-container {
-    max-width: 100% !important;
-    padding: 0 !important;
-}
-
+/* Page-level resets */
 body:has(.login-content) {
-    background: linear-gradient(135deg, #0B2948 0%, #144983 50%, #1A5BA6 100%) !important;
+    background: #144983 !important;
     min-height: 100vh !important;
+    overflow: hidden !important;
 }
 
-/* Hide unnecessary elements on login */
 body:has(.login-content) footer,
 body:has(.login-content) .navbar,
-body:has(.login-content) .web-footer {
+body:has(.login-content) .web-footer,
+body:has(.login-content) .page-header {
     display: none !important;
 }
 
-/* Login wrapper — split card */
-.login-content.page-card {
-    max-width: 900px !important;
-    width: 90% !important;
-    margin: 0 auto !important;
-    position: relative !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    display: flex !important;
-    flex-direction: row !important;
-    border-radius: 0 !important;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
-    border: none !important;
-    overflow: hidden !important;
-    background: #FFFFFF !important;
-    min-height: 480px !important;
+body:has(.login-content) .page-container,
+body:has(.login-content) .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-/* Left side — Form */
-.login-content.page-card .form-signin {
-    flex: 1 !important;
-    padding: 48px 40px !important;
+/* Main login — full-screen split */
+.login-content.page-card {
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #FFFFFF !important;
+    overflow: hidden !important;
+}
+
+/* ── LEFT PANEL — Blue branding (injected via JS) ── */
+.role8-login-panel {
+    flex: 0 0 50% !important;
+    background: #144983 !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
+    padding: 60px 56px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    color: #FFFFFF !important;
+    order: -1 !important;
+}
+
+.role8-login-panel h2 {
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    margin-bottom: 16px !important;
+    color: #FFFFFF !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.role8-login-panel p {
+    font-size: 15px !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    line-height: 1.7 !important;
+    max-width: 400px !important;
+    margin-bottom: 40px !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Dot pattern decoration */
+.role8-login-dots {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+    width: 88px !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.role8-login-dots span {
+    width: 8px !important;
+    height: 8px !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 50% !important;
+}
+
+/* ── RIGHT SIDE — Form ── */
+.login-content.page-card .form-signin {
+    flex: 0 0 50% !important;
+    padding: 60px 56px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    background: #FFFFFF !important;
 }
 
 .login-content.page-card .page-card-body {
@@ -1516,24 +1569,23 @@ body:has(.login-content) .web-footer {
 
 .login-content.page-card .page-card-actions {
     padding: 0 !important;
-    margin-top: 8px !important;
+    margin-top: 12px !important;
 }
 
-/* Input styling */
+/* Input fields */
 .login-content .form-control {
-    background: #F4F7FE !important;
-    border: 2px solid #E2E8F0 !important;
-    border-radius: 10px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #CDD4E0 !important;
+    border-radius: 6px !important;
     padding: 14px 16px !important;
     font-size: 14px !important;
     color: #1B2559 !important;
-    transition: all 0.3s ease !important;
+    transition: all 0.2s ease !important;
 }
 
 .login-content .form-control:focus {
     border-color: #144983 !important;
-    box-shadow: 0 0 0 3px rgba(20, 73, 131, 0.15) !important;
-    background: #FFFFFF !important;
+    box-shadow: 0 0 0 3px rgba(20, 73, 131, 0.12) !important;
 }
 
 .login-content .form-control::placeholder {
@@ -1542,25 +1594,26 @@ body:has(.login-content) .web-footer {
 
 /* Login button */
 .btn-login {
-    background: linear-gradient(135deg, #144983 0%, #1A5BA6 100%) !important;
+    background: #144983 !important;
     border: none !important;
-    border-radius: 10px !important;
+    border-radius: 6px !important;
     padding: 14px !important;
-    font-weight: 700 !important;
-    font-size: 16px !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
     color: #FFFFFF !important;
-    letter-spacing: 0.5px !important;
     transition: all 0.3s ease !important;
-    text-transform: uppercase !important;
 }
 
 .btn-login:hover {
-    background: linear-gradient(135deg, #0F3460 0%, #144983 100%) !important;
-    box-shadow: 0 4px 16px rgba(20, 73, 131, 0.35) !important;
-    transform: translateY(-1px) !important;
+    background: #0F3460 !important;
+    box-shadow: 0 4px 12px rgba(20, 73, 131, 0.3) !important;
 }
 
 /* Forgot password */
+.forgot-password-message {
+    text-align: right !important;
+}
+
 .forgot-password-message a {
     color: #144983 !important;
     font-size: 13px !important;
@@ -1571,86 +1624,25 @@ body:has(.login-content) .web-footer {
     color: #f37b37 !important;
 }
 
-/* Right panel — Welcome Back (injected via JS) */
-.role8-login-panel {
-    flex: 1 !important;
-    background: linear-gradient(135deg, #144983 0%, #0F3460 60%, #0B2948 100%) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 48px 32px !important;
-    position: relative !important;
-    overflow: hidden !important;
-    color: #FFFFFF !important;
-    text-align: center !important;
-}
-
-.role8-login-panel::before {
-    content: '' !important;
-    position: absolute !important;
-    top: -80px !important;
-    right: -80px !important;
-    width: 300px !important;
-    height: 300px !important;
-    background: radial-gradient(circle, rgba(243, 123, 55, 0.25) 0%, transparent 70%) !important;
-    border-radius: 50% !important;
-    pointer-events: none !important;
-}
-
-.role8-login-panel::after {
-    content: '' !important;
-    position: absolute !important;
-    bottom: -60px !important;
-    left: -40px !important;
-    width: 250px !important;
-    height: 250px !important;
-    background: radial-gradient(circle, rgba(26, 91, 166, 0.3) 0%, transparent 70%) !important;
-    border-radius: 50% !important;
-    pointer-events: none !important;
-}
-
-.role8-login-panel h2 {
-    font-size: 28px !important;
-    font-weight: 800 !important;
-    margin-bottom: 16px !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-.role8-login-panel p {
-    font-size: 14px !important;
-    opacity: 0.8 !important;
-    line-height: 1.6 !important;
-    max-width: 280px !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-.role8-login-panel .login-logo {
-    width: 120px !important;
-    margin-bottom: 24px !important;
-    position: relative !important;
-    z-index: 1 !important;
-}
-
-/* Mobile: stack vertically */
+/* ── Mobile: stack vertically ── */
 @media (max-width: 768px) {
     .login-content.page-card {
         flex-direction: column !important;
-        width: 95% !important;
-        min-height: auto !important;
-        top: auto !important;
-        transform: none !important;
-        margin-top: 20px !important;
+        height: auto !important;
+        min-height: 100vh !important;
     }
 
     .role8-login-panel {
-        padding: 32px 24px !important;
-        min-height: 180px !important;
+        flex: 0 0 auto !important;
+        padding: 36px 28px !important;
+    }
+
+    .role8-login-panel h2 {
+        font-size: 22px !important;
     }
 
     .login-content.page-card .form-signin {
+        flex: 1 !important;
         padding: 32px 24px !important;
     }
 }
