@@ -236,13 +236,21 @@ function role8_render_pnl_cards(data) {
     var currency = frappe.boot.sysdefaults.currency || 'SAR';
     var year = new Date().getFullYear();
 
-    // Parse report_summary if available
+    // Parse report_summary — skip separator entries
+    // Structure: [Income, sep, Expense, sep, Profit]
     if (data.report_summary && data.report_summary.length >= 3) {
-        income = parseFloat(data.report_summary[0].value) || 0;
-        income = Math.abs(income);
-        expense = parseFloat(data.report_summary[1].value) || 0;
-        expense = Math.abs(expense);
-        netProfit = parseFloat(data.report_summary[2].value) || 0;
+        var dataItems = data.report_summary.filter(function (item) {
+            return item.type !== 'separator' && item.datatype;
+        });
+        if (dataItems.length >= 3) {
+            income = Math.abs(parseFloat(dataItems[0].value) || 0);
+            expense = Math.abs(parseFloat(dataItems[1].value) || 0);
+            netProfit = parseFloat(dataItems[2].value) || 0;
+        } else if (dataItems.length >= 1) {
+            income = Math.abs(parseFloat(dataItems[0].value) || 0);
+            if (dataItems[1]) expense = Math.abs(parseFloat(dataItems[1].value) || 0);
+            netProfit = income - expense;
+        }
     } else if (data.result) {
         // Fallback: parse rows
         data.result.forEach(function (row) {
@@ -286,38 +294,24 @@ function role8_update_cards_error(msg) {
         .find('.card-value').text(msg);
 }
 
-/* ── Chart Bar Spacing — Directly modify SVG rect widths ── */
+/* ── Chart Bar Spacing — Target bars by CSS class ── */
 function role8_fix_chart_bars() {
-    // Only on Home workspace
     var route = frappe.get_route();
     if (!route) return;
     var r0 = (route[0] || '').toLowerCase();
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
 
-    var shrink = 0.4; // shrink to 40% for big visible gaps
+    var shrink = 0.45;
     var modified = 0;
 
-    document.querySelectorAll('.dashboard-widget-box .frappe-chart rect').forEach(function (rect) {
-        // Skip if already processed
+    // Target elements with class 'bar' inside chart SVGs
+    document.querySelectorAll('.dashboard-widget-box .frappe-chart rect.bar').forEach(function (rect) {
         if (rect.getAttribute('data-r8')) return;
 
         var w = parseFloat(rect.getAttribute('width'));
-        var h = parseFloat(rect.getAttribute('height'));
         var x = parseFloat(rect.getAttribute('x'));
-        if (!w || !h || !x && x !== 0) return;
-
-        // Only target actual data bars — skip backgrounds, grids, legend boxes
-        // Data bars: have a color fill, reasonable width (>10), and visible height (>3)
-        var fill = (rect.getAttribute('fill') || '').toLowerCase();
-        if (!fill || fill === 'none' || fill === 'transparent' || fill === '#fff' ||
-            fill === '#ffffff' || fill === 'white' || fill.indexOf('rgba(0') === 0) return;
-
-        if (w < 10 || h < 3) return;
-
-        // Also skip if parent is not a data group (legend rects are small)
-        var parent = rect.parentElement;
-        if (parent && parent.classList && parent.classList.contains('legend-dataset')) return;
+        if (!w || w < 5) return;
 
         var newW = w * shrink;
         var offset = (w - newW) / 2;
@@ -327,7 +321,6 @@ function role8_fix_chart_bars() {
         modified++;
     });
 
-    // If no bars found yet, chart may not have rendered — retry
     if (modified === 0) {
         setTimeout(role8_fix_chart_bars, 1000);
     }
