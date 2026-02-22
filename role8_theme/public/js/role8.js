@@ -309,9 +309,31 @@ function role8_update_cards_error(msg) {
 /* ── Login Page — Welcome Back Panel ── */
 function role8_inject_login_panel() {
     // Only on login page
-    if (!document.querySelector('.login-content.page-card')) return;
+    var card = document.querySelector('.login-content.page-card');
+    if (!card) return;
     if (document.querySelector('.role8-login-panel')) return;
 
+    // Force all parent containers to full-viewport
+    var el = card;
+    while (el && el !== document.documentElement) {
+        el.style.setProperty('max-width', '100vw', 'important');
+        el.style.setProperty('width', '100vw', 'important');
+        el.style.setProperty('padding', '0', 'important');
+        el.style.setProperty('margin', '0', 'important');
+        el.style.setProperty('height', '100vh', 'important');
+        el.style.setProperty('overflow', 'hidden', 'important');
+        el = el.parentElement;
+    }
+
+    // Force body background
+    document.body.style.setProperty('background', '#144983', 'important');
+    document.body.style.setProperty('overflow', 'hidden', 'important');
+
+    // Hide navbar/footer
+    var hide = document.querySelectorAll('footer, .navbar, .web-footer, .page-header');
+    hide.forEach(function (h) { h.style.display = 'none'; });
+
+    // Inject branding panel
     var dots = '';
     for (var i = 0; i < 15; i++) { dots += '<span></span>'; }
 
@@ -321,8 +343,5 @@ function role8_inject_login_panel() {
         '<div class="role8-login-dots">' + dots + '</div>' +
         '</div>';
 
-    var card = document.querySelector('.login-content.page-card');
-    if (card) {
-        card.insertAdjacentHTML('beforeend', panelHtml);
-    }
+    card.insertAdjacentHTML('beforeend', panelHtml);
 }
