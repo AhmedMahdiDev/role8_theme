@@ -1630,11 +1630,33 @@ body:has(.login-content) .for-login {
     align-items: center !important;
     position: absolute !important;
     right: 12px !important;
-    top: 50% !important;
+    top: 40% !important;
     transform: translateY(-50%) !important;
     cursor: pointer !important;
     font-size: 13px !important;
     z-index: 2 !important;
+}
+
+.for-login .page-card .page-card-body .field-icon,
+.for-forgot .page-card .page-card-body .field-icon,
+.for-login-with-email-link .page-card .page-card-body .field-icon,
+.for-signup .page-card .page-card-body .field-icon,
+.for-email-login .page-card .page-card-body .field-icon {
+    top: 16px !important;
+}
+
+.for-login .page-card .page-card-body .email-field input,
+.for-login .page-card .page-card-body .password-field input,
+.for-forgot .page-card .page-card-body .email-field input,
+.for-forgot .page-card .page-card-body .password-field input,
+.for-login-with-email-link .page-card .page-card-body .email-field input,
+.for-login-with-email-link .page-card .page-card-body .password-field input,
+.for-signup .page-card .page-card-body .email-field input,
+.for-signup .page-card .page-card-body .password-field input,
+.for-email-login .page-card .page-card-body .email-field input,
+.for-email-login .page-card .page-card-body .password-field input {
+    padding-left: 35px !important;
+    padding-right: 35px !important;
 }
 
 /* ── RIGHT SIDE — Form ── */
