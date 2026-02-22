@@ -13,3 +13,7 @@ app_license = "MIT"
 # include js, css files in header of desk.html
 app_include_css = "/assets/role8_theme/css/role8.css"
 app_include_js = "/assets/role8_theme/js/role8.js"
+
+# include js, css files in header of web template (login, website, etc.)
+web_include_css = "/assets/role8_theme/css/role8.css"
+web_include_js = "/assets/role8_theme/js/role8.js"
