@@ -302,7 +302,7 @@ function role8_fix_chart_bars() {
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) return;
 
-    var shrink = 0.45;
+    var shrink = 0.65;
     var modified = 0;
 
     // Target elements with class 'bar' inside chart SVGs

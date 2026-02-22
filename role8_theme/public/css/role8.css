@@ -684,16 +684,30 @@ h1.page-title {
 
 .widget.dashboard-widget-box .widget-head .widget-control .btn,
 .widget.dashboard-widget-box .widget-head .chart-actions .btn {
-    color: rgba(255, 255, 255, 0.8) !important;
-    background: rgba(255, 255, 255, 0.12) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #FFFFFF !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-radius: 8px !important;
     backdrop-filter: blur(4px) !important;
 }
 
 .widget.dashboard-widget-box .widget-head .widget-control .btn:hover,
 .widget.dashboard-widget-box .widget-head .chart-actions .btn:hover {
-    background: rgba(255, 255, 255, 0.25) !important;
+    background: rgba(255, 255, 255, 0.30) !important;
+    color: #FFFFFF !important;
+}
+
+/* Ensure all icons/SVGs inside chart header are white */
+.widget.dashboard-widget-box .widget-head svg,
+.widget.dashboard-widget-box .widget-head .icon,
+.widget.dashboard-widget-box .widget-head use {
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
+    fill: #FFFFFF !important;
+}
+
+.widget.dashboard-widget-box .widget-head .filter-icon,
+.widget.dashboard-widget-box .widget-head .menu-btn-group .btn {
     color: #FFFFFF !important;
 }
 
