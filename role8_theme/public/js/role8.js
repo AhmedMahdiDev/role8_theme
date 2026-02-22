@@ -230,6 +230,7 @@ function role8_fetch_pnl_data() {
 function role8_render_pnl_cards(data) {
     var income = 0, expense = 0, netProfit = 0;
     var currency = frappe.boot.sysdefaults.currency || 'SAR';
+    var year = new Date().getFullYear();
 
     // Parse report_summary if available
     if (data.report_summary && data.report_summary.length >= 3) {
