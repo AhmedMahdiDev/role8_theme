@@ -638,6 +638,45 @@ h1.page-title {
     padding: 16px 20px !important;
 }
 
+/* ── Quick Links — Clean text links, NOT cards ── */
+.shortcut-widget-box {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
+    padding: 10px 4px !important;
+    transition: none !important;
+}
+
+.shortcut-widget-box:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-left: 3px solid var(--role8-blue) !important;
+    padding-left: 12px !important;
+}
+
+.shortcut-widget-box .widget-head {
+    display: none !important;
+}
+
+.shortcut-widget-box .widget-body {
+    padding: 0 !important;
+}
+
+.shortcut-widget-box .shortcut-widget-box a,
+.shortcut-widget-box a {
+    color: var(--role8-blue) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    text-decoration: none !important;
+}
+
+.shortcut-widget-box a:hover {
+    color: var(--accent) !important;
+}
+
 /* ── Number Cards ── */
 .number-widget-box {
     border-top: 4px solid var(--role8-blue) !important;
