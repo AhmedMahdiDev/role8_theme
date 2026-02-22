@@ -8,6 +8,7 @@ $(document).ready(function () {
     setTimeout(function () {
         role8_fix_submenu_icons();
         role8_inject_sidebar_logo();
+        role8_inject_welcome_header();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
@@ -16,6 +17,7 @@ $(document).ready(function () {
             role8_fix_submenu_icons();
             role8_inject_sidebar_logo();
             role8_init_sidebar_toggle();
+            role8_inject_welcome_header();
         }, 500);
     });
 });
@@ -91,5 +93,44 @@ function role8_fix_submenu_icons() {
         });
         observer.observe(sidebar, { childList: true, subtree: true });
         sidebar.setAttribute('data-role8-observer', 'true');
+    }
+}
+
+/* ── Welcome Header — Azia-style greeting banner ── */
+function role8_inject_welcome_header() {
+    // Only show on Home workspace
+    var route = frappe.get_route();
+    if (!route || route[0] !== 'Workspaces' || (route[1] && route[1] !== 'Home' && route[1] !== 'home')) {
+        return;
+    }
+
+    // Don't inject if already exists
+    if ($('.role8-welcome-header').length > 0) return;
+
+    // Get user display name
+    var fullName = frappe.session.user_fullname || frappe.session.user || 'User';
+    var firstName = fullName.split(' ')[0];
+
+    // Get current time for greeting
+    var hour = new Date().getHours();
+    var greeting = 'Hi';
+    if (hour < 12) greeting = 'Good Morning';
+    else if (hour < 18) greeting = 'Good Afternoon';
+    else greeting = 'Good Evening';
+
+    var welcomeHtml = '<div class="role8-welcome-header">' +
+        '<h2>' + greeting + ', ' + firstName + '! 👋</h2>' +
+        '<p>Your finance performance and monitoring dashboard.</p>' +
+        '</div>';
+
+    // Find the workspace content area and prepend
+    var workspaceBody = $('.layout-main-section .codex-editor');
+    if (workspaceBody.length > 0) {
+        workspaceBody.before(welcomeHtml);
+    } else {
+        var layoutMain = $('.layout-main-section');
+        if (layoutMain.length > 0) {
+            layoutMain.prepend(welcomeHtml);
+        }
     }
 }

@@ -573,12 +573,10 @@ h1.page-title {
 }
 
 /* ══════════════════════════════════════════════════════
-   WIDGETS & CARDS — Rounded, Shadowed
-   Classes: .widget, .links-widget-box, .shortcut-widget-box,
-   .number-widget-box, .chart-widget, .onboarding-widget-box,
-   .card, .frappe-card
+   WIDGETS & CARDS — Azia-Inspired 3D Design
    ══════════════════════════════════════════════════════ */
 
+/* ── Base Widget Card ── */
 .widget,
 .links-widget-box,
 .shortcut-widget-box,
@@ -588,59 +586,425 @@ h1.page-title {
 .custom-block-widget-box,
 .quick-list-widget-box {
     background-color: var(--card-bg) !important;
-    border-radius: var(--card-radius) !important;
-    box-shadow: var(--card-shadow) !important;
-    border: 1px solid var(--border-light) !important;
-    transition: all 0.25s ease !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 1px 3px rgba(15, 52, 96, 0.04),
+        0 4px 12px rgba(15, 52, 96, 0.06),
+        0 8px 24px rgba(15, 52, 96, 0.04) !important;
+    border: 1px solid rgba(226, 232, 240, 0.6) !important;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     overflow: hidden !important;
+    position: relative !important;
 }
 
+/* Hover lift + glow */
 .widget:hover {
-    box-shadow: 0 4px 20px rgba(15, 52, 96, 0.10) !important;
-    transform: translateY(-1px);
+    box-shadow:
+        0 4px 8px rgba(15, 52, 96, 0.06),
+        0 8px 24px rgba(15, 52, 96, 0.10),
+        0 16px 40px rgba(20, 73, 131, 0.08) !important;
+    transform: translateY(-3px) !important;
 }
 
 .card,
 .frappe-card {
     background-color: var(--card-bg) !important;
-    border-radius: var(--card-radius) !important;
-    box-shadow: var(--card-shadow) !important;
-    border: 1px solid var(--border-light) !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 1px 3px rgba(15, 52, 96, 0.04),
+        0 4px 12px rgba(15, 52, 96, 0.06) !important;
+    border: 1px solid rgba(226, 232, 240, 0.6) !important;
 }
 
-/* Widget head / title */
+/* ── Widget Head ── */
 .widget-head {
     border-bottom: 1px solid var(--border-light) !important;
-    padding: 14px 18px !important;
+    padding: 16px 20px !important;
+    background: linear-gradient(135deg, rgba(244, 247, 254, 0.5), rgba(237, 242, 249, 0.3)) !important;
 }
 
 .widget-head .widget-title,
 .widget-title {
     color: var(--text-dark) !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     font-size: 15px !important;
     font-family: 'Inter', sans-serif !important;
+    letter-spacing: -0.2px !important;
+    text-transform: uppercase !important;
 }
 
-/* Widget body */
+/* ── Widget Body ── */
 .widget-body {
-    padding: 14px 18px !important;
+    padding: 16px 20px !important;
 }
 
-/* Number Cards — colored top border */
+/* ── Number Cards ── */
 .number-widget-box {
-    border-top: 3px solid var(--role8-blue) !important;
+    border-top: 4px solid var(--role8-blue) !important;
+    background: linear-gradient(180deg, rgba(20, 73, 131, 0.03) 0%, #FFFFFF 40%) !important;
 }
 
 .number-widget-box:nth-child(even) {
     border-top-color: var(--accent) !important;
+    background: linear-gradient(180deg, rgba(243, 123, 55, 0.04) 0%, #FFFFFF 40%) !important;
 }
 
-/* Chart widget */
-.widget.chart-widget,
-.frappe-chart {
-    background-color: var(--card-bg) !important;
-    border-radius: var(--card-radius) !important;
+.number-widget-box .widget-body .number {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    color: var(--text-dark) !important;
+    letter-spacing: -0.5px !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   CHART WIDGETS — 3D Animated Azia Style
+   ══════════════════════════════════════════════════════ */
+
+.widget.dashboard-widget-box {
+    border: none !important;
+    background: linear-gradient(145deg, #FFFFFF 0%, #F8FAFF 100%) !important;
+    box-shadow:
+        0 2px 6px rgba(15, 52, 96, 0.05),
+        0 8px 24px rgba(15, 52, 96, 0.08),
+        0 16px 48px rgba(20, 73, 131, 0.06) !important;
+}
+
+.widget.dashboard-widget-box .widget-head {
+    background: linear-gradient(135deg, #144983 0%, #1A5BA6 50%, #0F3460 100%) !important;
+    border-bottom: none !important;
+    padding: 18px 22px !important;
+    border-radius: 16px 16px 0 0 !important;
+}
+
+.widget.dashboard-widget-box .widget-head .widget-title {
+    color: #FFFFFF !important;
+    font-size: 16px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15) !important;
+}
+
+.widget.dashboard-widget-box .widget-head .widget-control .btn,
+.widget.dashboard-widget-box .widget-head .chart-actions .btn {
+    color: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+.widget.dashboard-widget-box .widget-head .widget-control .btn:hover,
+.widget.dashboard-widget-box .widget-head .chart-actions .btn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+    color: #FFFFFF !important;
+}
+
+/* Chart body styling */
+.widget.dashboard-widget-box .widget-body {
+    padding: 20px 22px 16px !important;
+    background: #FFFFFF !important;
+}
+
+/* Chart container — subtle 3D perspective */
+.widget.dashboard-widget-box .chart-container {
+    perspective: 800px !important;
+}
+
+/* Frappe chart SVG — gradient bars animation */
+.widget.dashboard-widget-box .frappe-chart {
+    background: transparent !important;
+}
+
+/* Animated bars — entrance animation */
+.widget.dashboard-widget-box .frappe-chart .bar rect,
+.widget.dashboard-widget-box .frappe-chart rect.bar {
+    rx: 4 !important;
+    ry: 4 !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)) !important;
+    animation: role8-bar-rise 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+}
+
+@keyframes role8-bar-rise {
+    0% {
+        transform: scaleY(0);
+        transform-origin: bottom;
+        opacity: 0;
+    }
+
+    100% {
+        transform: scaleY(1);
+        transform-origin: bottom;
+        opacity: 1;
+    }
+}
+
+/* Chart legends — pill style */
+.widget.dashboard-widget-box .chart-legend {
+    display: flex !important;
+    gap: 12px !important;
+    padding: 12px 0 4px !important;
+    justify-content: center !important;
+}
+
+.widget.dashboard-widget-box .chart-legend .legend-dataset {
+    background: rgba(244, 247, 254, 0.8) !important;
+    border-radius: 20px !important;
+    padding: 4px 12px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border: 1px solid var(--border-light) !important;
+}
+
+/* Y-axis and X-axis labels */
+.widget.dashboard-widget-box .frappe-chart .y-axis text,
+.widget.dashboard-widget-box .frappe-chart .x-axis text {
+    fill: var(--text-muted-color) !important;
+    font-size: 11px !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   QUICK LINKS / SHORTCUTS — Azia Card Grid
+   ══════════════════════════════════════════════════════ */
+
+/* Shortcut container grid */
+.widget-group[data-widget-type="shortcut"] .widget-group-body {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 14px !important;
+}
+
+.widget.shortcut-widget-box {
+    border-left: 4px solid var(--role8-blue) !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.widget.shortcut-widget-box::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(135deg, rgba(20, 73, 131, 0.03) 0%, transparent 60%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+/* Alternate shortcut colors */
+.widget.shortcut-widget-box:nth-child(2n) {
+    border-left-color: var(--accent) !important;
+}
+
+.widget.shortcut-widget-box:nth-child(3n) {
+    border-left-color: #6C5CE7 !important;
+}
+
+.widget.shortcut-widget-box:nth-child(4n) {
+    border-left-color: #00B894 !important;
+}
+
+/* Shortcut hover */
+.widget.shortcut-widget-box:hover {
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow:
+        0 6px 16px rgba(15, 52, 96, 0.10),
+        0 12px 32px rgba(15, 52, 96, 0.06) !important;
+}
+
+.widget.shortcut-widget-box .widget-head {
+    border-bottom: none !important;
+    padding: 14px 16px !important;
+    background: transparent !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.widget.shortcut-widget-box .widget-title {
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    color: var(--text-dark) !important;
+}
+
+.widget.shortcut-widget-box .widget-control .icon {
+    color: var(--text-muted-color) !important;
+    opacity: 0.6 !important;
+    transition: all 0.2s ease !important;
+}
+
+.widget.shortcut-widget-box:hover .widget-control .icon {
+    opacity: 1 !important;
+    color: var(--role8-blue) !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   REPORTS & MASTERS — Links Widget Cards
+   ══════════════════════════════════════════════════════ */
+
+.widget.links-widget-box {
+    border-radius: 14px !important;
+    border: 1px solid var(--border-light) !important;
+    overflow: hidden !important;
+}
+
+/* Links card header */
+.widget.links-widget-box .widget-head {
+    background: linear-gradient(135deg, rgba(20, 73, 131, 0.05), rgba(243, 123, 55, 0.03)) !important;
+    border-bottom: 2px solid var(--role8-blue) !important;
+    padding: 14px 18px !important;
+}
+
+.widget.links-widget-box .widget-head .widget-title {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: var(--role8-blue) !important;
+}
+
+/* Even links cards — orange accent */
+.widget.links-widget-box:nth-child(2n) .widget-head {
+    border-bottom-color: var(--accent) !important;
+}
+
+.widget.links-widget-box:nth-child(2n) .widget-head .widget-title {
+    color: var(--accent) !important;
+}
+
+/* Links body */
+.widget.links-widget-box .widget-body {
+    padding: 8px 12px !important;
+}
+
+/* Individual link items */
+.widget.links-widget-box .link-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 9px 14px !important;
+    border-radius: 8px !important;
+    margin: 2px 0 !important;
+    transition: all 0.2s ease !important;
+    position: relative !important;
+    color: var(--text-dark) !important;
+    text-decoration: none !important;
+}
+
+.widget.links-widget-box .link-item:hover {
+    background-color: rgba(20, 73, 131, 0.04) !important;
+    padding-left: 18px !important;
+}
+
+.widget.links-widget-box .link-item:hover .link-content {
+    color: var(--role8-blue) !important;
+}
+
+.widget.links-widget-box .link-item .link-content {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
+}
+
+/* External link icon */
+.widget.links-widget-box .link-item .icon-link {
+    opacity: 0 !important;
+    transition: opacity 0.2s ease !important;
+    margin-left: auto !important;
+}
+
+.widget.links-widget-box .link-item:hover .icon-link {
+    opacity: 0.6 !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   SPACER WIDGET — Subtle Divider
+   ══════════════════════════════════════════════════════ */
+
+.widget.spacer {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    min-height: 8px !important;
+    max-height: 20px !important;
+    position: relative !important;
+}
+
+.widget.spacer::after {
+    content: '' !important;
+    position: absolute !important;
+    left: 20% !important;
+    right: 20% !important;
+    top: 50% !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, var(--border), transparent) !important;
+}
+
+.widget.spacer:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ══════════════════════════════════════════════════════
+   WELCOME HEADER — Injected via JS
+   ══════════════════════════════════════════════════════ */
+
+.role8-welcome-header {
+    background: linear-gradient(135deg, #144983 0%, #1A5BA6 40%, #0F3460 100%) !important;
+    border-radius: 18px !important;
+    padding: 28px 32px !important;
+    margin-bottom: 24px !important;
+    color: #FFFFFF !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow:
+        0 4px 12px rgba(20, 73, 131, 0.15),
+        0 8px 32px rgba(15, 52, 96, 0.10) !important;
+}
+
+.role8-welcome-header::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -50px !important;
+    right: -30px !important;
+    width: 200px !important;
+    height: 200px !important;
+    background: radial-gradient(circle, rgba(243, 123, 55, 0.2) 0%, transparent 70%) !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
+}
+
+.role8-welcome-header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -40px !important;
+    left: 30% !important;
+    width: 160px !important;
+    height: 160px !important;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%) !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
+}
+
+.role8-welcome-header h2 {
+    color: #FFFFFF !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    margin: 0 0 6px 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.role8-welcome-header p {
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 14px !important;
+    margin: 0 !important;
+    font-weight: 400 !important;
+    position: relative !important;
+    z-index: 1 !important;
 }
 
 /* ══════════════════════════════════════════════════════
@@ -917,15 +1281,41 @@ textarea.form-control {
 }
 
 /* ══════════════════════════════════════════════════════
-   WORKSPACE / HOME PAGE
+   WORKSPACE / HOME PAGE — Azia-Inspired
    ══════════════════════════════════════════════════════ */
 
 .widget-group-head {
     color: var(--text-dark) !important;
-    font-weight: 700 !important;
-    font-size: 16px !important;
-    margin-bottom: 12px !important;
+    font-weight: 800 !important;
+    font-size: 17px !important;
+    margin-bottom: 16px !important;
     font-family: 'Inter', sans-serif !important;
+    letter-spacing: -0.3px !important;
+    position: relative !important;
+    padding-left: 14px !important;
+}
+
+.widget-group-head::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 2px !important;
+    bottom: 2px !important;
+    width: 4px !important;
+    background: linear-gradient(180deg, var(--role8-blue), var(--accent)) !important;
+    border-radius: 4px !important;
+}
+
+/* Section headings inside workspace (h4, etc) */
+[data-page-route="Workspaces"] .ce-header h4,
+[data-page-route="Workspaces"] .ce-header h3 {
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    color: var(--text-dark) !important;
+    letter-spacing: -0.3px !important;
+    margin-top: 8px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 2px solid var(--border-light) !important;
 }
 
 /* ══════════════════════════════════════════════════════
