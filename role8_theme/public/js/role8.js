@@ -4,9 +4,12 @@
 $(document).ready(function () {
     console.log("Role8 Theme Loaded 🚀");
 
-    // Login page panel (try immediately and with delay)
+    // Login page panel (multiple retries for async rendering)
     role8_inject_login_panel();
+    setTimeout(role8_inject_login_panel, 100);
     setTimeout(role8_inject_login_panel, 500);
+    setTimeout(role8_inject_login_panel, 1500);
+    setTimeout(role8_inject_login_panel, 3000);
 
     // Skip desk-only functions if not on desk
     if (typeof frappe === 'undefined' || !frappe.get_route) return;
