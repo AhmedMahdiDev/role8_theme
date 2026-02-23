@@ -20,6 +20,7 @@ $(document).ready(function () {
         role8_inject_sidebar_logo();
         role8_inject_welcome_header();
         role8_inject_finance_cards();
+        role8_hide_orphan_toggle();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
@@ -30,6 +31,7 @@ $(document).ready(function () {
             role8_init_sidebar_toggle();
             role8_inject_welcome_header();
             role8_inject_finance_cards();
+            role8_hide_orphan_toggle();
         }, 500);
     });
 });
@@ -44,6 +46,17 @@ function role8_init_sidebar_toggle() {
     });
 }
 
+/* ── Hide toggle button on pages without sidebar ── */
+function role8_hide_orphan_toggle() {
+    var toggle = document.querySelector('.sidebar-toggle-btn');
+    if (!toggle) return;
+    var sidebar = document.querySelector('.desk-sidebar');
+    if (sidebar) {
+        toggle.style.display = '';
+    } else {
+        toggle.style.setProperty('display', 'none', 'important');
+    }
+}
 
 
 function role8_inject_sidebar_logo() {
