@@ -56,32 +56,30 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Card styling for internal pages (list/form/report) ── */
+/* ── Card styling for internal pages (matching .role8-finance-card) ── */
 .layout-main-section {
-    border-radius: 12px !important;
-    box-shadow: rgba(28, 39, 60, 0.06) 0px 0px 10px 0px !important;
-    border: 1px solid var(--border-color) !important;
+    background: #FFFFFF !important;
+    border-radius: 0 !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
+    border: 1px solid #cdd4e0 !important;
     overflow: hidden !important;
 }
 
-/* Override .frappe-card which resets border-radius to 0 on list pages */
 .layout-main-section.frappe-card {
-    border-radius: 12px !important;
-}
-
-.form-page {
-    border-radius: 12px !important;
+    border-radius: 0 !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
+    border: 1px solid #cdd4e0 !important;
 }
 
 /* Style the comments/activity section below the form */
 .form-footer,
 .comment-box,
 .timeline {
-    background-color: var(--fg-color) !important;
-    border-radius: 12px !important;
-    box-shadow: rgba(28, 39, 60, 0.06) 0px 0px 10px 0px !important;
-    border: 1px solid var(--border-color) !important;
-    padding: 16px !important;
+    background: #FFFFFF !important;
+    border-radius: 0 !important;
+    box-shadow: 0 0 10px rgba(28, 39, 60, 0.06) !important;
+    border: 1px solid #cdd4e0 !important;
+    padding: 24px !important;
     margin-top: 16px !important;
 }
 
