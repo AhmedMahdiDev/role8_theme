@@ -54,53 +54,45 @@ function role8_persist_sidebar() {
     if (sidebar) {
         try {
             sessionStorage.setItem('role8_sidebar_html', sidebar.outerHTML);
-        } catch (e) { /* ignore storage errors */ }
+        } catch (e) { /* ignore */ }
+        document.body.classList.add('role8-has-sidebar');
         return;
     }
 
-    // If sidebar is missing (list/form pages), inject it
+    // If already injected, skip
+    if (document.querySelector('.role8-persistent-sidebar')) {
+        document.body.classList.add('role8-has-sidebar');
+        return;
+    }
+
+    // Get saved sidebar
     var savedHtml = null;
     try {
         savedHtml = sessionStorage.getItem('role8_sidebar_html');
     } catch (e) { /* ignore */ }
-
     if (!savedHtml) return;
 
-    // Don't inject on login or website pages
-    if (!document.querySelector('#body') && !document.querySelector('.page-container')) return;
+    // Don't inject on login/website pages
     if (document.querySelector('.login-content')) return;
 
-    // Check if we already injected
-    if (document.querySelector('.role8-persistent-sidebar')) return;
+    // Create a fixed sidebar container and inject into body
+    var wrapper = document.createElement('div');
+    wrapper.className = 'role8-persistent-sidebar';
+    wrapper.innerHTML = savedHtml;
+    document.body.appendChild(wrapper);
+    document.body.classList.add('role8-has-sidebar');
 
-    // Find the current active page container
-    var pageContainer = document.querySelector('.page-container');
-    if (!pageContainer) return;
+    // Re-run logo injection
+    role8_inject_sidebar_logo();
 
-    // Find the main content area — look for the visible page
-    var mainSection = pageContainer.querySelector('.layout-main-section-wrapper')
-        || pageContainer.querySelector('.layout-main-section');
-    var layoutMain = pageContainer.querySelector('.layout-main');
-
-    // Create the sidebar wrapper
-    var sidebarWrapper = document.createElement('div');
-    sidebarWrapper.className = 'col-lg-2 layout-side-section role8-persistent-sidebar';
-    sidebarWrapper.innerHTML = '<div class="list-sidebar overlay-sidebar hidden-xs hidden-sm">' + savedHtml + '</div>';
-
-    // Find the correct layout row to insert into
-    var layoutRow = layoutMain ? layoutMain.querySelector('.row') : null;
-    if (!layoutRow) {
-        // Try alternative: find the row that contains the main section
-        layoutRow = pageContainer.querySelector('.row.layout-main');
-        if (!layoutRow) layoutRow = pageContainer.querySelector('.row');
-    }
-
-    if (layoutRow) {
-        layoutRow.insertBefore(sidebarWrapper, layoutRow.firstChild);
-
-        // Re-run logo injection and toggle setup for the new sidebar
-        role8_inject_sidebar_logo();
-        role8_init_sidebar_toggle();
+    // Wire up the page's hamburger button (☰) to toggle sidebar
+    var hamburger = document.querySelector('.sidebar-toggle-btn');
+    if (hamburger) {
+        hamburger.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.body.classList.toggle('role8-sidebar-hidden');
+        });
     }
 }
 

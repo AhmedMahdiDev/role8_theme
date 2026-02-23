@@ -167,6 +167,30 @@ body {
     /* Allow fixed child to be seen */
 }
 
+/* Persistent sidebar (injected on non-workspace pages) */
+.role8-persistent-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 230px !important;
+    height: 100vh !important;
+    z-index: 1050 !important;
+    overflow: visible !important;
+}
+
+.role8-persistent-sidebar .desk-sidebar {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 230px !important;
+    height: 100vh !important;
+}
+
+/* Hide sidebar control buttons (⋯) in persistent sidebar */
+.role8-persistent-sidebar .sidebar-item-control {
+    display: none !important;
+}
+
 .standard-sidebar-section {
     background-color: var(--sidebar-bg) !important;
 }
