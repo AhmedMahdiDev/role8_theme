@@ -56,6 +56,18 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Card styling for internal pages (list/form/report) ── */
+.layout-main-section {
+    border-radius: 12px !important;
+    box-shadow: rgba(28, 39, 60, 0.06) 0px 0px 10px 0px !important;
+    border: 1px solid var(--border-color) !important;
+    overflow: hidden !important;
+}
+
+.form-page {
+    border-radius: 12px !important;
+}
+
 /* ══════════════════════════════════════════════════════
    SIDEBAR — Dark Navy (#0F3460)
    Classes: .desk-sidebar, .layout-side-section,
