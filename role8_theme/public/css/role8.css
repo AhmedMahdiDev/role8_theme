@@ -186,9 +186,20 @@ body {
     height: 100vh !important;
 }
 
-/* Hide sidebar controls (drag handles, dots menu) in persistent sidebar */
+/* Expand/collapse button in persistent sidebar */
+.role8-persistent-sidebar .role8-expand-btn {
+    transition: transform 0.2s ease !important;
+    padding: 4px !important;
+}
+
+.role8-persistent-sidebar .role8-expand-btn.expanded {
+    transform: rotate(180deg) !important;
+}
+
+/* Hide sidebar controls in persistent sidebar (keep expand btn) */
 .role8-persistent-sidebar .sidebar-item-control {
-    display: none !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
 .standard-sidebar-section {

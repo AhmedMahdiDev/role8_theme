@@ -48,51 +48,127 @@ function role8_init_sidebar_toggle() {
 
 /* ── Persist Sidebar Across All Desk Pages ── */
 function role8_persist_sidebar() {
-    var sidebar = document.querySelector('.desk-sidebar');
+    // Skip on login/website pages
+    if (document.querySelector('.login-content')) return;
+    if (typeof frappe === 'undefined' || !frappe.boot) return;
 
-    // If sidebar exists (workspace page), save its HTML
-    if (sidebar) {
-        try {
-            sessionStorage.setItem('role8_sidebar_html', sidebar.outerHTML);
-        } catch (e) { /* ignore */ }
+    // If native desk-sidebar exists (workspace page), just ensure class
+    if (document.querySelector('.desk-sidebar')) {
         document.body.classList.add('role8-has-sidebar');
         return;
     }
 
-    // Don't inject on login/website pages
-    if (document.querySelector('.login-content')) return;
-
     // If already injected, just update active state
     if (document.querySelector('.role8-persistent-sidebar')) {
-        document.body.classList.add('role8-has-sidebar');
         role8_update_sidebar_active();
         return;
     }
 
-    // Get saved sidebar
-    var savedHtml = null;
-    try {
-        savedHtml = sessionStorage.getItem('role8_sidebar_html');
-    } catch (e) { /* ignore */ }
-    if (!savedHtml) return;
+    // Build sidebar from frappe.boot.allowed_workspaces
+    var workspaces = frappe.boot.allowed_workspaces;
+    if (!workspaces || workspaces.length === 0) return;
 
-    // Create a fixed sidebar container and inject into body
+    // Separate parent and child items
+    var parents = [];
+    var childrenMap = {};
+    workspaces.forEach(function (w) {
+        if (w.parent_page) {
+            if (!childrenMap[w.parent_page]) childrenMap[w.parent_page] = [];
+            childrenMap[w.parent_page].push(w);
+        } else {
+            parents.push(w);
+        }
+    });
+
+    // Build sidebar HTML
+    var html = '<div class="desk-sidebar list-unstyled sidebar-menu">';
+
+    // Logo
+    html += '<div class="role8-sidebar-logo" style="padding: 20px; text-align: center; margin-bottom: 0;">';
+    html += '<a href="/app/home" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">';
+    html += '<img src="/assets/role8_theme/images/cloud360.png" style="max-height: 45px; width: auto;" alt="Cloud360" class="app-logo">';
+    html += '</a></div>';
+
+    // Section label
+    html += '<div class="standard-sidebar-section nested-container">';
+    html += '<button class="btn-reset standard-sidebar-label" aria-expanded="true">';
+    html += '<span class="section-title">Public</span></button>';
+
+    // Sidebar items
+    parents.forEach(function (p) {
+        var hasChildren = childrenMap[p.name] && childrenMap[p.name].length > 0;
+        var slug = p.name.toLowerCase().replace(/ /g, '-');
+        var iconName = p.icon || 'folder-normal';
+
+        html += '<div class="sidebar-item-container" item-name="' + p.name + '">';
+        html += '<div class="desk-sidebar-item standard-sidebar-item">';
+        html += '<a href="/app/' + slug + '" class="item-anchor" title="' + p.title + '">';
+        html += '<span class="sidebar-item-icon" item-icon="' + iconName + '">';
+        html += '<svg class="icon icon-md" aria-hidden="true"><use href="#icon-' + iconName + '"></use></svg>';
+        html += '</span>';
+        html += '<span class="sidebar-item-label">' + p.title + '</span>';
+        html += '</a>';
+
+        // Add expand/collapse chevron for items with children
+        if (hasChildren) {
+            html += '<div class="sidebar-item-control">';
+            html += '<button class="btn-reset drop-icon role8-expand-btn" title="Expand">';
+            html += '<svg class="es-icon es-line icon-xs" aria-hidden="true"><use href="#es-line-down"></use></svg>';
+            html += '</button></div>';
+        }
+
+        html += '</div>'; // close desk-sidebar-item
+
+        // Child items (hidden by default)
+        if (hasChildren) {
+            childrenMap[p.name].forEach(function (child) {
+                var childSlug = child.name.toLowerCase().replace(/ /g, '-');
+                var childIcon = child.icon || 'folder-normal';
+                html += '<div class="sidebar-child-item sidebar-item-container" item-name="' + child.name + '" style="display: none;">';
+                html += '<div class="desk-sidebar-item standard-sidebar-item" style="padding-left: 24px !important;">';
+                html += '<a href="/app/' + childSlug + '" class="item-anchor" title="' + child.title + '">';
+                html += '<span class="sidebar-item-icon" item-icon="' + childIcon + '">';
+                html += '<svg class="icon icon-md" aria-hidden="true"><use href="#icon-' + childIcon + '"></use></svg>';
+                html += '</span>';
+                html += '<span class="sidebar-item-label">' + child.title + '</span>';
+                html += '</a></div></div>';
+            });
+        }
+
+        html += '</div>'; // close sidebar-item-container
+    });
+
+    html += '</div>'; // close section
+    html += '</div>'; // close desk-sidebar
+
+    // Inject into body
     var wrapper = document.createElement('div');
     wrapper.className = 'role8-persistent-sidebar';
-    wrapper.innerHTML = savedHtml;
+    wrapper.innerHTML = html;
     document.body.appendChild(wrapper);
     document.body.classList.add('role8-has-sidebar');
 
-    // Re-run logo injection
-    role8_inject_sidebar_logo();
+    // Wire expand/collapse
+    var expandBtns = wrapper.querySelectorAll('.role8-expand-btn');
+    expandBtns.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var container = btn.closest('.sidebar-item-container');
+            if (!container) return;
+            var children = container.querySelectorAll('.sidebar-child-item');
+            var isOpen = btn.classList.contains('expanded');
+            if (isOpen) {
+                btn.classList.remove('expanded');
+                children.forEach(function (c) { c.style.display = 'none'; });
+            } else {
+                btn.classList.add('expanded');
+                children.forEach(function (c) { c.style.display = ''; });
+            }
+        });
+    });
 
-    // Wire up expand/collapse for sidebar items with submenus
-    role8_wire_sidebar_expand();
-
-    // Update active state based on current route
-    role8_update_sidebar_active();
-
-    // Wire up the page's hamburger button (☰) to toggle sidebar
+    // Wire hamburger toggle
     var hamburger = document.querySelector('.sidebar-toggle-btn');
     if (hamburger) {
         hamburger.addEventListener('click', function (e) {
@@ -101,47 +177,9 @@ function role8_persist_sidebar() {
             document.body.classList.toggle('role8-sidebar-hidden');
         });
     }
-}
 
-/* ── Wire expand/collapse on sidebar items ── */
-function role8_wire_sidebar_expand() {
-    var persistent = document.querySelector('.role8-persistent-sidebar');
-    if (!persistent) return;
-
-    // Find all sidebar items that have a control button (expand/collapse)
-    var controls = persistent.querySelectorAll('.sidebar-item-control');
-    controls.forEach(function (ctrl) {
-        ctrl.style.cursor = 'pointer';
-        ctrl.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            // Find the parent sidebar-item-container
-            var container = ctrl.closest('.sidebar-item-container');
-            if (!container) return;
-            // Find child items (nested items)
-            var children = container.querySelectorAll('.sidebar-child-item');
-            var isExpanded = container.classList.contains('show');
-            if (isExpanded) {
-                container.classList.remove('show');
-                children.forEach(function (c) { c.style.display = 'none'; });
-            } else {
-                container.classList.add('show');
-                children.forEach(function (c) { c.style.display = ''; });
-            }
-        });
-    });
-
-    // Also handle clicking the main item text to expand submenus
-    var itemAnchors = persistent.querySelectorAll('.desk-sidebar-item:has(.sidebar-item-control) .item-anchor');
-    itemAnchors.forEach(function (anchor) {
-        anchor.addEventListener('click', function (e) {
-            // Navigate to the workspace page
-            var href = anchor.getAttribute('href');
-            if (href) {
-                window.location.href = href;
-            }
-        });
-    });
+    // Set active state
+    role8_update_sidebar_active();
 }
 
 /* ── Update active state based on current route ── */
@@ -149,40 +187,38 @@ function role8_update_sidebar_active() {
     var persistent = document.querySelector('.role8-persistent-sidebar');
     if (!persistent) return;
 
-    // Get current path from breadcrumb or URL
-    var currentPath = window.location.pathname.replace('/app/', '');
-
-    // Get breadcrumb text for workspace matching
+    // Get breadcrumb for workspace matching
     var breadcrumb = document.querySelector('.breadcrumb-container a, .breadcrumb a');
     var workspaceName = breadcrumb ? breadcrumb.textContent.trim() : '';
 
     // Remove all selected states
-    var allItems = persistent.querySelectorAll('.desk-sidebar-item');
-    allItems.forEach(function (item) {
+    persistent.querySelectorAll('.desk-sidebar-item').forEach(function (item) {
         item.classList.remove('selected', 'active');
     });
 
-    // Try to find matching sidebar item by workspace name or href
+    // Find matching item
     var matched = false;
-    var items = persistent.querySelectorAll('.sidebar-item-container');
-    items.forEach(function (item) {
-        var anchor = item.querySelector('.item-anchor');
-        if (!anchor) return;
-        var label = item.querySelector('.sidebar-item-label');
-        var labelText = label ? label.textContent.trim() : '';
-        var href = anchor.getAttribute('href') || '';
-
-        if ((workspaceName && labelText.toLowerCase() === workspaceName.toLowerCase()) ||
-            (currentPath && href.indexOf(currentPath) !== -1)) {
+    persistent.querySelectorAll('.sidebar-item-container').forEach(function (item) {
+        var name = item.getAttribute('item-name') || '';
+        if (workspaceName && name.toLowerCase() === workspaceName.toLowerCase()) {
             var sidebarItem = item.querySelector('.desk-sidebar-item');
             if (sidebarItem) {
                 sidebarItem.classList.add('selected');
                 matched = true;
             }
+            // If it's a child, also expand the parent and highlight it
+            if (item.classList.contains('sidebar-child-item')) {
+                var parent = item.parentElement;
+                if (parent) {
+                    var children = parent.querySelectorAll('.sidebar-child-item');
+                    children.forEach(function (c) { c.style.display = ''; });
+                    var expandBtn = parent.querySelector('.role8-expand-btn');
+                    if (expandBtn) expandBtn.classList.add('expanded');
+                }
+            }
         }
     });
 
-    // If no match, default to Home
     if (!matched) {
         var homeItem = persistent.querySelector('[item-name="Home"] .desk-sidebar-item');
         if (homeItem) homeItem.classList.add('selected');
