@@ -20,6 +20,7 @@ $(document).ready(function () {
         role8_inject_sidebar_logo();
         role8_inject_welcome_header();
         role8_inject_finance_cards();
+        role8_persist_sidebar();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
@@ -30,6 +31,7 @@ $(document).ready(function () {
             role8_init_sidebar_toggle();
             role8_inject_welcome_header();
             role8_inject_finance_cards();
+            role8_persist_sidebar();
         }, 500);
     });
 });
@@ -42,6 +44,64 @@ function role8_init_sidebar_toggle() {
         e.stopPropagation();
         $('body').toggleClass('role8-sidebar-hidden');
     });
+}
+
+/* ── Persist Sidebar Across All Desk Pages ── */
+function role8_persist_sidebar() {
+    var sidebar = document.querySelector('.desk-sidebar');
+
+    // If sidebar exists (workspace page), save its HTML
+    if (sidebar) {
+        try {
+            sessionStorage.setItem('role8_sidebar_html', sidebar.outerHTML);
+        } catch (e) { /* ignore storage errors */ }
+        return;
+    }
+
+    // If sidebar is missing (list/form pages), inject it
+    var savedHtml = null;
+    try {
+        savedHtml = sessionStorage.getItem('role8_sidebar_html');
+    } catch (e) { /* ignore */ }
+
+    if (!savedHtml) return;
+
+    // Don't inject on login or website pages
+    if (!document.querySelector('#body') && !document.querySelector('.page-container')) return;
+    if (document.querySelector('.login-content')) return;
+
+    // Check if we already injected
+    if (document.querySelector('.role8-persistent-sidebar')) return;
+
+    // Find the current active page container
+    var pageContainer = document.querySelector('.page-container');
+    if (!pageContainer) return;
+
+    // Find the main content area — look for the visible page
+    var mainSection = pageContainer.querySelector('.layout-main-section-wrapper')
+        || pageContainer.querySelector('.layout-main-section');
+    var layoutMain = pageContainer.querySelector('.layout-main');
+
+    // Create the sidebar wrapper
+    var sidebarWrapper = document.createElement('div');
+    sidebarWrapper.className = 'col-lg-2 layout-side-section role8-persistent-sidebar';
+    sidebarWrapper.innerHTML = '<div class="list-sidebar overlay-sidebar hidden-xs hidden-sm">' + savedHtml + '</div>';
+
+    // Find the correct layout row to insert into
+    var layoutRow = layoutMain ? layoutMain.querySelector('.row') : null;
+    if (!layoutRow) {
+        // Try alternative: find the row that contains the main section
+        layoutRow = pageContainer.querySelector('.row.layout-main');
+        if (!layoutRow) layoutRow = pageContainer.querySelector('.row');
+    }
+
+    if (layoutRow) {
+        layoutRow.insertBefore(sidebarWrapper, layoutRow.firstChild);
+
+        // Re-run logo injection and toggle setup for the new sidebar
+        role8_inject_sidebar_logo();
+        role8_init_sidebar_toggle();
+    }
 }
 
 
