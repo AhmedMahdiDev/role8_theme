@@ -186,8 +186,12 @@ body {
     height: 100vh !important;
 }
 
-/* Hide sidebar control buttons (⋯) in persistent sidebar */
-.role8-persistent-sidebar .sidebar-item-control {
+/* Hide 3-dot menu in persistent sidebar but keep expand arrows */
+.role8-persistent-sidebar .sidebar-item-control .desk-sidebar-item-default-actions {
+    display: none !important;
+}
+
+.role8-persistent-sidebar .sidebar-item-control .sidebar-action {
     display: none !important;
 }
 

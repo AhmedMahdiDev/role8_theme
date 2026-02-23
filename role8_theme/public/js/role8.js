@@ -59,9 +59,13 @@ function role8_persist_sidebar() {
         return;
     }
 
-    // If already injected, skip
+    // Don't inject on login/website pages
+    if (document.querySelector('.login-content')) return;
+
+    // If already injected, just update active state
     if (document.querySelector('.role8-persistent-sidebar')) {
         document.body.classList.add('role8-has-sidebar');
+        role8_update_sidebar_active();
         return;
     }
 
@@ -71,9 +75,6 @@ function role8_persist_sidebar() {
         savedHtml = sessionStorage.getItem('role8_sidebar_html');
     } catch (e) { /* ignore */ }
     if (!savedHtml) return;
-
-    // Don't inject on login/website pages
-    if (document.querySelector('.login-content')) return;
 
     // Create a fixed sidebar container and inject into body
     var wrapper = document.createElement('div');
@@ -85,6 +86,12 @@ function role8_persist_sidebar() {
     // Re-run logo injection
     role8_inject_sidebar_logo();
 
+    // Wire up expand/collapse for sidebar items with submenus
+    role8_wire_sidebar_expand();
+
+    // Update active state based on current route
+    role8_update_sidebar_active();
+
     // Wire up the page's hamburger button (☰) to toggle sidebar
     var hamburger = document.querySelector('.sidebar-toggle-btn');
     if (hamburger) {
@@ -93,6 +100,92 @@ function role8_persist_sidebar() {
             e.stopPropagation();
             document.body.classList.toggle('role8-sidebar-hidden');
         });
+    }
+}
+
+/* ── Wire expand/collapse on sidebar items ── */
+function role8_wire_sidebar_expand() {
+    var persistent = document.querySelector('.role8-persistent-sidebar');
+    if (!persistent) return;
+
+    // Find all sidebar items that have a control button (expand/collapse)
+    var controls = persistent.querySelectorAll('.sidebar-item-control');
+    controls.forEach(function (ctrl) {
+        ctrl.style.cursor = 'pointer';
+        ctrl.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // Find the parent sidebar-item-container
+            var container = ctrl.closest('.sidebar-item-container');
+            if (!container) return;
+            // Find child items (nested items)
+            var children = container.querySelectorAll('.sidebar-child-item');
+            var isExpanded = container.classList.contains('show');
+            if (isExpanded) {
+                container.classList.remove('show');
+                children.forEach(function (c) { c.style.display = 'none'; });
+            } else {
+                container.classList.add('show');
+                children.forEach(function (c) { c.style.display = ''; });
+            }
+        });
+    });
+
+    // Also handle clicking the main item text to expand submenus
+    var itemAnchors = persistent.querySelectorAll('.desk-sidebar-item:has(.sidebar-item-control) .item-anchor');
+    itemAnchors.forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+            // Navigate to the workspace page
+            var href = anchor.getAttribute('href');
+            if (href) {
+                window.location.href = href;
+            }
+        });
+    });
+}
+
+/* ── Update active state based on current route ── */
+function role8_update_sidebar_active() {
+    var persistent = document.querySelector('.role8-persistent-sidebar');
+    if (!persistent) return;
+
+    // Get current path from breadcrumb or URL
+    var currentPath = window.location.pathname.replace('/app/', '');
+
+    // Get breadcrumb text for workspace matching
+    var breadcrumb = document.querySelector('.breadcrumb-container a, .breadcrumb a');
+    var workspaceName = breadcrumb ? breadcrumb.textContent.trim() : '';
+
+    // Remove all selected states
+    var allItems = persistent.querySelectorAll('.desk-sidebar-item');
+    allItems.forEach(function (item) {
+        item.classList.remove('selected', 'active');
+    });
+
+    // Try to find matching sidebar item by workspace name or href
+    var matched = false;
+    var items = persistent.querySelectorAll('.sidebar-item-container');
+    items.forEach(function (item) {
+        var anchor = item.querySelector('.item-anchor');
+        if (!anchor) return;
+        var label = item.querySelector('.sidebar-item-label');
+        var labelText = label ? label.textContent.trim() : '';
+        var href = anchor.getAttribute('href') || '';
+
+        if ((workspaceName && labelText.toLowerCase() === workspaceName.toLowerCase()) ||
+            (currentPath && href.indexOf(currentPath) !== -1)) {
+            var sidebarItem = item.querySelector('.desk-sidebar-item');
+            if (sidebarItem) {
+                sidebarItem.classList.add('selected');
+                matched = true;
+            }
+        }
+    });
+
+    // If no match, default to Home
+    if (!matched) {
+        var homeItem = persistent.querySelector('[item-name="Home"] .desk-sidebar-item');
+        if (homeItem) homeItem.classList.add('selected');
     }
 }
 
