@@ -64,8 +64,8 @@ function role8_hide_orphan_toggle() {
 function role8_inject_language_switcher() {
     if (document.querySelector('.role8-language-switcher')) return; // Already injected
 
-    // Find the right side of the navbar (where notifications/help are)
-    var rightMenu = document.querySelector('.navbar .navbar-right');
+    // Find the right side of the navbar (Frappe uses .navbar-nav for the right side items)
+    var rightMenu = document.querySelector('.navbar .navbar-nav:last-child') || document.querySelector('.navbar .navbar-nav');
     if (!rightMenu) return;
 
     // Determine current language to show the other option
@@ -82,7 +82,8 @@ function role8_inject_language_switcher() {
         </a>
     `;
 
-    // Insert before the notification bell (which is usually the first or second item depending on the search bar)
+    // Insert before the notification bell (which is usually the first dropdown item)
+
     var firstDropdown = rightMenu.querySelector('.dropdown');
     if (firstDropdown) {
         rightMenu.insertBefore(langItem, firstDropdown);
