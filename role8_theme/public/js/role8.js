@@ -65,9 +65,9 @@ function role8_inject_language_switcher() {
     if (document.querySelector('.role8-language-switcher')) return; // Already injected
 
     var checkExist = setInterval(function () {
-        // Target Frappe 15 right menu layout
-        var rightMenu = document.querySelector('.navbar-nav.justify-content-end') || document.querySelector('.navbar .navbar-right');
-        if (rightMenu) {
+        // Target the container that holds the help, notifications, and user avatar
+        var headerActions = document.querySelector('header .navbar-nav');
+        if (headerActions) {
             clearInterval(checkExist);
 
             if (document.querySelector('.role8-language-switcher')) return; // Double check
@@ -81,14 +81,22 @@ function role8_inject_language_switcher() {
 
             var langItem = document.createElement('li');
             langItem.className = 'nav-item dropdown role8-language-switcher';
+            langItem.style.display = 'flex';
+            langItem.style.alignItems = 'center';
             langItem.innerHTML = `
                 <a class="nav-link" href="#" onclick="event.preventDefault(); role8_switch_language('${targetLang}')" title="Switch Language">
                     <span style="font-weight: 600; font-size: 14px; color: var(--text-color); margin: 0 10px;">${label}</span>
                 </a>
             `;
 
-            // Insert at the beginning of the right menu
-            rightMenu.prepend(langItem);
+            // Look for the notification bell to insert before it
+            var notificationBell = headerActions.querySelector('.notifications-icon');
+            if (notificationBell && notificationBell.closest('li')) {
+                headerActions.insertBefore(langItem, notificationBell.closest('li'));
+            } else {
+                // Fallback to prepend
+                headerActions.prepend(langItem);
+            }
         }
     }, 200); // Check every 200ms
 }

@@ -156,12 +156,21 @@ body {
 }
 
 /* RTL Support - Move sidebar to Right */
+html[dir="rtl"] .desk-sidebar,
 [dir="rtl"] .desk-sidebar {
     left: auto !important;
     right: 0 !important;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1) !important;
 }
 
+[dir="rtl"] body[data-sidebar-hidden="1"] .desk-sidebar,
+html[dir="rtl"] body.role8-sidebar-hidden .desk-sidebar,
+[dir="rtl"] body.role8-sidebar-hidden .desk-sidebar {
+    right: -250px !important;
+    left: auto !important;
+}
+
+html[dir="rtl"] .navbar,
 [dir="rtl"] .navbar {
     padding-left: 0 !important;
     padding-right: 20px !important;
