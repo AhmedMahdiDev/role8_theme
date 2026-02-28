@@ -1,6 +1,6 @@
 # Role8 Theme
 
-Azia-inspired ERPNext theme using Role8 brand identity.
+ERPNext theme using Role8 brand identity.
 
 ## Installation
 
