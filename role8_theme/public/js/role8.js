@@ -64,33 +64,37 @@ function role8_hide_orphan_toggle() {
 function role8_inject_language_switcher() {
     if (document.querySelector('.role8-language-switcher')) return; // Already injected
 
-    // Find the right side of the navbar (Frappe uses .navbar-nav for the right side items)
-    var rightMenu = document.querySelector('.navbar .navbar-nav:last-child') || document.querySelector('.navbar .navbar-nav');
-    if (!rightMenu) return;
+    var checkExist = setInterval(function () {
+        var rightMenu = document.querySelector('.navbar .navbar-nav:last-child') || document.querySelector('.navbar .navbar-nav');
+        if (rightMenu) {
+            clearInterval(checkExist);
 
-    // Determine current language to show the other option (check DOM lang first as it's more reliable for RTL)
-    var currentLang = document.documentElement.lang || frappe.boot.user.language || 'en';
-    var isArabic = currentLang.toLowerCase().startsWith('ar');
+            if (document.querySelector('.role8-language-switcher')) return; // Double check
 
-    var targetLang = isArabic ? 'en' : 'ar';
-    var label = isArabic ? 'English' : 'عربي';
+            // Determine current language to show the other option (check DOM lang first as it's more reliable for RTL)
+            var currentLang = document.documentElement.lang || frappe.boot.user.language || 'en';
+            var isArabic = currentLang.toLowerCase().startsWith('ar');
 
-    var langItem = document.createElement('li');
-    langItem.className = 'nav-item dropdown role8-language-switcher';
-    langItem.innerHTML = `
-        <a class="nav-link" href="#" onclick="event.preventDefault(); role8_switch_language('${targetLang}')" title="Switch Language">
-            <span style="font-weight: 600; font-size: 14px; color: var(--text-color);">${label}</span>
-        </a>
-    `;
+            var targetLang = isArabic ? 'en' : 'ar';
+            var label = isArabic ? 'English' : 'عربي';
 
-    // Insert before the notification bell (which is usually the first dropdown item)
+            var langItem = document.createElement('li');
+            langItem.className = 'nav-item dropdown role8-language-switcher';
+            langItem.innerHTML = `
+                <a class="nav-link" href="#" onclick="event.preventDefault(); role8_switch_language('${targetLang}')" title="Switch Language">
+                    <span style="font-weight: 600; font-size: 14px; color: var(--text-color);">${label}</span>
+                </a>
+            `;
 
-    var firstDropdown = rightMenu.querySelector('.dropdown');
-    if (firstDropdown) {
-        rightMenu.insertBefore(langItem, firstDropdown);
-    } else {
-        rightMenu.prepend(langItem);
-    }
+            // Insert before the notification bell (which is usually the first dropdown item)
+            var firstDropdown = rightMenu.querySelector('.dropdown');
+            if (firstDropdown) {
+                rightMenu.insertBefore(langItem, firstDropdown);
+            } else {
+                rightMenu.prepend(langItem);
+            }
+        }
+    }, 200); // Check every 200ms
 }
 
 // Global function to trigger language change
