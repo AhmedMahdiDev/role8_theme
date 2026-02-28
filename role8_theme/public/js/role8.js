@@ -65,7 +65,8 @@ function role8_inject_language_switcher() {
     if (document.querySelector('.role8-language-switcher')) return; // Already injected
 
     var checkExist = setInterval(function () {
-        var rightMenu = document.querySelector('.navbar .navbar-nav:last-child') || document.querySelector('.navbar .navbar-nav');
+        // Target Frappe 15 right menu layout
+        var rightMenu = document.querySelector('.navbar-nav.justify-content-end') || document.querySelector('.navbar .navbar-right');
         if (rightMenu) {
             clearInterval(checkExist);
 
@@ -82,17 +83,12 @@ function role8_inject_language_switcher() {
             langItem.className = 'nav-item dropdown role8-language-switcher';
             langItem.innerHTML = `
                 <a class="nav-link" href="#" onclick="event.preventDefault(); role8_switch_language('${targetLang}')" title="Switch Language">
-                    <span style="font-weight: 600; font-size: 14px; color: var(--text-color);">${label}</span>
+                    <span style="font-weight: 600; font-size: 14px; color: var(--text-color); margin: 0 10px;">${label}</span>
                 </a>
             `;
 
-            // Insert before the notification bell (which is usually the first dropdown item)
-            var firstDropdown = rightMenu.querySelector('.dropdown');
-            if (firstDropdown) {
-                rightMenu.insertBefore(langItem, firstDropdown);
-            } else {
-                rightMenu.prepend(langItem);
-            }
+            // Insert at the beginning of the right menu
+            rightMenu.prepend(langItem);
         }
     }, 200); // Check every 200ms
 }
