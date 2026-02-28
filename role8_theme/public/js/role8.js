@@ -68,11 +68,12 @@ function role8_inject_language_switcher() {
     var rightMenu = document.querySelector('.navbar .navbar-nav:last-child') || document.querySelector('.navbar .navbar-nav');
     if (!rightMenu) return;
 
-    // Determine current language to show the other option
-    var currentLang = frappe.boot.user.language || 'en';
-    var targetLang = currentLang === 'ar' ? 'en' : 'ar';
-    var label = currentLang === 'ar' ? 'English' : 'عربي';
-    var icon = currentLang === 'ar' ? 'en' : 'ar';
+    // Determine current language to show the other option (check DOM lang first as it's more reliable for RTL)
+    var currentLang = document.documentElement.lang || frappe.boot.user.language || 'en';
+    var isArabic = currentLang.toLowerCase().startsWith('ar');
+
+    var targetLang = isArabic ? 'en' : 'ar';
+    var label = isArabic ? 'English' : 'عربي';
 
     var langItem = document.createElement('li');
     langItem.className = 'nav-item dropdown role8-language-switcher';
