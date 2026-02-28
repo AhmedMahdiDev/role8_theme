@@ -21,6 +21,7 @@ $(document).ready(function () {
         role8_inject_welcome_header();
         role8_inject_finance_cards();
         role8_hide_orphan_toggle();
+        role8_inject_language_switcher();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
@@ -32,6 +33,7 @@ $(document).ready(function () {
             role8_inject_welcome_header();
             role8_inject_finance_cards();
             role8_hide_orphan_toggle();
+            role8_inject_language_switcher();
         }, 500);
     });
 });
@@ -57,6 +59,59 @@ function role8_hide_orphan_toggle() {
         toggle.style.setProperty('display', 'none', 'important');
     }
 }
+
+/* ── Inject Language Switcher in Navbar ── */
+function role8_inject_language_switcher() {
+    if (document.querySelector('.role8-language-switcher')) return; // Already injected
+
+    // Find the right side of the navbar (where notifications/help are)
+    var rightMenu = document.querySelector('.navbar .navbar-right');
+    if (!rightMenu) return;
+
+    // Determine current language to show the other option
+    var currentLang = frappe.boot.user.language || 'en';
+    var targetLang = currentLang === 'ar' ? 'en' : 'ar';
+    var label = currentLang === 'ar' ? 'English' : 'عربي';
+    var icon = currentLang === 'ar' ? 'en' : 'ar';
+
+    var langItem = document.createElement('li');
+    langItem.className = 'nav-item dropdown role8-language-switcher';
+    langItem.innerHTML = `
+        <a class="nav-link" href="#" onclick="event.preventDefault(); role8_switch_language('${targetLang}')" title="Switch Language">
+            <span style="font-weight: 600; font-size: 14px; color: var(--text-color);">${label}</span>
+        </a>
+    `;
+
+    // Insert before the notification bell (which is usually the first or second item depending on the search bar)
+    var firstDropdown = rightMenu.querySelector('.dropdown');
+    if (firstDropdown) {
+        rightMenu.insertBefore(langItem, firstDropdown);
+    } else {
+        rightMenu.prepend(langItem);
+    }
+}
+
+// Global function to trigger language change
+window.role8_switch_language = function (lang) {
+    if (!frappe || !frappe.call) return;
+    frappe.call({
+        method: 'frappe.core.doctype.user.user.switch_theme', // We'll use a standard DB update since there isn't a direct "switch_language" endpoint exposed easily
+        // Wait, standard way is to update user profile language:
+        method: "frappe.client.set_value",
+        args: {
+            doctype: "User",
+            name: frappe.session.user,
+            fieldname: "language",
+            value: lang
+        },
+        callback: function (r) {
+            if (!r.exc) {
+                // Reload to apply language
+                window.location.reload();
+            }
+        }
+    });
+};
 
 
 function role8_inject_sidebar_logo() {
