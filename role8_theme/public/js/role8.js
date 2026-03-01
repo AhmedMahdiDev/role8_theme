@@ -330,17 +330,17 @@ function role8_inject_finance_cards() {
     var r0 = (route[0] || '').toLowerCase();
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) {
-        $('.role8-finance-cards').remove();
+        $('.role8-home-finance-cards').remove();
         return;
     }
 
-    if ($('.role8-finance-cards').length > 0) return;
+    if ($('.role8-home-finance-cards').length > 0) return;
 
     var incomeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>';
     var expenseIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>';
     var profitIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"></rect><line x1="2" y1="9" x2="22" y2="9"></line><line x1="12" y1="9" x2="12" y2="21"></line></svg>';
 
-    var cardsHtml = '<div class="role8-finance-cards">' +
+    var cardsHtml = '<div class="role8-home-finance-cards role8-finance-cards">' +
         role8_build_card('card-income', role8_t('total_income'), '...', '', incomeIcon, true) +
         role8_build_card('card-expense', role8_t('total_expenses'), '...', '', expenseIcon, true) +
         role8_build_card('card-profit', role8_t('net_profit_loss'), '...', '', profitIcon, true) +
@@ -449,7 +449,7 @@ function role8_render_pnl_cards(data) {
         ? '<div class="card-trend trend-up"><span class="trend-icon">▲</span> ' + role8_t('profitable') + '</div>'
         : '<div class="card-trend trend-down"><span class="trend-icon">▼</span> ' + role8_t('loss') + '</div>';
 
-    var cards = $('.role8-finance-cards');
+    var cards = $('.role8-home-finance-cards');
     cards.find('.card-income').removeClass('loading')
         .find('.card-value').html(formatNum(income)).end()
         .find('.card-trend').html('<div class="card-trend trend-up"><span class="trend-icon">▲</span> ' + role8_t('total') + ' ' + year + '</div>');
@@ -464,7 +464,7 @@ function role8_render_pnl_cards(data) {
 }
 
 function role8_update_cards_error(msg) {
-    $('.role8-finance-cards .role8-finance-card').removeClass('loading')
+    $('.role8-home-finance-cards .role8-finance-card').removeClass('loading')
         .find('.card-value').text(msg);
 }
 
@@ -630,7 +630,7 @@ function role8_inject_module_cards() {
     var cardsHtml = '<div class="role8-module-cards role8-finance-cards" data-module="' + moduleKey + '">';
 
     cardDefs.forEach(function (def) {
-        var iconSvg = ROLE8_ICONS[def.icon] || ROLE8_ICONS.invoice;
+        var iconSvg = ROLE8_CARD_ICONS[def.key] || ROLE8_CARD_ICONS.unpaid_invoices;
         cardsHtml += role8_build_card(def.color, role8_t(def.key), '...', '', iconSvg, true);
     });
 
