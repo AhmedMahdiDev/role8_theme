@@ -537,17 +537,17 @@ var ROLE8_MODULE_CARDS = {
         { key: 'unpaid_invoices', doctype: 'Sales Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
         { key: 'overdue_payments', doctype: 'Sales Invoice', filters: { status: 'Overdue', docstatus: 1 }, icon: 'clock', color: 'card-expense' },
         { key: 'draft_journals', doctype: 'Journal Entry', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-profit' },
-        { key: 'unpaid_suppliers', doctype: 'Purchase Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'clock', color: 'card-income' },
-        { key: 'total_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1 }, icon: 'chart', color: 'card-profit', aggregate: true },
-        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-expense' }
+        { key: 'unpaid_suppliers', doctype: 'Purchase Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'clock', color: 'card-teal' },
+        { key: 'total_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1 }, icon: 'chart', color: 'card-purple', aggregate: true },
+        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-amber' }
     ],
     'selling': [
         { key: 'open_quotations', doctype: 'Quotation', filters: { status: 'Open', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
         { key: 'active_orders', doctype: 'Sales Order', filters: { status: ['in', ['To Deliver and Bill', 'To Bill', 'To Deliver']], docstatus: 1 }, icon: 'chart', color: 'card-profit' },
         { key: 'pending_delivery', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-expense' },
-        { key: 'unpaid_invoices', doctype: 'Sales Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
-        { key: 'monthly_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1, posting_date: ['>=', ''] }, icon: 'chart', color: 'card-profit', monthly: true },
-        { key: 'overdue_payments', doctype: 'Sales Invoice', filters: { status: 'Overdue', docstatus: 1 }, icon: 'clock', color: 'card-expense' }
+        { key: 'unpaid_invoices', doctype: 'Sales Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'invoice', color: 'card-teal' },
+        { key: 'monthly_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1, posting_date: ['>=', ''] }, icon: 'chart', color: 'card-purple', monthly: true },
+        { key: 'overdue_payments', doctype: 'Sales Invoice', filters: { status: 'Overdue', docstatus: 1 }, icon: 'clock', color: 'card-amber' }
     ],
     'buying': [
         { key: 'pending_po', doctype: 'Purchase Order', filters: { status: ['in', ['To Receive and Bill', 'To Bill', 'To Receive']], docstatus: 1 }, icon: 'invoice', color: 'card-income' },
@@ -558,9 +558,9 @@ var ROLE8_MODULE_CARDS = {
         { key: 'total_items', doctype: 'Item', filters: { disabled: 0 }, icon: 'box', color: 'card-income' },
         { key: 'low_stock', doctype: 'Bin', filters: { actual_qty: ['<', 10] }, icon: 'alert', color: 'card-expense' },
         { key: 'pending_receipts', doctype: 'Purchase Receipt', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-profit' },
-        { key: 'pending_deliveries', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-income' },
-        { key: 'pending_po', doctype: 'Purchase Order', filters: { status: ['in', ['To Receive and Bill', 'To Receive']], docstatus: 1 }, icon: 'invoice', color: 'card-profit' },
-        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-expense' }
+        { key: 'pending_deliveries', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-teal' },
+        { key: 'pending_po', doctype: 'Purchase Order', filters: { status: ['in', ['To Receive and Bill', 'To Receive']], docstatus: 1 }, icon: 'invoice', color: 'card-purple' },
+        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-amber' }
     ],
     'assets': [
         { key: 'total_assets', doctype: 'Asset', filters: { docstatus: 1 }, icon: 'folder', color: 'card-income' },
