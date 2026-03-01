@@ -789,11 +789,11 @@ function role8_inject_login_panel() {
     var switchLabel = loginIsAr ? 'English' : 'العربية';
     var switchLang = loginIsAr ? 'en' : 'ar';
     var langSwitcherHtml = '<div class="role8-login-lang-switcher">' +
-        '<button onclick="(function(){' +
+        '<button type="button" onclick="event.preventDefault();event.stopPropagation();' +
         'var u=new URL(window.location.href);' +
         'u.searchParams.set(\'lang\',\'' + switchLang + '\');' +
         'window.location.href=u.toString();' +
-        '})()" class="role8-login-lang-btn">' +
+        '" class="role8-login-lang-btn">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">' +
         '<circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line>' +
         '<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>' +
