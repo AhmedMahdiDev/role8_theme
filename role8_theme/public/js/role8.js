@@ -65,8 +65,20 @@ function role8_inject_language_switcher() {
     if (document.querySelector('.role8-language-switcher')) return; // Already injected
 
     var checkExist = setInterval(function () {
-        // Target the container that holds the help, notifications, and user avatar
-        var headerActions = document.querySelector('header .navbar-nav');
+        // Find the navbar-nav that contains the notification bell
+        var headerActions = null;
+        var navs = document.querySelectorAll('header .navbar-nav');
+        navs.forEach(function (nav) {
+            if (nav.querySelector('.dropdown-notifications')) {
+                headerActions = nav;
+            }
+        });
+
+        if (!headerActions) {
+            // Fallback for older versions
+            headerActions = document.querySelector('header .navbar-nav.justify-content-end') || document.querySelector('.navbar .navbar-right');
+        }
+
         if (headerActions) {
             clearInterval(checkExist);
 
@@ -90,9 +102,9 @@ function role8_inject_language_switcher() {
             `;
 
             // Look for the notification bell to insert before it
-            var notificationBell = headerActions.querySelector('.notifications-icon');
-            if (notificationBell && notificationBell.closest('li')) {
-                headerActions.insertBefore(langItem, notificationBell.closest('li'));
+            var notificationBell = headerActions.querySelector('.dropdown-notifications');
+            if (notificationBell) {
+                headerActions.insertBefore(langItem, notificationBell);
             } else {
                 // Fallback to prepend
                 headerActions.prepend(langItem);
