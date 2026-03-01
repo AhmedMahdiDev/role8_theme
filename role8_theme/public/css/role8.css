@@ -2079,3 +2079,32 @@ body:has(.login-content) .for-login {
     height: 16px !important;
     flex-shrink: 0 !important;
 }
+
+/* ── Login page RTL overrides (Arabic) ── */
+
+[dir="rtl"] .role8-login-panel h2 {
+    text-align: right !important;
+}
+
+[dir="rtl"] .role8-login-panel p {
+    text-align: right !important;
+}
+
+[dir="rtl"] .role8-signin-title {
+    text-align: right !important;
+}
+
+[dir="rtl"] .login-content .toggle-password {
+    display: inline-block;
+    left: 12px !important;
+    right: unset !important;
+}
+
+[dir="rtl"] .for-login .page-card .page-card-body .field-icon,
+[dir="rtl"] .for-forgot .page-card .page-card-body .field-icon,
+[dir="rtl"] .for-login-with-email-link .page-card .page-card-body .field-icon,
+[dir="rtl"] .for-signup .page-card .page-card-body .field-icon,
+[dir="rtl"] .for-email-login .page-card .page-card-body .field-icon {
+    right: 9px !important;
+    left: unset !important;
+}
