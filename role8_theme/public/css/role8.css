@@ -2042,3 +2042,40 @@ body:has(.login-content) .for-login {
         display: none !important;
     }
 }
+
+/* ══════════════════════════════════════════════════════
+   Login Page Language Switcher
+   ══════════════════════════════════════════════════════ */
+
+.role8-login-lang-switcher {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-bottom: 12px !important;
+}
+
+.role8-login-lang-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: transparent !important;
+    border: 1.5px solid #144983 !important;
+    color: #144983 !important;
+    padding: 6px 16px !important;
+    border-radius: 20px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    font-family: "Bahij TheSansArabic Plain", "Inter", sans-serif !important;
+}
+
+.role8-login-lang-btn:hover {
+    background: #144983 !important;
+    color: #FFFFFF !important;
+}
+
+.role8-login-lang-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+}

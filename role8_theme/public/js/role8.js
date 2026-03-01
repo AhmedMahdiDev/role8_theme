@@ -747,9 +747,11 @@ function role8_inject_login_panel() {
     if (!card) return;
     if (document.querySelector('.role8-login-panel')) return;
 
-    // Detect browser language for login page (no frappe.boot available)
+    // Detect language: URL param > cookie > browser language
+    var urlParams = new URLSearchParams(window.location.search);
+    var langParam = urlParams.get('lang');
     var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-    var loginIsAr = browserLang.startsWith('ar');
+    var loginIsAr = langParam === 'ar' || (!langParam && browserLang.startsWith('ar'));
 
     // Force all parent containers to full-viewport
     var el = card;
@@ -766,6 +768,12 @@ function role8_inject_login_panel() {
     document.body.style.setProperty('background', '#144983', 'important');
     document.body.style.setProperty('overflow', 'hidden', 'important');
 
+    // Set RTL direction for Arabic
+    if (loginIsAr) {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+    }
+
     var hide = document.querySelectorAll('footer, .navbar, .web-footer, .page-header');
     hide.forEach(function (h) { h.style.display = 'none'; });
 
@@ -777,6 +785,21 @@ function role8_inject_login_panel() {
         cardHead.style.setProperty('display', 'none', 'important');
     }
 
+    // Language switcher button
+    var switchLabel = loginIsAr ? 'English' : 'العربية';
+    var switchLang = loginIsAr ? 'en' : 'ar';
+    var langSwitcherHtml = '<div class="role8-login-lang-switcher">' +
+        '<button onclick="(function(){' +
+        'var u=new URL(window.location.href);' +
+        'u.searchParams.set(\'lang\',\'' + switchLang + '\');' +
+        'window.location.href=u.toString();' +
+        '})()" class="role8-login-lang-btn">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">' +
+        '<circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line>' +
+        '<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>' +
+        '</svg> ' + switchLabel +
+        '</button></div>';
+
     var formBody = card.querySelector('.page-card-body');
     if (formBody && !formBody.querySelector('.role8-signin-title')) {
         var signInText = loginIsAr ? 'تسجيل الدخول' : 'Sign In';
@@ -785,7 +808,7 @@ function role8_inject_login_panel() {
             '<h2>' + signInText + '</h2>' +
             '<p>' + signInSub + '</p>' +
             '</div>';
-        formBody.insertAdjacentHTML('afterbegin', titleHtml);
+        formBody.insertAdjacentHTML('afterbegin', langSwitcherHtml + titleHtml);
     }
 
     var dots = '';
