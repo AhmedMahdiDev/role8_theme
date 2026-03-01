@@ -1,6 +1,108 @@
 // Role8 Theme JS — Auto-runs on desk load
 // Uses $(document).ready and frappe.after_ajax for desk
 
+/* ══════════════════════════════════════════════════════════
+   Translation Helper — bilingual AR / EN
+   ══════════════════════════════════════════════════════════ */
+var ROLE8_LANG = (document.documentElement.lang || 'en').toLowerCase().startsWith('ar') ? 'ar' : 'en';
+
+var ROLE8_STRINGS = {
+    // Greetings
+    'good_morning': { en: 'Good Morning', ar: 'صباح الخير' },
+    'good_afternoon': { en: 'Good Afternoon', ar: 'مساء الخير' },
+    'good_evening': { en: 'Good Evening', ar: 'مساء الخير' },
+    'dashboard_subtitle': { en: 'Your finance performance and monitoring dashboard.', ar: 'لوحة متابعة الأداء المالي الخاصة بك.' },
+
+    // Finance cards
+    'total_income': { en: 'TOTAL INCOME', ar: 'إجمالي الإيرادات' },
+    'total_expenses': { en: 'TOTAL EXPENSES', ar: 'إجمالي المصروفات' },
+    'net_profit_loss': { en: 'NET PROFIT / LOSS', ar: 'صافي الربح / الخسارة' },
+    'profitable': { en: 'Profitable', ar: 'مربح' },
+    'loss': { en: 'Loss', ar: 'خسارة' },
+    'total': { en: 'Total', ar: 'الإجمالي' },
+    'no_company': { en: 'No company set', ar: 'لم يتم تحديد شركة' },
+    'no_data': { en: 'No data', ar: 'لا توجد بيانات' },
+    'error_loading': { en: 'Error loading data', ar: 'خطأ في تحميل البيانات' },
+
+    // Login
+    'sign_in': { en: 'Sign In', ar: 'تسجيل الدخول' },
+    'sign_in_subtitle': { en: 'Enter your credentials to access your account', ar: 'أدخل بياناتك للوصول إلى حسابك' },
+    'erp_headline': { en: 'Your Cloud ERP<br>Solution for Growth.', ar: 'حلول ERP السحابية<br>لنمو أعمالك.' },
+    'erp_subtitle': { en: 'Manage your accounting, inventory, CRM and operations — all in one powerful platform built for modern businesses.', ar: 'إدارة المحاسبة والمخزون وعلاقات العملاء والعمليات — الكل في منصة واحدة قوية مصممة للأعمال الحديثة.' },
+
+    // Module card labels
+    'unpaid_invoices': { en: 'Unpaid Invoices', ar: 'فواتير غير مدفوعة' },
+    'overdue_payments': { en: 'Overdue Payments', ar: 'مدفوعات متأخرة' },
+    'total_revenue': { en: 'Total Revenue', ar: 'إجمالي الإيرادات' },
+    'draft_journals': { en: 'Draft Journals', ar: 'قيود مسودة' },
+
+    'open_quotations': { en: 'Open Quotations', ar: 'عروض أسعار مفتوحة' },
+    'active_orders': { en: 'Active Sales Orders', ar: 'أوامر بيع نشطة' },
+    'pending_delivery': { en: 'Pending Deliveries', ar: 'تسليمات معلقة' },
+    'monthly_revenue': { en: 'Monthly Revenue', ar: 'إيرادات الشهر' },
+
+    'pending_po': { en: 'Pending POs', ar: 'أوامر شراء معلقة' },
+    'unpaid_suppliers': { en: 'Unpaid Suppliers', ar: 'موردون غير مدفوعين' },
+    'items_to_receive': { en: 'Items to Receive', ar: 'أصناف للاستلام' },
+    'purchase_returns': { en: 'Purchase Returns', ar: 'مرتجعات المشتريات' },
+
+    'total_items': { en: 'Total Items', ar: 'إجمالي الأصناف' },
+    'low_stock': { en: 'Low Stock Items', ar: 'أصناف منخفضة المخزون' },
+    'pending_receipts': { en: 'Pending Receipts', ar: 'إيصالات معلقة' },
+    'pending_deliveries': { en: 'Pending Deliveries', ar: 'تسليمات معلقة' },
+
+    'total_assets': { en: 'Total Assets', ar: 'إجمالي الأصول' },
+    'depreciating': { en: 'Depreciating', ar: 'قيد الإهلاك' },
+    'fully_depreciated': { en: 'Fully Depreciated', ar: 'مُهلكة بالكامل' },
+    'pending_repairs': { en: 'Pending Repairs', ar: 'صيانة معلقة' },
+
+    'open_inspections': { en: 'Open Inspections', ar: 'فحوصات مفتوحة' },
+    'non_conformance': { en: 'Non-Conformances', ar: 'عدم مطابقة' },
+    'actions_open': { en: 'Actions Open', ar: 'إجراءات مفتوحة' },
+    'reviews_pending': { en: 'Reviews Pending', ar: 'مراجعات معلقة' },
+
+    'active_projects': { en: 'Active Projects', ar: 'مشاريع نشطة' },
+    'open_tasks': { en: 'Open Tasks', ar: 'مهام مفتوحة' },
+    'overdue_tasks': { en: 'Overdue Tasks', ar: 'مهام متأخرة' },
+    'timesheets_today': { en: 'Timesheets Today', ar: 'سجل الوقت اليوم' },
+
+    'open_tickets': { en: 'Open Tickets', ar: 'تذاكر مفتوحة' },
+    'avg_resolution': { en: 'Avg Resolution', ar: 'متوسط الحل' },
+    'unresolved': { en: 'Unresolved', ar: 'غير محلولة' },
+    'sla_breach': { en: 'SLA Breach', ar: 'انتهاك SLA' },
+
+    'total_users': { en: 'Total Users', ar: 'إجمالي المستخدمين' },
+    'active_today': { en: 'Active Today', ar: 'نشط اليوم' },
+    'roles_count': { en: 'Roles', ar: 'الأدوار' },
+    'sessions': { en: 'Active Sessions', ar: 'جلسات نشطة' },
+
+    'published_pages': { en: 'Published Pages', ar: 'صفحات منشورة' },
+    'blog_posts': { en: 'Blog Posts', ar: 'مقالات المدونة' },
+    'web_forms': { en: 'Web Forms', ar: 'نماذج الويب' },
+    'visitors': { en: 'Visitors', ar: 'الزوار' },
+
+    'open_leads': { en: 'Open Leads', ar: 'عملاء محتملون' },
+    'active_opps': { en: 'Active Opportunities', ar: 'فرص نشطة' },
+    'won_this_month': { en: 'Won This Month', ar: 'فاز هذا الشهر' },
+    'lost_this_month': { en: 'Lost This Month', ar: 'خسائر هذا الشهر' },
+
+    'pending_imports': { en: 'Pending Imports', ar: 'استيرادات معلقة' },
+    'error_logs': { en: 'Error Logs', ar: 'سجلات الأخطاء' },
+    'scheduled_jobs': { en: 'Scheduled Jobs', ar: 'مهام مجدولة' },
+    'bg_jobs': { en: 'Background Jobs', ar: 'مهام في الخلفية' },
+
+    'loading': { en: 'Loading...', ar: '...جاري التحميل' }
+};
+
+function role8_t(key) {
+    var entry = ROLE8_STRINGS[key];
+    if (!entry) return key;
+    return entry[ROLE8_LANG] || entry['en'] || key;
+}
+
+/* ══════════════════════════════════════════════════════════
+   Bootstrap — ready + page-change
+   ══════════════════════════════════════════════════════════ */
 $(document).ready(function () {
     console.log("Role8 Theme Loaded 🚀");
 
@@ -20,6 +122,7 @@ $(document).ready(function () {
         role8_inject_sidebar_logo();
         role8_inject_welcome_header();
         role8_inject_finance_cards();
+        role8_inject_module_cards();
         role8_hide_orphan_toggle();
         role8_inject_language_switcher();
     }, 500);
@@ -32,6 +135,7 @@ $(document).ready(function () {
             role8_init_sidebar_toggle();
             role8_inject_welcome_header();
             role8_inject_finance_cards();
+            role8_inject_module_cards();
             role8_hide_orphan_toggle();
             role8_inject_language_switcher();
         }, 500);
@@ -39,8 +143,6 @@ $(document).ready(function () {
 });
 
 function role8_init_sidebar_toggle() {
-    // Attach click event to the sidebar toggle button
-    // We use 'body' delegation because the button might be re-rendered
     $('body').off('click', '.sidebar-toggle-btn').on('click', '.sidebar-toggle-btn', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -60,12 +162,13 @@ function role8_hide_orphan_toggle() {
     }
 }
 
-/* ── Inject Language Switcher in Navbar ── */
+/* ══════════════════════════════════════════════════════════
+   Language Switcher
+   ══════════════════════════════════════════════════════════ */
 function role8_inject_language_switcher() {
-    if (document.querySelector('.role8-language-switcher')) return; // Already injected
+    if (document.querySelector('.role8-language-switcher')) return;
 
     var checkExist = setInterval(function () {
-        // Find the navbar-nav that contains the notification bell
         var headerActions = null;
         var navs = document.querySelectorAll('header .navbar-nav');
         navs.forEach(function (nav) {
@@ -75,19 +178,15 @@ function role8_inject_language_switcher() {
         });
 
         if (!headerActions) {
-            // Fallback for older versions
             headerActions = document.querySelector('header .navbar-nav.justify-content-end') || document.querySelector('.navbar .navbar-right');
         }
 
         if (headerActions) {
             clearInterval(checkExist);
 
-            if (document.querySelector('.role8-language-switcher')) return; // Double check
+            if (document.querySelector('.role8-language-switcher')) return;
 
-            // Determine current language to show the other option (check DOM lang first as it's more reliable for RTL)
-            var currentLang = document.documentElement.lang || frappe.boot.user.language || 'en';
-            var isArabic = currentLang.toLowerCase().startsWith('ar');
-
+            var isArabic = ROLE8_LANG === 'ar';
             var targetLang = isArabic ? 'en' : 'ar';
             var label = isArabic ? 'English' : 'عربي';
 
@@ -101,24 +200,19 @@ function role8_inject_language_switcher() {
                 </a>
             `;
 
-            // Look for the notification bell to insert before it
             var notificationBell = headerActions.querySelector('.dropdown-notifications');
             if (notificationBell) {
                 headerActions.insertBefore(langItem, notificationBell);
             } else {
-                // Fallback to prepend
                 headerActions.prepend(langItem);
             }
         }
-    }, 200); // Check every 200ms
+    }, 200);
 }
 
-// Global function to trigger language change
 window.role8_switch_language = function (lang) {
     if (!frappe || !frappe.call) return;
     frappe.call({
-        method: 'frappe.core.doctype.user.user.switch_theme', // We'll use a standard DB update since there isn't a direct "switch_language" endpoint exposed easily
-        // Wait, standard way is to update user profile language:
         method: "frappe.client.set_value",
         args: {
             doctype: "User",
@@ -128,25 +222,23 @@ window.role8_switch_language = function (lang) {
         },
         callback: function (r) {
             if (!r.exc) {
-                // Reload to apply language
                 window.location.reload();
             }
         }
     });
 };
 
-
+/* ══════════════════════════════════════════════════════════
+   Sidebar Logo
+   ══════════════════════════════════════════════════════════ */
 function role8_inject_sidebar_logo() {
     var sidebar = $('.desk-sidebar');
     if (sidebar.length === 0) return;
 
-    // Check if logo already exists INSIDE this specific sidebar
-    // If multiple sidebars exist (e.g. one hidden), we iterate
     sidebar.each(function () {
         var $thisSidebar = $(this);
         if ($thisSidebar.find('.role8-sidebar-logo').length > 0) return;
 
-        // Create Logo HTML
         var logoHtml = `
             <div class="role8-sidebar-logo" style="padding: 20px; text-align: center; margin-bottom: 0;">
                 <a href="/app/home" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">
@@ -154,14 +246,11 @@ function role8_inject_sidebar_logo() {
                 </a>
             </div>
         `;
-
-        // Prepend to sidebar
         $thisSidebar.prepend(logoHtml);
     });
 }
 
 function role8_fix_submenu_icons() {
-    // Find all sidebar sub-item icons with arrow-left or arrow-right
     var icons = document.querySelectorAll(
         '.sidebar-item-icon[item-icon="arrow-left"],' +
         '.sidebar-item-icon[item-icon="arrow-right"],' +
@@ -169,25 +258,20 @@ function role8_fix_submenu_icons() {
     );
 
     icons.forEach(function (iconSpan) {
-        // Skip if already fixed
         if (iconSpan.getAttribute('data-role8-fixed')) return;
 
-        // Hide the original SVG
         var svg = iconSpan.querySelector('svg');
         if (svg) {
             svg.style.display = 'none';
         }
 
-        // Insert a white dot/circle instead
         var dot = document.createElement('span');
         dot.className = 'role8-submenu-dot';
-        dot.textContent = '\u2022'; // bullet character •
+        dot.textContent = '\u2022';
         iconSpan.appendChild(dot);
         iconSpan.setAttribute('data-role8-fixed', 'true');
-        // console.log("Role8: Fixed submenu icon for", iconSpan.getAttribute('item-icon'));
     });
 
-    // Also watch for sidebar mutations (menu expand/collapse)
     var sidebar = document.querySelector('.desk-sidebar') || document.querySelector('.layout-side-section');
     if (sidebar && !sidebar.getAttribute('data-role8-observer')) {
         var observer = new MutationObserver(function () {
@@ -198,39 +282,34 @@ function role8_fix_submenu_icons() {
     }
 }
 
-/* ── Welcome Header — Azia-style greeting banner ── */
+/* ══════════════════════════════════════════════════════════
+   Welcome Header — Bilingual greeting banner
+   ══════════════════════════════════════════════════════════ */
 function role8_inject_welcome_header() {
-    // Only show on Home workspace (case-insensitive)
     var route = frappe.get_route();
     if (!route) return;
     var r0 = (route[0] || '').toLowerCase();
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) {
-        // Remove if navigated away from Home
         $('.role8-welcome-header').remove();
         return;
     }
 
-    // Don't inject if already exists
     if ($('.role8-welcome-header').length > 0) return;
 
-    // Get user display name
     var fullName = frappe.session.user_fullname || frappe.session.user || 'User';
     var firstName = fullName.split(' ')[0];
 
-    // Get current time for greeting
     var hour = new Date().getHours();
-    var greeting = 'Hi';
-    if (hour < 12) greeting = 'Good Morning';
-    else if (hour < 18) greeting = 'Good Afternoon';
-    else greeting = 'Good Evening';
+    var greetingKey = 'good_morning';
+    if (hour >= 12 && hour < 18) greetingKey = 'good_afternoon';
+    else if (hour >= 18) greetingKey = 'good_evening';
 
     var welcomeHtml = '<div class="role8-welcome-header">' +
-        '<h2>' + greeting + ', ' + firstName + '! 👋</h2>' +
-        '<p>Your finance performance and monitoring dashboard.</p>' +
+        '<h2>' + role8_t(greetingKey) + ', ' + firstName + '! 👋</h2>' +
+        '<p>' + role8_t('dashboard_subtitle') + '</p>' +
         '</div>';
 
-    // Find the workspace content area and prepend
     var workspaceBody = $('.layout-main-section .codex-editor');
     if (workspaceBody.length > 0) {
         workspaceBody.before(welcomeHtml);
@@ -242,35 +321,31 @@ function role8_inject_welcome_header() {
     }
 }
 
-/* ── Finance Summary Cards — Azia-style KPI Cards ── */
+/* ══════════════════════════════════════════════════════════
+   Finance Summary Cards — Home Page KPI (Bilingual)
+   ══════════════════════════════════════════════════════════ */
 function role8_inject_finance_cards() {
-    // Only show on Home workspace
     var route = frappe.get_route();
     if (!route) return;
     var r0 = (route[0] || '').toLowerCase();
     var r1 = (route[1] || '').toLowerCase();
     if (r0 !== 'workspaces' || (r1 && r1 !== 'home')) {
-        // Remove if navigated away from Home
         $('.role8-finance-cards').remove();
         return;
     }
 
-    // Don't inject if already exists
     if ($('.role8-finance-cards').length > 0) return;
 
-    // SVG icons
     var incomeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>';
     var expenseIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>';
     var profitIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"></rect><line x1="2" y1="9" x2="22" y2="9"></line><line x1="12" y1="9" x2="12" y2="21"></line></svg>';
 
-    // Create loading skeleton cards first
     var cardsHtml = '<div class="role8-finance-cards">' +
-        role8_build_card('card-income', 'TOTAL INCOME', '...', '', incomeIcon, true) +
-        role8_build_card('card-expense', 'TOTAL EXPENSES', '...', '', expenseIcon, true) +
-        role8_build_card('card-profit', 'NET PROFIT / LOSS', '...', '', profitIcon, true) +
+        role8_build_card('card-income', role8_t('total_income'), '...', '', incomeIcon, true) +
+        role8_build_card('card-expense', role8_t('total_expenses'), '...', '', expenseIcon, true) +
+        role8_build_card('card-profit', role8_t('net_profit_loss'), '...', '', profitIcon, true) +
         '</div>';
 
-    // Insert after welcome header or before chart
     var welcomeHeader = $('.role8-welcome-header');
     if (welcomeHeader.length > 0) {
         welcomeHeader.after(cardsHtml);
@@ -284,7 +359,6 @@ function role8_inject_finance_cards() {
         }
     }
 
-    // Fetch actual P&L data
     role8_fetch_pnl_data();
 }
 
@@ -303,7 +377,7 @@ function role8_build_card(typeClass, label, value, trend, iconSvg, loading) {
 function role8_fetch_pnl_data() {
     var company = frappe.defaults.get_user_default('company');
     if (!company) {
-        role8_update_cards_error('No company set');
+        role8_update_cards_error(role8_t('no_company'));
         return;
     }
 
@@ -324,11 +398,11 @@ function role8_fetch_pnl_data() {
             if (r && r.message) {
                 role8_render_pnl_cards(r.message);
             } else {
-                role8_update_cards_error('No data');
+                role8_update_cards_error(role8_t('no_data'));
             }
         },
         error: function () {
-            role8_update_cards_error('Error loading data');
+            role8_update_cards_error(role8_t('error_loading'));
         }
     });
 }
@@ -338,8 +412,6 @@ function role8_render_pnl_cards(data) {
     var currency = frappe.boot.sysdefaults.currency || 'SAR';
     var year = new Date().getFullYear();
 
-    // Parse report_summary — skip separator entries
-    // Structure: [Income, sep, Expense, sep, Profit]
     if (data.report_summary && data.report_summary.length >= 3) {
         var dataItems = data.report_summary.filter(function (item) {
             return item.type !== 'separator' && item.datatype;
@@ -354,7 +426,6 @@ function role8_render_pnl_cards(data) {
             netProfit = income - expense;
         }
     } else if (data.result) {
-        // Fallback: parse rows
         data.result.forEach(function (row) {
             if (row.account_name === 'Total Income' || row.account === 'Total Income') {
                 income = Math.abs(row.total || 0);
@@ -374,20 +445,18 @@ function role8_render_pnl_cards(data) {
             Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
 
-    // Build trend HTML
     var profitTrend = netProfit >= 0
-        ? '<div class="card-trend trend-up"><span class="trend-icon">▲</span> Profitable</div>'
-        : '<div class="card-trend trend-down"><span class="trend-icon">▼</span> Loss</div>';
+        ? '<div class="card-trend trend-up"><span class="trend-icon">▲</span> ' + role8_t('profitable') + '</div>'
+        : '<div class="card-trend trend-down"><span class="trend-icon">▼</span> ' + role8_t('loss') + '</div>';
 
-    // Update income card
     var cards = $('.role8-finance-cards');
     cards.find('.card-income').removeClass('loading')
         .find('.card-value').html(formatNum(income)).end()
-        .find('.card-trend').html('<div class="card-trend trend-up"><span class="trend-icon">▲</span> ' + year + ' Total</div>');
+        .find('.card-trend').html('<div class="card-trend trend-up"><span class="trend-icon">▲</span> ' + role8_t('total') + ' ' + year + '</div>');
 
     cards.find('.card-expense').removeClass('loading')
         .find('.card-value').html(formatNum(expense)).end()
-        .find('.card-trend').html('<div class="card-trend trend-down"><span class="trend-icon">▼</span> ' + year + ' Total</div>');
+        .find('.card-trend').html('<div class="card-trend trend-down"><span class="trend-icon">▼</span> ' + role8_t('total') + ' ' + year + '</div>');
 
     cards.find('.card-profit').removeClass('loading')
         .find('.card-value').html(formatNum(netProfit)).end()
@@ -399,11 +468,246 @@ function role8_update_cards_error(msg) {
         .find('.card-value').text(msg);
 }
 
-/* ── Login Page — Welcome Back Panel ── */
+/* ══════════════════════════════════════════════════════════
+   Per-Module Summary Cards
+   ══════════════════════════════════════════════════════════ */
+
+// SVG icons for module cards
+var ROLE8_ICONS = {
+    invoice: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>',
+    chart: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
+    box: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+    tool: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>',
+    folder: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>',
+    headphones: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"></path><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>',
+    globe: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>',
+    alert: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+};
+
+// Module configuration: workspace name → card definitions
+var ROLE8_MODULE_CARDS = {
+    'accounting': [
+        { key: 'unpaid_invoices', doctype: 'Sales Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
+        { key: 'overdue_payments', doctype: 'Sales Invoice', filters: { status: 'Overdue', docstatus: 1 }, icon: 'clock', color: 'card-expense' },
+        { key: 'total_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1 }, icon: 'chart', color: 'card-profit', aggregate: true },
+        { key: 'draft_journals', doctype: 'Journal Entry', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-info' }
+    ],
+    'selling': [
+        { key: 'open_quotations', doctype: 'Quotation', filters: { status: 'Open', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
+        { key: 'active_orders', doctype: 'Sales Order', filters: { status: ['in', ['To Deliver and Bill', 'To Bill', 'To Deliver']], docstatus: 1 }, icon: 'chart', color: 'card-profit' },
+        { key: 'pending_delivery', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-expense' },
+        { key: 'monthly_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1, posting_date: ['>=', ''] }, icon: 'chart', color: 'card-info', monthly: true }
+    ],
+    'buying': [
+        { key: 'pending_po', doctype: 'Purchase Order', filters: { status: ['in', ['To Receive and Bill', 'To Bill', 'To Receive']], docstatus: 1 }, icon: 'invoice', color: 'card-income' },
+        { key: 'unpaid_suppliers', doctype: 'Purchase Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'clock', color: 'card-expense' },
+        { key: 'items_to_receive', doctype: 'Purchase Receipt', filters: { docstatus: 0 }, icon: 'box', color: 'card-profit' },
+        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-info' }
+    ],
+    'stock': [
+        { key: 'total_items', doctype: 'Item', filters: { disabled: 0 }, icon: 'box', color: 'card-income' },
+        { key: 'low_stock', doctype: 'Bin', filters: { actual_qty: ['<', 10] }, icon: 'alert', color: 'card-expense' },
+        { key: 'pending_receipts', doctype: 'Purchase Receipt', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-profit' },
+        { key: 'pending_deliveries', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-info' }
+    ],
+    'assets': [
+        { key: 'total_assets', doctype: 'Asset', filters: { docstatus: 1 }, icon: 'folder', color: 'card-income' },
+        { key: 'depreciating', doctype: 'Asset', filters: { status: 'Submitted', docstatus: 1 }, icon: 'clock', color: 'card-profit' },
+        { key: 'fully_depreciated', doctype: 'Asset', filters: { status: 'Fully Depreciated', docstatus: 1 }, icon: 'check', color: 'card-expense' },
+        { key: 'pending_repairs', doctype: 'Asset Repair', filters: { repair_status: 'Pending' }, icon: 'tool', color: 'card-info' }
+    ],
+    'quality-management': [
+        { key: 'open_inspections', doctype: 'Quality Inspection', filters: { docstatus: 0 }, icon: 'check', color: 'card-income' },
+        { key: 'non_conformance', doctype: 'Non Conformance', filters: { status: 'Open' }, icon: 'alert', color: 'card-expense' },
+        { key: 'actions_open', doctype: 'Quality Action', filters: { status: 'Open' }, icon: 'tool', color: 'card-profit' },
+        { key: 'reviews_pending', doctype: 'Quality Review', filters: { docstatus: 0 }, icon: 'clock', color: 'card-info' }
+    ],
+    'projects': [
+        { key: 'active_projects', doctype: 'Project', filters: { status: 'Open' }, icon: 'folder', color: 'card-income' },
+        { key: 'open_tasks', doctype: 'Task', filters: { status: 'Open' }, icon: 'check', color: 'card-profit' },
+        { key: 'overdue_tasks', doctype: 'Task', filters: { status: 'Overdue' }, icon: 'clock', color: 'card-expense' },
+        { key: 'timesheets_today', doctype: 'Timesheet', filters: { docstatus: 0 }, icon: 'clock', color: 'card-info' }
+    ],
+    'support': [
+        { key: 'open_tickets', doctype: 'Issue', filters: { status: 'Open' }, icon: 'headphones', color: 'card-income' },
+        { key: 'unresolved', doctype: 'Issue', filters: { status: ['in', ['Open', 'Replied']] }, icon: 'alert', color: 'card-expense' },
+        { key: 'sla_breach', doctype: 'Issue', filters: { agreement_status: 'Failed' }, icon: 'clock', color: 'card-profit' },
+        { key: 'avg_resolution', doctype: 'Issue', filters: { status: 'Closed' }, icon: 'check', color: 'card-info' }
+    ],
+    'users': [
+        { key: 'total_users', doctype: 'User', filters: { enabled: 1, user_type: 'System User' }, icon: 'users', color: 'card-income' },
+        { key: 'active_today', doctype: 'User', filters: { enabled: 1, last_active: ['>=', ''] }, icon: 'check', color: 'card-profit', today: true },
+        { key: 'roles_count', doctype: 'Role', filters: { disabled: 0 }, icon: 'tool', color: 'card-expense' },
+        { key: 'sessions', doctype: 'Sessions', filters: {}, icon: 'users', color: 'card-info' }
+    ],
+    'website': [
+        { key: 'published_pages', doctype: 'Web Page', filters: { published: 1 }, icon: 'globe', color: 'card-income' },
+        { key: 'blog_posts', doctype: 'Blog Post', filters: { published: 1 }, icon: 'invoice', color: 'card-profit' },
+        { key: 'web_forms', doctype: 'Web Form', filters: { published: 1 }, icon: 'check', color: 'card-expense' }
+    ],
+    'crm': [
+        { key: 'open_leads', doctype: 'Lead', filters: { status: 'Open' }, icon: 'target', color: 'card-income' },
+        { key: 'active_opps', doctype: 'Opportunity', filters: { status: 'Open' }, icon: 'chart', color: 'card-profit' },
+        { key: 'won_this_month', doctype: 'Opportunity', filters: { status: 'Converted' }, icon: 'check', color: 'card-expense', monthly: true },
+        { key: 'lost_this_month', doctype: 'Opportunity', filters: { status: 'Lost' }, icon: 'alert', color: 'card-info', monthly: true }
+    ],
+    'settings': [
+        { key: 'error_logs', doctype: 'Error Log', filters: {}, icon: 'alert', color: 'card-expense' },
+        { key: 'scheduled_jobs', doctype: 'Scheduled Job Type', filters: { stopped: 0 }, icon: 'clock', color: 'card-income' },
+        { key: 'bg_jobs', doctype: 'RQ Job', filters: { status: ['in', ['queued', 'started']] }, icon: 'tool', color: 'card-profit' }
+    ]
+};
+
+// Map Arabic workspace names to module keys
+var ROLE8_WORKSPACE_MAP = {
+    'home': null, // Home has its own finance cards
+    'accounting': 'accounting',
+    'الحسابات': 'accounting',
+    'selling': 'selling',
+    'البيع': 'selling',
+    'buying': 'buying',
+    'الشراء': 'buying',
+    'stock': 'stock',
+    'المخازن': 'stock',
+    'assets': 'assets',
+    'الأصول': 'assets',
+    'quality': 'quality-management',
+    'quality-management': 'quality-management',
+    'جودة': 'quality-management',
+    'projects': 'projects',
+    'مشاريع': 'projects',
+    'support': 'support',
+    'الدعم': 'support',
+    'users': 'users',
+    'المستخدمين': 'users',
+    'website': 'website',
+    'الموقع': 'website',
+    'crm': 'crm',
+    'إدارة علاقات الزبائن': 'crm',
+    'tools': 'settings',
+    'الأدوات': 'settings',
+    'settings': 'settings'
+};
+
+function role8_inject_module_cards() {
+    var route = frappe.get_route();
+    if (!route) return;
+    var r0 = (route[0] || '').toLowerCase();
+    var r1 = decodeURIComponent(route[1] || '').toLowerCase();
+
+    // Only on workspace pages, skip home (it has finance cards)
+    if (r0 !== 'workspaces' || !r1 || r1 === 'home') {
+        $('.role8-module-cards').remove();
+        return;
+    }
+
+    // Find module config
+    var moduleKey = ROLE8_WORKSPACE_MAP[r1];
+    if (!moduleKey) {
+        // Try partial match
+        for (var wsName in ROLE8_WORKSPACE_MAP) {
+            if (r1.indexOf(wsName) !== -1 || wsName.indexOf(r1) !== -1) {
+                moduleKey = ROLE8_WORKSPACE_MAP[wsName];
+                break;
+            }
+        }
+    }
+
+    if (!moduleKey || !ROLE8_MODULE_CARDS[moduleKey]) {
+        $('.role8-module-cards').remove();
+        return;
+    }
+
+    // Don't inject if already exists for this module
+    if ($('.role8-module-cards[data-module="' + moduleKey + '"]').length > 0) return;
+    // Remove old module cards from other pages
+    $('.role8-module-cards').remove();
+
+    var cardDefs = ROLE8_MODULE_CARDS[moduleKey];
+    var cardsHtml = '<div class="role8-module-cards role8-finance-cards" data-module="' + moduleKey + '">';
+
+    cardDefs.forEach(function (def) {
+        var iconSvg = ROLE8_ICONS[def.icon] || ROLE8_ICONS.invoice;
+        cardsHtml += role8_build_card(def.color, role8_t(def.key), '...', '', iconSvg, true);
+    });
+
+    cardsHtml += '</div>';
+
+    // Insert at top of workspace content
+    var workspaceBody = $('.layout-main-section .codex-editor');
+    if (workspaceBody.length > 0) {
+        workspaceBody.before(cardsHtml);
+    } else {
+        var layoutMain = $('.layout-main-section');
+        if (layoutMain.length > 0) {
+            layoutMain.prepend(cardsHtml);
+        }
+    }
+
+    // Fetch counts for each card
+    role8_fetch_module_counts(moduleKey, cardDefs);
+}
+
+function role8_fetch_module_counts(moduleKey, cardDefs) {
+    var today = frappe.datetime.get_today();
+    var monthStart = today.substring(0, 7) + '-01';
+
+    cardDefs.forEach(function (def, idx) {
+        var filters = Object.assign({}, def.filters);
+
+        // Handle monthly filter
+        if (def.monthly) {
+            filters.posting_date = ['>=', monthStart];
+            if (def.doctype === 'Opportunity') {
+                filters.transaction_date = ['>=', monthStart];
+                delete filters.posting_date;
+            }
+        }
+
+        // Handle today filter
+        if (def.today) {
+            filters.last_active = ['>=', today];
+        }
+
+        frappe.call({
+            method: 'frappe.client.get_count',
+            args: {
+                doctype: def.doctype,
+                filters: filters
+            },
+            async: true,
+            callback: function (r) {
+                var count = (r && r.message) ? r.message : 0;
+                var container = $('.role8-module-cards[data-module="' + moduleKey + '"]');
+                var card = container.find('.role8-finance-card').eq(idx);
+                card.removeClass('loading');
+                card.find('.card-value').text(count);
+            },
+            error: function () {
+                var container = $('.role8-module-cards[data-module="' + moduleKey + '"]');
+                var card = container.find('.role8-finance-card').eq(idx);
+                card.removeClass('loading');
+                card.find('.card-value').text('—');
+            }
+        });
+    });
+}
+
+/* ══════════════════════════════════════════════════════════
+   Login Page — Welcome Back Panel (Bilingual)
+   ══════════════════════════════════════════════════════════ */
 function role8_inject_login_panel() {
     var card = document.querySelector('.login-content.page-card');
     if (!card) return;
     if (document.querySelector('.role8-login-panel')) return;
+
+    // Detect browser language for login page (no frappe.boot available)
+    var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    var loginIsAr = browserLang.startsWith('ar');
 
     // Force all parent containers to full-viewport
     var el = card;
@@ -417,15 +721,12 @@ function role8_inject_login_panel() {
         el = el.parentElement;
     }
 
-    // Force body
     document.body.style.setProperty('background', '#144983', 'important');
     document.body.style.setProperty('overflow', 'hidden', 'important');
 
-    // Hide navbar/footer/header
     var hide = document.querySelectorAll('footer, .navbar, .web-footer, .page-header');
     hide.forEach(function (h) { h.style.display = 'none'; });
 
-    // Hide the page-card-head (logo + "Login to Cloud360" header)
     var cardHead = document.querySelector('.page-card-head');
     var logoSrc = '';
     if (cardHead) {
@@ -434,17 +735,17 @@ function role8_inject_login_panel() {
         cardHead.style.setProperty('display', 'none', 'important');
     }
 
-    // Inject "Sign In" heading above the form
     var formBody = card.querySelector('.page-card-body');
     if (formBody && !formBody.querySelector('.role8-signin-title')) {
+        var signInText = loginIsAr ? 'تسجيل الدخول' : 'Sign In';
+        var signInSub = loginIsAr ? 'أدخل بياناتك للوصول إلى حسابك' : 'Enter your credentials to access your account';
         var titleHtml = '<div class="role8-signin-title">' +
-            '<h2>Sign In</h2>' +
-            '<p>Enter your credentials to access your account</p>' +
+            '<h2>' + signInText + '</h2>' +
+            '<p>' + signInSub + '</p>' +
             '</div>';
         formBody.insertAdjacentHTML('afterbegin', titleHtml);
     }
 
-    // Inject branding panel with logo
     var dots = '';
     for (var i = 0; i < 15; i++) { dots += '<span></span>'; }
 
@@ -452,10 +753,15 @@ function role8_inject_login_panel() {
         ? '<img src="' + logoSrc + '" class="role8-login-logo" alt="Cloud360">'
         : '';
 
+    var headline = loginIsAr ? 'حلول ERP السحابية<br>لنمو أعمالك.' : 'Your Cloud ERP<br>Solution for Growth.';
+    var subtitle = loginIsAr
+        ? 'إدارة المحاسبة والمخزون وعلاقات العملاء والعمليات — الكل في منصة واحدة قوية مصممة للأعمال الحديثة.'
+        : 'Manage your accounting, inventory, CRM and operations — all in one powerful platform built for modern businesses.';
+
     var panelHtml = '<div class="role8-login-panel">' +
         logoHtml +
-        '<h2>Your Cloud ERP<br>Solution for Growth.</h2>' +
-        '<p>Manage your accounting, inventory, CRM and operations — all in one powerful platform built for modern businesses.</p>' +
+        '<h2>' + headline + '</h2>' +
+        '<p>' + subtitle + '</p>' +
         '<div class="role8-login-dots">' + dots + '</div>' +
         '</div>';
 
