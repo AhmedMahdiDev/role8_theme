@@ -488,61 +488,61 @@ var ROLE8_ICONS = {
     alert: '<svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
 };
 
-// Module configuration: workspace name → card definitions
+// Module configuration: workspace name → card definitions (3 or 6 cards only, never 4)
 var ROLE8_MODULE_CARDS = {
     'accounting': [
         { key: 'unpaid_invoices', doctype: 'Sales Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
         { key: 'overdue_payments', doctype: 'Sales Invoice', filters: { status: 'Overdue', docstatus: 1 }, icon: 'clock', color: 'card-expense' },
+        { key: 'draft_journals', doctype: 'Journal Entry', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-profit' },
+        { key: 'unpaid_suppliers', doctype: 'Purchase Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'clock', color: 'card-income' },
         { key: 'total_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1 }, icon: 'chart', color: 'card-profit', aggregate: true },
-        { key: 'draft_journals', doctype: 'Journal Entry', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-info' }
+        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-expense' }
     ],
     'selling': [
         { key: 'open_quotations', doctype: 'Quotation', filters: { status: 'Open', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
         { key: 'active_orders', doctype: 'Sales Order', filters: { status: ['in', ['To Deliver and Bill', 'To Bill', 'To Deliver']], docstatus: 1 }, icon: 'chart', color: 'card-profit' },
         { key: 'pending_delivery', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-expense' },
-        { key: 'monthly_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1, posting_date: ['>=', ''] }, icon: 'chart', color: 'card-info', monthly: true }
+        { key: 'unpaid_invoices', doctype: 'Sales Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'invoice', color: 'card-income' },
+        { key: 'monthly_revenue', doctype: 'Sales Invoice', filters: { docstatus: 1, posting_date: ['>=', ''] }, icon: 'chart', color: 'card-profit', monthly: true },
+        { key: 'overdue_payments', doctype: 'Sales Invoice', filters: { status: 'Overdue', docstatus: 1 }, icon: 'clock', color: 'card-expense' }
     ],
     'buying': [
         { key: 'pending_po', doctype: 'Purchase Order', filters: { status: ['in', ['To Receive and Bill', 'To Bill', 'To Receive']], docstatus: 1 }, icon: 'invoice', color: 'card-income' },
         { key: 'unpaid_suppliers', doctype: 'Purchase Invoice', filters: { status: 'Unpaid', docstatus: 1 }, icon: 'clock', color: 'card-expense' },
-        { key: 'items_to_receive', doctype: 'Purchase Receipt', filters: { docstatus: 0 }, icon: 'box', color: 'card-profit' },
-        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-info' }
+        { key: 'items_to_receive', doctype: 'Purchase Receipt', filters: { docstatus: 0 }, icon: 'box', color: 'card-profit' }
     ],
     'stock': [
         { key: 'total_items', doctype: 'Item', filters: { disabled: 0 }, icon: 'box', color: 'card-income' },
         { key: 'low_stock', doctype: 'Bin', filters: { actual_qty: ['<', 10] }, icon: 'alert', color: 'card-expense' },
         { key: 'pending_receipts', doctype: 'Purchase Receipt', filters: { docstatus: 0 }, icon: 'invoice', color: 'card-profit' },
-        { key: 'pending_deliveries', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-info' }
+        { key: 'pending_deliveries', doctype: 'Delivery Note', filters: { docstatus: 0 }, icon: 'box', color: 'card-income' },
+        { key: 'pending_po', doctype: 'Purchase Order', filters: { status: ['in', ['To Receive and Bill', 'To Receive']], docstatus: 1 }, icon: 'invoice', color: 'card-profit' },
+        { key: 'purchase_returns', doctype: 'Purchase Invoice', filters: { is_return: 1, docstatus: 1 }, icon: 'alert', color: 'card-expense' }
     ],
     'assets': [
         { key: 'total_assets', doctype: 'Asset', filters: { docstatus: 1 }, icon: 'folder', color: 'card-income' },
         { key: 'depreciating', doctype: 'Asset', filters: { status: 'Submitted', docstatus: 1 }, icon: 'clock', color: 'card-profit' },
-        { key: 'fully_depreciated', doctype: 'Asset', filters: { status: 'Fully Depreciated', docstatus: 1 }, icon: 'check', color: 'card-expense' },
-        { key: 'pending_repairs', doctype: 'Asset Repair', filters: { repair_status: 'Pending' }, icon: 'tool', color: 'card-info' }
+        { key: 'fully_depreciated', doctype: 'Asset', filters: { status: 'Fully Depreciated', docstatus: 1 }, icon: 'check', color: 'card-expense' }
     ],
     'quality-management': [
         { key: 'open_inspections', doctype: 'Quality Inspection', filters: { docstatus: 0 }, icon: 'check', color: 'card-income' },
         { key: 'non_conformance', doctype: 'Non Conformance', filters: { status: 'Open' }, icon: 'alert', color: 'card-expense' },
-        { key: 'actions_open', doctype: 'Quality Action', filters: { status: 'Open' }, icon: 'tool', color: 'card-profit' },
-        { key: 'reviews_pending', doctype: 'Quality Review', filters: { docstatus: 0 }, icon: 'clock', color: 'card-info' }
+        { key: 'actions_open', doctype: 'Quality Action', filters: { status: 'Open' }, icon: 'tool', color: 'card-profit' }
     ],
     'projects': [
         { key: 'active_projects', doctype: 'Project', filters: { status: 'Open' }, icon: 'folder', color: 'card-income' },
         { key: 'open_tasks', doctype: 'Task', filters: { status: 'Open' }, icon: 'check', color: 'card-profit' },
-        { key: 'overdue_tasks', doctype: 'Task', filters: { status: 'Overdue' }, icon: 'clock', color: 'card-expense' },
-        { key: 'timesheets_today', doctype: 'Timesheet', filters: { docstatus: 0 }, icon: 'clock', color: 'card-info' }
+        { key: 'overdue_tasks', doctype: 'Task', filters: { status: 'Overdue' }, icon: 'clock', color: 'card-expense' }
     ],
     'support': [
         { key: 'open_tickets', doctype: 'Issue', filters: { status: 'Open' }, icon: 'headphones', color: 'card-income' },
         { key: 'unresolved', doctype: 'Issue', filters: { status: ['in', ['Open', 'Replied']] }, icon: 'alert', color: 'card-expense' },
-        { key: 'sla_breach', doctype: 'Issue', filters: { agreement_status: 'Failed' }, icon: 'clock', color: 'card-profit' },
-        { key: 'avg_resolution', doctype: 'Issue', filters: { status: 'Closed' }, icon: 'check', color: 'card-info' }
+        { key: 'sla_breach', doctype: 'Issue', filters: { agreement_status: 'Failed' }, icon: 'clock', color: 'card-profit' }
     ],
     'users': [
         { key: 'total_users', doctype: 'User', filters: { enabled: 1, user_type: 'System User' }, icon: 'users', color: 'card-income' },
         { key: 'active_today', doctype: 'User', filters: { enabled: 1, last_active: ['>=', ''] }, icon: 'check', color: 'card-profit', today: true },
-        { key: 'roles_count', doctype: 'Role', filters: { disabled: 0 }, icon: 'tool', color: 'card-expense' },
-        { key: 'sessions', doctype: 'Sessions', filters: {}, icon: 'users', color: 'card-info' }
+        { key: 'roles_count', doctype: 'Role', filters: { disabled: 0 }, icon: 'tool', color: 'card-expense' }
     ],
     'website': [
         { key: 'published_pages', doctype: 'Web Page', filters: { published: 1 }, icon: 'globe', color: 'card-income' },
@@ -552,8 +552,7 @@ var ROLE8_MODULE_CARDS = {
     'crm': [
         { key: 'open_leads', doctype: 'Lead', filters: { status: 'Open' }, icon: 'target', color: 'card-income' },
         { key: 'active_opps', doctype: 'Opportunity', filters: { status: 'Open' }, icon: 'chart', color: 'card-profit' },
-        { key: 'won_this_month', doctype: 'Opportunity', filters: { status: 'Converted' }, icon: 'check', color: 'card-expense', monthly: true },
-        { key: 'lost_this_month', doctype: 'Opportunity', filters: { status: 'Lost' }, icon: 'alert', color: 'card-info', monthly: true }
+        { key: 'won_this_month', doctype: 'Opportunity', filters: { status: 'Converted' }, icon: 'check', color: 'card-expense', monthly: true }
     ],
     'settings': [
         { key: 'error_logs', doctype: 'Error Log', filters: {}, icon: 'alert', color: 'card-expense' },
