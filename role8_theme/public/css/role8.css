@@ -156,6 +156,7 @@ body {
 }
 
 /* RTL Support - Move sidebar to Right */
+body[data-route=""] [dir="rtl"] .desk-sidebar,
 html[dir="rtl"] .desk-sidebar,
 [dir="rtl"] .desk-sidebar {
     left: auto !important;
@@ -163,6 +164,7 @@ html[dir="rtl"] .desk-sidebar,
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1) !important;
 }
 
+body[data-route=""] [dir="rtl"] body.role8-sidebar-hidden .desk-sidebar,
 [dir="rtl"] body[data-sidebar-hidden="1"] .desk-sidebar,
 html[dir="rtl"] body.role8-sidebar-hidden .desk-sidebar,
 [dir="rtl"] body.role8-sidebar-hidden .desk-sidebar {
@@ -170,6 +172,7 @@ html[dir="rtl"] body.role8-sidebar-hidden .desk-sidebar,
     left: auto !important;
 }
 
+body[data-route=""] [dir="rtl"] .navbar,
 html[dir="rtl"] .navbar,
 [dir="rtl"] .navbar {
     padding-left: 0 !important;
