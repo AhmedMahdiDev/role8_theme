@@ -1,6 +1,27 @@
 /* Saudi Riyal Symbol Font */
 @import url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/index.css');
 
+/* Bahij TheSansArabic — Arabic-only font */
+@font-face {
+    font-family: "Bahij TheSansArabic Plain";
+    src: url("https://db.onlinewebfonts.com/t/a85976799f11330f194b1dc04c954666.eot");
+    src: url("https://db.onlinewebfonts.com/t/a85976799f11330f194b1dc04c954666.eot?#iefix") format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/a85976799f11330f194b1dc04c954666.woff2") format("woff2"),
+        url("https://db.onlinewebfonts.com/t/a85976799f11330f194b1dc04c954666.woff") format("woff"),
+        url("https://db.onlinewebfonts.com/t/a85976799f11330f194b1dc04c954666.ttf") format("truetype"),
+        url("https://db.onlinewebfonts.com/t/a85976799f11330f194b1dc04c954666.svg#Bahij TheSansArabic Plain") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Apply Bahij font to all elements when in Arabic (RTL) */
+html[dir="rtl"],
+html[dir="rtl"] body,
+html[dir="rtl"] *:not(.fa):not(.octicon):not(.icon):not([class*="icon"]) {
+    font-family: "Bahij TheSansArabic Plain", "Inter", sans-serif !important;
+}
+
 /* ============================================================
    Role8 Theme — Azia-Inspired ERPNext v15 Theme
    Brand: Blue #144983 | Orange #f37b37
