@@ -92,6 +92,17 @@ body {
     border: 1px solid #cdd4e0 !important;
 }
 
+/* User added internal page backgrounds */
+.form-section, .section-body {
+    background-color: #F8FAFD !important;
+}
+.form-dashboard.visible-section {
+    background-color: #F8FAFD !important;
+}
+.frappe-list .result, .frappe-list {
+    background-color: #F8FAFD !important;
+}
+
 /* Style the comments/activity section below the form */
 .form-footer,
 .comment-box,
