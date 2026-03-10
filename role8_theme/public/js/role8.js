@@ -123,7 +123,7 @@ $(document).ready(function () {
         role8_inject_welcome_header();
         role8_inject_finance_cards();
         role8_inject_module_cards();
-        role8_hide_orphan_toggle();
+        role8_inject_module_cards();
         role8_inject_language_switcher();
     }, 500);
 
@@ -136,10 +136,26 @@ $(document).ready(function () {
             role8_inject_welcome_header();
             role8_inject_finance_cards();
             role8_inject_module_cards();
-            role8_hide_orphan_toggle();
             role8_inject_language_switcher();
         }, 500);
     });
+
+    // Continuously monitor sidebar state to handle asynchronous SPA routing in Frappe
+    setInterval(function() {
+        var toggle = document.querySelector('.sidebar-toggle-btn');
+        var sidebar = document.querySelector('.desk-sidebar');
+        
+        // Ensure sidebar has actual content, not just a ghost container element
+        var hasSidebar = sidebar && sidebar.querySelectorAll('.standard-sidebar-item').length > 0;
+        
+        if (hasSidebar) {
+            if (toggle) toggle.style.display = '';
+            document.body.classList.add('role8-has-sidebar');
+        } else {
+            if (toggle) toggle.style.setProperty('display', 'none', 'important');
+            document.body.classList.remove('role8-has-sidebar');
+        }
+    }, 200);
 });
 
 function role8_init_sidebar_toggle() {
@@ -150,18 +166,7 @@ function role8_init_sidebar_toggle() {
     });
 }
 
-/* ── Hide toggle button on pages without sidebar and add body class ── */
-function role8_hide_orphan_toggle() {
-    var toggle = document.querySelector('.sidebar-toggle-btn');
-    var sidebar = document.querySelector('.desk-sidebar');
-    if (sidebar) {
-        if (toggle) toggle.style.display = '';
-        document.body.classList.add('role8-has-sidebar');
-    } else {
-        if (toggle) toggle.style.setProperty('display', 'none', 'important');
-        document.body.classList.remove('role8-has-sidebar');
-    }
-}
+/* ── Handled by setInterval in $(document).ready ── */
 
 /* ══════════════════════════════════════════════════════════
    Language Switcher
