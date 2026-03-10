@@ -160,15 +160,21 @@ body {
     display: block !important;
 }
 
-/* Adjust Navbar to start AFTER sidebar */
+/* Adjust Navbar to be full width by default, and pushed if sidebar exists */
 .navbar {
-    left: 250px !important;
-    width: calc(100% - 250px) !important;
+    left: 0 !important;
+    width: 100% !important;
     position: fixed !important;
     top: 0 !important;
     right: 0 !important;
     z-index: 1000 !important;
     padding-left: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+body.role8-has-sidebar .navbar {
+    left: 250px !important;
+    width: calc(100% - 250px) !important;
 }
 
 [data-route=""] .desk-sidebar,
@@ -210,7 +216,13 @@ html[dir="rtl"] .navbar,
     padding-left: 0 !important;
     padding-right: 20px !important;
     left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+}
+
+[dir="rtl"] body.role8-has-sidebar .navbar {
     right: 250px !important;
+    left: auto !important;
     width: calc(100% - 250px) !important;
 }
 
@@ -594,6 +606,12 @@ body.role8-sidebar-hidden .container {
 
 .page-container {
     transition: margin-left 0.3s ease, margin-right 0.3s ease !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body.role8-has-sidebar .page-container {
     margin-left: 250px !important;
     width: calc(100% - 250px) !important;
     max-width: calc(100% - 250px) !important;
@@ -601,6 +619,12 @@ body.role8-sidebar-hidden .container {
 
 [dir="rtl"] .page-container {
     margin-left: 0px !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+[dir="rtl"] body.role8-has-sidebar .page-container {
     margin-right: 250px !important;
     width: calc(100% - 250px) !important;
     max-width: calc(100% - 250px) !important;

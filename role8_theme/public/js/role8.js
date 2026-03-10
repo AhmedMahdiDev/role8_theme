@@ -150,15 +150,16 @@ function role8_init_sidebar_toggle() {
     });
 }
 
-/* ── Hide toggle button on pages without sidebar ── */
+/* ── Hide toggle button on pages without sidebar and add body class ── */
 function role8_hide_orphan_toggle() {
     var toggle = document.querySelector('.sidebar-toggle-btn');
-    if (!toggle) return;
     var sidebar = document.querySelector('.desk-sidebar');
     if (sidebar) {
-        toggle.style.display = '';
+        if (toggle) toggle.style.display = '';
+        document.body.classList.add('role8-has-sidebar');
     } else {
-        toggle.style.setProperty('display', 'none', 'important');
+        if (toggle) toggle.style.setProperty('display', 'none', 'important');
+        document.body.classList.remove('role8-has-sidebar');
     }
 }
 
