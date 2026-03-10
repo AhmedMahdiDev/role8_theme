@@ -143,10 +143,20 @@ $(document).ready(function () {
     // Continuously monitor sidebar state to handle asynchronous SPA routing in Frappe
     setInterval(function() {
         var toggle = document.querySelector('.sidebar-toggle-btn');
-        var sidebar = document.querySelector('.desk-sidebar');
+        var sidebars = document.querySelectorAll('.desk-sidebar');
+        var hasSidebar = false;
         
-        // Ensure sidebar has actual content, not just a ghost container element
-        var hasSidebar = sidebar && sidebar.querySelectorAll('.standard-sidebar-item').length > 0;
+        for (var i = 0; i < sidebars.length; i++) {
+            var sidebar = sidebars[i];
+            // Check if sidebar is actually rendered visually (not inside a hidden page container)
+            if (sidebar.offsetWidth > 0 && sidebar.offsetHeight > 0) {
+                // Also ensure it has standard items populated
+                if (sidebar.querySelectorAll('.standard-sidebar-item').length > 0) {
+                    hasSidebar = true;
+                    break;
+                }
+            }
+        }
         
         if (hasSidebar) {
             if (toggle) toggle.style.display = '';
@@ -155,7 +165,7 @@ $(document).ready(function () {
             if (toggle) toggle.style.setProperty('display', 'none', 'important');
             document.body.classList.remove('role8-has-sidebar');
         }
-    }, 200);
+    }, 150);
 });
 
 function role8_init_sidebar_toggle() {
