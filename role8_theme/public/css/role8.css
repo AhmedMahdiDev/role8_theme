@@ -1554,7 +1554,6 @@ textarea.form-control {
 
 .frappe-list .result,
 .frappe-list {
-    background-color: var(--card-bg) !important;
     border-radius: 0 !important;
     box-shadow: var(--card-shadow) !important;
     border: 1px solid var(--border-light) !important;
