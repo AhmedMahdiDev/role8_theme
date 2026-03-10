@@ -123,8 +123,8 @@ $(document).ready(function () {
         role8_inject_welcome_header();
         role8_inject_finance_cards();
         role8_inject_module_cards();
-        role8_inject_module_cards();
         role8_inject_language_switcher();
+        role8_inject_home_icon();
     }, 500);
 
     // Re-run on Frappe page changes (SPA)
@@ -137,6 +137,7 @@ $(document).ready(function () {
             role8_inject_finance_cards();
             role8_inject_module_cards();
             role8_inject_language_switcher();
+            role8_inject_home_icon();
         }, 500);
     });
 
@@ -243,6 +244,42 @@ window.role8_switch_language = function (lang) {
         }
     });
 };
+
+/* ══════════════════════════════════════════════════════════
+   Home Icon in Navbar
+   ══════════════════════════════════════════════════════════ */
+function role8_inject_home_icon() {
+    if (document.querySelector('.role8-home-icon')) return;
+
+    var breadcrumbs = document.getElementById('navbar-breadcrumbs');
+    if (breadcrumbs) {
+        var homeIconHtml = `
+            <a href="/app/home" class="role8-home-icon" title="Home">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </a>
+        `;
+        $(breadcrumbs).before(homeIconHtml);
+    } else {
+        // Fallback: try to find the breadcrumbs container if ID isn't immediately available
+        var container = document.querySelector('.navbar-breadcrumbs') || document.querySelector('.breadcrumb-container');
+        if (container && !container.querySelector('.role8-home-icon')) {
+            var icon = document.createElement('a');
+            icon.href = '/app/home';
+            icon.className = 'role8-home-icon';
+            icon.title = 'Home';
+            icon.innerHTML = `
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            `;
+            container.parentNode.insertBefore(icon, container);
+        }
+    }
+}
 
 /* ══════════════════════════════════════════════════════════
    Sidebar Logo

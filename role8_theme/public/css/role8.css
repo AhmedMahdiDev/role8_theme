@@ -143,6 +143,30 @@ body {
     /* FORCE VISIBILITY ON ALL PAGES */
 }
 
+/* Custom Home Icon in Navbar */
+.role8-home-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: var(--text-color);
+    opacity: 0.8;
+    transition: all 0.2s ease;
+    text-decoration: none !important;
+    vertical-align: middle;
+}
+
+.role8-home-icon:hover {
+    color: var(--role8-blue) !important;
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+[dir="rtl"] .role8-home-icon {
+    margin-right: 0 !important;
+    margin-left: 12px !important;
+}
+
 /* Hide default Navbar Logo/Brand */
 .navbar .navbar-brand,
 .navbar .navbar-home {
