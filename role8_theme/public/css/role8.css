@@ -654,6 +654,13 @@ body.role8-has-sidebar .page-container {
     max-width: calc(100% - 250px) !important;
 }
 
+/* Override: when sidebar exists but is hidden, expand to full width */
+body.role8-has-sidebar.role8-sidebar-hidden .page-container {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
 [dir="rtl"] .page-container {
     margin-left: 0px !important;
     margin-right: 0 !important;
@@ -665,6 +672,12 @@ body.role8-has-sidebar .page-container {
     margin-right: 250px !important;
     width: calc(100% - 250px) !important;
     max-width: calc(100% - 250px) !important;
+}
+
+[dir="rtl"] body.role8-has-sidebar.role8-sidebar-hidden .page-container {
+    margin-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
 }
 
 /* Ensure inner wrappers take full width and have no double margins */
