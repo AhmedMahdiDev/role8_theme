@@ -146,21 +146,14 @@ $(document).ready(function () {
         var toggle = document.querySelector('.sidebar-toggle-btn');
         var sidebars = document.querySelectorAll('.desk-sidebar');
         var hasSidebar = false;
-        var userHidSidebar = document.body.classList.contains('role8-sidebar-hidden');
         
         for (var i = 0; i < sidebars.length; i++) {
             var sidebar = sidebars[i];
-            // If user manually hid sidebar, don't check offsetWidth (it's off-screen intentionally)
-            if (userHidSidebar) {
-                if (sidebar.querySelectorAll('.standard-sidebar-item').length > 0) {
-                    hasSidebar = true;
-                    break;
-                }
-            } else if (sidebar.offsetWidth > 0 && sidebar.offsetHeight > 0) {
-                if (sidebar.querySelectorAll('.standard-sidebar-item').length > 0) {
-                    hasSidebar = true;
-                    break;
-                }
+            // Check if sidebar has items in the DOM (don't check offsetWidth - 
+            // it becomes 0 when sidebar is hidden, causing toggle to disappear)
+            if (sidebar.querySelectorAll('.standard-sidebar-item').length > 0) {
+                hasSidebar = true;
+                break;
             }
         }
         
