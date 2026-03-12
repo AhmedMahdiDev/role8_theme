@@ -596,7 +596,7 @@ body.role8-sidebar-hidden .desk-sidebar {
 body.role8-sidebar-hidden .sidebar-toggle-btn {
     position: fixed !important;
     left: 12px !important;
-    top: 75px !important;
+    top: 90px !important;
     z-index: 10001 !important;
 }
 
