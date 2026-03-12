@@ -146,13 +146,16 @@ $(document).ready(function () {
         var toggle = document.querySelector('.sidebar-toggle-btn');
         var sidebars = document.querySelectorAll('.desk-sidebar');
         var hasSidebar = false;
+        var sidebarVisible = false;
         
         for (var i = 0; i < sidebars.length; i++) {
             var sidebar = sidebars[i];
-            // Check if sidebar has items in the DOM (don't check offsetWidth - 
-            // it becomes 0 when sidebar is hidden, causing toggle to disappear)
             if (sidebar.querySelectorAll('.standard-sidebar-item').length > 0) {
                 hasSidebar = true;
+                // Check if sidebar is actually visible on screen
+                if (sidebar.offsetWidth > 0 && sidebar.offsetHeight > 0) {
+                    sidebarVisible = true;
+                }
                 break;
             }
         }
@@ -160,9 +163,16 @@ $(document).ready(function () {
         if (hasSidebar) {
             if (toggle) toggle.style.display = '';
             document.body.classList.add('role8-has-sidebar');
+            // Auto-detect: if sidebar exists but not visible, mark as hidden
+            if (!sidebarVisible) {
+                document.body.classList.add('role8-sidebar-hidden');
+            } else {
+                document.body.classList.remove('role8-sidebar-hidden');
+            }
         } else {
             if (toggle) toggle.style.setProperty('display', 'none', 'important');
             document.body.classList.remove('role8-has-sidebar');
+            document.body.classList.remove('role8-sidebar-hidden');
         }
     }, 150);
 });
