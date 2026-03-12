@@ -592,6 +592,19 @@ body.role8-sidebar-hidden .desk-sidebar {
     transition: left 0.3s ease !important;
 }
 
+/* Keep the native toggle button visible when sidebar slides off-screen */
+body.role8-sidebar-hidden .sidebar-toggle-btn {
+    position: fixed !important;
+    left: 12px !important;
+    top: 75px !important;
+    z-index: 10001 !important;
+}
+
+[dir="rtl"] body.role8-sidebar-hidden .sidebar-toggle-btn {
+    left: auto !important;
+    right: 12px !important;
+}
+
 /* Adjust Navbar when sidebar is hidden */
 body.role8-sidebar-hidden .navbar {
     left: 0 !important;
