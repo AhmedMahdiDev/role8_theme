@@ -4,9 +4,7 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-host = "161.97.67.194"
-user = "root"
-password = "m0hv5U2U6nkVy"
+
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
