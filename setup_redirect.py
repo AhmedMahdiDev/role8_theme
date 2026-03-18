@@ -1,9 +1,14 @@
 import paramiko
 import sys
 
+import getpass
+
 sys.stdout.reconfigure(encoding='utf-8')
 
-
+print("--- ERPNext Nginx Redirect Setup ---")
+host = input("Enter Server IP: ")
+user = input("Enter Username (default: root): ") or "root"
+password = getpass.getpass("Enter Password: ")
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -29,16 +34,16 @@ try:
     print(stdout.read().decode('utf-8', errors='replace'))
     
     # We will create a new config file in conf.d to handle the redirect for the base IP
-    nginx_conf = """
-server {
+    nginx_conf = f"""
+server {{
     listen 80;
-    server_name 161.97.67.194;
+    server_name {host};
     
     # Redirect root to app/home on port 8080
-    location = / {
-        return 301 http://161.97.67.194:8080/app/home;
-    }
-}
+    location = / {{
+        return 301 http://{host}:8080/app/home;
+    }}
+}}
 """
     # Write the config to the server
     cmd = f"cat << 'EOF' > /etc/nginx/conf.d/erpnext_redirect.conf\n{nginx_conf}\nEOF"

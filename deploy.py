@@ -2,9 +2,14 @@ import paramiko
 import time
 import sys
 
+import getpass
+
 sys.stdout.reconfigure(encoding='utf-8')
 
-
+print("--- ERPNext Theme Deployment ---")
+host = input("Enter Server IP: ")
+user = input("Enter Username (default: root): ") or "root"
+password = getpass.getpass("Enter Password: ")
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
