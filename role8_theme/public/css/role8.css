@@ -331,7 +331,7 @@ html[dir="rtl"] .navbar,
     flex: 0 0 0% !important;
     padding: 0 !important;
     margin: 0 !important;
-    display: none !important;
+    /* DO NOT use display: none, because desk-sidebar is a child and needs to remain visible overflow */
 }
 
 [data-page-route="Workspaces"] .layout-main-section-wrapper {
