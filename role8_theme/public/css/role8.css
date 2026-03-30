@@ -306,7 +306,7 @@ html[dir="rtl"] .navbar,
 }
 
 /* Ensure Frappe's inner sidebars ONLY show if they contain actual page components */
-.layout-side-section:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar, .page-sidebar) {
+.layout-side-section:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar) {
     width: auto !important;
     min-width: unset !important;
     flex: 0 0 16.666667% !important;
@@ -315,7 +315,7 @@ html[dir="rtl"] .navbar,
     padding-right: 20px !important;
 }
 
-[dir="rtl"] .layout-side-section:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar, .page-sidebar) {
+[dir="rtl"] .layout-side-section:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar) {
     padding-right: 0 !important;
     padding-left: 20px !important;
 }
@@ -705,7 +705,7 @@ body.role8-has-sidebar.role8-sidebar-hidden .page-container {
 }
 
 /* Allow form sidebar and main content to co-exist in internal pages */
-.layout-main:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar, .page-sidebar) .layout-main-section-wrapper {
+.layout-main:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar) .layout-main-section-wrapper {
     width: auto !important;
     flex: 1 !important;
 }
