@@ -290,7 +290,7 @@ html[dir="rtl"] .navbar,
 
 /* Parent container wrapper - COLLAPSE it so it doesn't take space */
 /* (Since child .desk-sidebar is fixed, this parent is empty flow-wise) */
-.layout-side-section {
+.layout-side-section:not(.page-body .layout-side-section) {
     width: 0 !important;
     min-width: 0 !important;
     flex: 0 0 0% !important;
@@ -303,6 +303,15 @@ html[dir="rtl"] .navbar,
     border: none !important;
     overflow: visible !important;
     /* Allow fixed child to be seen */
+}
+
+/* Ensure Frappe's inner sidebars (like Customer Form) have space */
+.page-body .layout-side-section {
+    padding-right: 20px !important;
+}
+[dir="rtl"] .page-body .layout-side-section {
+    padding-right: 0 !important;
+    padding-left: 20px !important;
 }
 
 
@@ -676,6 +685,12 @@ body.role8-has-sidebar.role8-sidebar-hidden .page-container {
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 15px !important; /* Some padding for inner spacing */
+}
+
+/* Allow form sidebar and main content to co-exist in internal pages */
+.page-body .layout-main-section-wrapper {
+    width: auto !important;
+    flex: 1 !important;
 }
 
 /* Force main containers to fill the remaining screen space */
