@@ -288,9 +288,9 @@ html[dir="rtl"] .navbar,
     border-radius: 4px;
 }
 
-/* Parent container wrapper - COLLAPSE it so it doesn't take space */
+/* Parent container wrapper - COLLAPSE it so it doesn't take space globally (Workspaces) */
 /* (Since child .desk-sidebar is fixed, this parent is empty flow-wise) */
-.layout-side-section:not(.page-body .layout-side-section) {
+.layout-side-section {
     width: 0 !important;
     min-width: 0 !important;
     flex: 0 0 0% !important;
@@ -305,11 +305,17 @@ html[dir="rtl"] .navbar,
     /* Allow fixed child to be seen */
 }
 
-/* Ensure Frappe's inner sidebars (like Customer Form) have space */
-.page-body .layout-side-section {
+/* Ensure Frappe's inner sidebars ONLY show if they contain actual page components */
+.layout-side-section:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar, .page-sidebar) {
+    width: auto !important;
+    min-width: unset !important;
+    flex: 0 0 16.666667% !important;
+    flex-basis: 16.666667% !important;
+    max-width: 250px !important;
     padding-right: 20px !important;
 }
-[dir="rtl"] .page-body .layout-side-section {
+
+[dir="rtl"] .layout-side-section:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar, .page-sidebar) {
     padding-right: 0 !important;
     padding-left: 20px !important;
 }
@@ -327,27 +333,24 @@ html[dir="rtl"] .navbar,
     transition: all 0.2s ease !important;
 }
 
-/* ALL text and links inside sidebar must be white/light */
+/* ALL text and links inside main desk sidebar must be white/light */
 .desk-sidebar .standard-sidebar-item a,
 .desk-sidebar .standard-sidebar-item span,
 .desk-sidebar .standard-sidebar-item .sidebar-item-label,
 .desk-sidebar a,
-.desk-sidebar span,
-.layout-side-section:not(.page-body .layout-side-section) a,
-.layout-side-section:not(.page-body .layout-side-section) span,
-.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-label,
-.standard-sidebar-item:not(.page-body .standard-sidebar-item) a,
-.standard-sidebar-item:not(.page-body .standard-sidebar-item) span {
+.desk-sidebar span {
     color: var(--sidebar-text) !important;
     font-size: 13.5px !important;
     font-weight: 400 !important;
     text-decoration: none !important;
 }
 
-/* Ensure text in internal page sidebars is clearly readable */
-.page-body .layout-side-section a,
-.page-body .layout-side-section span,
-.page-body .layout-side-section .sidebar-item-label {
+/* Ensure text in internal page sidebars is clearly readable (Dark) */
+.layout-side-section a,
+.layout-side-section span,
+.layout-side-section .sidebar-item-label,
+.form-sidebar a,
+.form-sidebar span {
     color: rgb(0 0 0 / 70%) !important;
     font-size: 13.5px !important;
     font-weight: 500 !important;
@@ -358,28 +361,24 @@ html[dir="rtl"] .navbar,
    SVG <use> creates shadow DOM with hardcoded fills that cannot
    be overridden with CSS color/fill. Using filter instead. */
 
-/* Make ALL sidebar SVG icons white via CSS filter */
+/* Make ALL desk sidebar SVG icons white via CSS filter */
 .desk-sidebar .sidebar-item-icon svg,
 .desk-sidebar .sidebar-item-icon .icon,
-.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-icon svg,
-.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-icon .icon,
-.desk-sidebar svg.icon,
-.layout-side-section:not(.page-body .layout-side-section) svg.icon {
+.desk-sidebar svg.icon {
     filter: brightness(0) invert(1) !important;
     opacity: 0.7 !important;
     transition: all 0.2s ease !important;
 }
 
-/* Sidebar item control icons (collapse arrow, caret, etc) */
-.desk-sidebar .sidebar-item-control svg,
-.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-control svg {
+/* Sidebar item control icons (collapse arrow, caret, etc) for desk sidebar */
+.desk-sidebar .sidebar-item-control svg {
     filter: brightness(0) invert(1) !important;
     opacity: 0.7 !important;
 }
 
-/* Revert icon filters for internal page sidebars so they match the text */
-.page-body .layout-side-section svg,
-.page-body .layout-side-section .icon {
+/* Revert icon filters for internal page sidebars so they match the dark text */
+.layout-side-section svg,
+.layout-side-section .icon {
     filter: none !important;
     opacity: 0.6 !important;
     color: rgb(0 0 0 / 60%) !important;
@@ -706,7 +705,7 @@ body.role8-has-sidebar.role8-sidebar-hidden .page-container {
 }
 
 /* Allow form sidebar and main content to co-exist in internal pages */
-.page-body .layout-main-section-wrapper {
+.layout-main:has(.form-sidebar, .list-sidebar, .report-sidebar, .tree-sidebar, .page-sidebar) .layout-main-section-wrapper {
     width: auto !important;
     flex: 1 !important;
 }
