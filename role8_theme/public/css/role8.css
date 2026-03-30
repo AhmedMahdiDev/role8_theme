@@ -320,6 +320,26 @@ html[dir="rtl"] .navbar,
     padding-left: 20px !important;
 }
 
+/* ── FORCE HIDE NATIVE SIDEBAR ON WORKSPACES ──
+   Since desk-sidebar replaces the native workspace navigation,
+   the native layout-side-section on workspaces must be kept collapsed
+   even if it contains native elements (which are empty or hidden). */
+[data-page-route="Workspaces"] .layout-side-section {
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    flex: 0 0 0% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: none !important;
+}
+
+[data-page-route="Workspaces"] .layout-main-section-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+    flex: 1 !important;
+}
+
 
 .standard-sidebar-section {
     background-color: var(--sidebar-bg) !important;
