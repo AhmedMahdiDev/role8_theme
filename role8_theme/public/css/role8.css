@@ -333,14 +333,24 @@ html[dir="rtl"] .navbar,
 .desk-sidebar .standard-sidebar-item .sidebar-item-label,
 .desk-sidebar a,
 .desk-sidebar span,
-.layout-side-section a,
-.layout-side-section span,
-.layout-side-section .sidebar-item-label,
-.standard-sidebar-item a,
-.standard-sidebar-item span {
+.layout-side-section:not(.page-body .layout-side-section) a,
+.layout-side-section:not(.page-body .layout-side-section) span,
+.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-label,
+.standard-sidebar-item:not(.page-body .standard-sidebar-item) a,
+.standard-sidebar-item:not(.page-body .standard-sidebar-item) span {
     color: var(--sidebar-text) !important;
     font-size: 13.5px !important;
     font-weight: 400 !important;
+    text-decoration: none !important;
+}
+
+/* Ensure text in internal page sidebars is clearly readable */
+.page-body .layout-side-section a,
+.page-body .layout-side-section span,
+.page-body .layout-side-section .sidebar-item-label {
+    color: rgb(0 0 0 / 70%) !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
     text-decoration: none !important;
 }
 
@@ -351,10 +361,10 @@ html[dir="rtl"] .navbar,
 /* Make ALL sidebar SVG icons white via CSS filter */
 .desk-sidebar .sidebar-item-icon svg,
 .desk-sidebar .sidebar-item-icon .icon,
-.layout-side-section .sidebar-item-icon svg,
-.layout-side-section .sidebar-item-icon .icon,
+.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-icon svg,
+.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-icon .icon,
 .desk-sidebar svg.icon,
-.layout-side-section svg.icon {
+.layout-side-section:not(.page-body .layout-side-section) svg.icon {
     filter: brightness(0) invert(1) !important;
     opacity: 0.7 !important;
     transition: all 0.2s ease !important;
@@ -362,9 +372,17 @@ html[dir="rtl"] .navbar,
 
 /* Sidebar item control icons (collapse arrow, caret, etc) */
 .desk-sidebar .sidebar-item-control svg,
-.layout-side-section .sidebar-item-control svg {
+.layout-side-section:not(.page-body .layout-side-section) .sidebar-item-control svg {
     filter: brightness(0) invert(1) !important;
     opacity: 0.7 !important;
+}
+
+/* Revert icon filters for internal page sidebars so they match the text */
+.page-body .layout-side-section svg,
+.page-body .layout-side-section .icon {
+    filter: none !important;
+    opacity: 0.6 !important;
+    color: rgb(0 0 0 / 60%) !important;
 }
 
 /* Sub-menu dot indicator (replaces arrow icons via JS) */
