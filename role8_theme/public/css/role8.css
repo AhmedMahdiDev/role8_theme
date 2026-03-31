@@ -366,11 +366,18 @@ html[dir="rtl"] .navbar,
 }
 
 /* Ensure text in internal page sidebars is clearly readable (Dark) */
-.layout-side-section a,
-.layout-side-section span,
-.layout-side-section .sidebar-item-label,
 .form-sidebar a,
-.form-sidebar span {
+.form-sidebar span,
+.form-sidebar .sidebar-item-label,
+.list-sidebar a,
+.list-sidebar span,
+.list-sidebar .sidebar-item-label,
+.tree-sidebar a,
+.tree-sidebar span,
+.tree-sidebar .sidebar-item-label,
+.report-sidebar a,
+.report-sidebar span,
+.report-sidebar .sidebar-item-label {
     color: rgb(0 0 0 / 70%) !important;
     font-size: 13.5px !important;
     font-weight: 500 !important;
@@ -397,8 +404,14 @@ html[dir="rtl"] .navbar,
 }
 
 /* Revert icon filters for internal page sidebars so they match the dark text */
-.layout-side-section svg,
-.layout-side-section .icon {
+.form-sidebar svg,
+.form-sidebar .icon,
+.list-sidebar svg,
+.list-sidebar .icon,
+.tree-sidebar svg,
+.tree-sidebar .icon,
+.report-sidebar svg,
+.report-sidebar .icon {
     filter: none !important;
     opacity: 0.6 !important;
     color: rgb(0 0 0 / 60%) !important;
