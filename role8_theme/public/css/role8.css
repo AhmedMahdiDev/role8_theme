@@ -580,6 +580,12 @@ html[dir="rtl"] .navbar,
     align-items: center !important;
 }
 
+/* Explicitly protect span children from parent list-sidebar overrides */
+.desk-sidebar .standard-sidebar-label span,
+.standard-sidebar-label span {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
 .desk-sidebar .standard-sidebar-label svg,
 .standard-sidebar-label svg {
     filter: brightness(0) invert(1) !important;
